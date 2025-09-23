@@ -1,0 +1,192 @@
+---
+export interface Props {
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  theme?: 'light' | 'dark' | 'auto';
+  showInProduction?: boolean;
+}
+
+const { 
+  position = 'top-right',
+  theme = 'auto',
+  showInProduction = true  // Enable in production for Xolar
+} = Astro.props;
+---
+
+<!-- Performance Dashboard - Real-time performance monitoring -->
+<script src="/PerformanceDashboard.js" is:inline></script>
+
+<script define:vars={{ position, theme, showInProduction }}>
+  // Initialize Performance Dashboard
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window !== 'undefined' && window.PerformanceDashboard) {
+      new window.PerformanceDashboard({
+        position,
+        theme,
+        showInProduction
+      });
+    }
+  });
+
+  // Also initialize Web Vitals monitoring
+  if (typeof window !== 'undefined') {
+    // Enable web vitals globally
+    window.webVitalsEnabled = true;
+
+    // Simple Web Vitals implementation without external dependencies
+    class SimpleWebVitals {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        // Use Performance Observer API for Core Web Vitals
+        this.observeLCP();
+        this.observeFID();
+        this.observeCLS();
+        this.observeFCP();
+        this.measureTTFB();
+      }
+
+      observeLCP() {
+        if (!('PerformanceObserver' in window)) return;
+        
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          
+          this.dispatchMetric('LCP', lastEntry.startTime, this.getRating('LCP', lastEntry.startTime));
+        });
+
+        try {
+          observer.observe({ entryTypes: ['largest-contentful-paint'] });
+        } catch (e) {
+          // LCP not supported
+        }
+      }
+
+      observeFID() {
+        if (!('PerformanceObserver' in window)) return;
+
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach(entry => {
+            this.dispatchMetric('FID', entry.processingStart - entry.startTime, this.getRating('FID', entry.processingStart - entry.startTime));
+          });
+        });
+
+        try {
+          observer.observe({ entryTypes: ['first-input'], buffered: true });
+        } catch (e) {
+          // FID not supported
+        }
+      }
+
+      observeCLS() {
+        if (!('PerformanceObserver' in window)) return;
+
+        let clsValue = 0;
+        let sessionValue = 0;
+        let sessionEntries = [];
+
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          
+          entries.forEach(entry => {
+            if (!entry.hadRecentInput) {
+              const firstSessionEntry = sessionEntries[0];
+              const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
+
+              if (sessionValue &&
+                  entry.startTime - lastSessionEntry.startTime < 1000 &&
+                  entry.startTime - firstSessionEntry.startTime < 5000) {
+                sessionValue += entry.value;
+                sessionEntries.push(entry);
+              } else {
+                sessionValue = entry.value;
+                sessionEntries = [entry];
+              }
+
+              if (sessionValue > clsValue) {
+                clsValue = sessionValue;
+                this.dispatchMetric('CLS', clsValue, this.getRating('CLS', clsValue));
+              }
+            }
+          });
+        });
+
+        try {
+          observer.observe({ entryTypes: ['layout-shift'], buffered: true });
+        } catch (e) {
+          // CLS not supported
+        }
+      }
+
+      observeFCP() {
+        if (!('PerformanceObserver' in window)) return;
+
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach(entry => {
+            if (entry.name === 'first-contentful-paint') {
+              this.dispatchMetric('FCP', entry.startTime, this.getRating('FCP', entry.startTime));
+            }
+          });
+        });
+
+        try {
+          observer.observe({ entryTypes: ['paint'], buffered: true });
+        } catch (e) {
+          // FCP not supported
+        }
+      }
+
+      measureTTFB() {
+        if ('navigation' in performance) {
+          const navigation = performance.getEntriesByType('navigation')[0];
+          if (navigation) {
+            const ttfb = navigation.responseStart - navigation.requestStart;
+            this.dispatchMetric('TTFB', ttfb, this.getRating('TTFB', ttfb));
+          }
+        }
+      }
+
+      getRating(metric, value) {
+        const thresholds = {
+          'LCP': [2500, 4000],
+          'FID': [100, 300],
+          'CLS': [0.1, 0.25],
+          'FCP': [1800, 3000],
+          'TTFB': [800, 1800]
+        };
+
+        const [good, poor] = thresholds[metric] || [0, 0];
+        if (value <= good) return 'good';
+        if (value <= poor) return 'needs-improvement';
+        return 'poor';
+      }
+
+      dispatchMetric(name, value, rating) {
+        const metric = {
+          name,
+          value,
+          rating,
+          id: `${name}-${Date.now()}`,
+          timestamp: Date.now()
+        };
+
+        // Dispatch event for performance dashboard
+        window.dispatchEvent(new CustomEvent('webvitals', {
+          detail: metric
+        }));
+
+        // Log to console in development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          console.log(`[WebVitals] ${name}: ${Math.round(value)}${name === 'CLS' ? '' : 'ms'} (${rating})`);
+        }
+      }
+    }
+
+    // Initialize Web Vitals
+    new SimpleWebVitals();
+  }
+</script>

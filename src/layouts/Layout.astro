@@ -1,22 +1,228 @@
+---
+import "../styles/global.css";
+import Navigation from "./Navigation.astro";
+import Footer from "./Footer.astro";
+import PerformanceDashboard from "../components/PerformanceDashboard.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+  schemaMarkup?: string;
+  keywords?: string;
+  author?: string;
+  publishDate?: string;
+  modifiedDate?: string;
+  yoastSeo?: {
+    title?: string;
+    description?: string;
+    canonical?: string;
+    og_title?: string;
+    og_description?: string;
+    og_image?: string;
+    og_type?: string;
+    twitter_card?: string;
+    twitter_title?: string;
+    twitter_description?: string;
+    twitter_image?: string;
+    robots?: {
+      index?: boolean;
+      follow?: boolean;
+    };
+    schema?: string;
+    meta_keywords?: string;
+    author?: string;
+    article_published_time?: string;
+    article_modified_time?: string;
+  };
+}
+
+const {
+  title = "Xolar Inc. - Solar Energy Solutions",
+  description = "Canada's leading solar energy installation company. Get free solar quotes, Tesla Powerwall, heat pumps, and EV charging solutions.",
+  canonicalUrl = Astro.url.href,
+  ogTitle,
+  ogDescription,
+  ogImage = "/images/xolar-og-default.jpg",
+  ogType = "website",
+  twitterCard = "summary_large_image",
+  twitterTitle,
+  twitterDescription,
+  twitterImage,
+  noindex = false,
+  nofollow = false,
+  schemaMarkup,
+  keywords,
+  author = "Xolar Inc.",
+  publishDate,
+  modifiedDate,
+  yoastSeo
+} = Astro.props;
+
+// Use Yoast SEO data if provided, otherwise fallback to props
+const seoTitle = yoastSeo?.title || title;
+const seoDescription = yoastSeo?.description || description;
+const seoCanonical = yoastSeo?.canonical || canonicalUrl;
+const seoOgTitle = yoastSeo?.og_title || ogTitle || seoTitle;
+const seoOgDescription = yoastSeo?.og_description || ogDescription || seoDescription;
+const seoOgImage = yoastSeo?.og_image || ogImage;
+const seoOgType = yoastSeo?.og_type || ogType;
+const seoTwitterCard = yoastSeo?.twitter_card || twitterCard;
+const seoTwitterTitle = yoastSeo?.twitter_title || twitterTitle || seoTitle;
+const seoTwitterDescription = yoastSeo?.twitter_description || twitterDescription || seoDescription;
+const seoTwitterImage = yoastSeo?.twitter_image || twitterImage || seoOgImage;
+const seoNoindex = yoastSeo?.robots?.index === false || noindex;
+const seoNofollow = yoastSeo?.robots?.follow === false || nofollow;
+const seoSchema = yoastSeo?.schema || schemaMarkup;
+const seoKeywords = yoastSeo?.meta_keywords || keywords;
+const seoAuthor = yoastSeo?.author || author;
+const seoPublishDate = yoastSeo?.article_published_time || publishDate;
+const seoModifiedDate = yoastSeo?.article_modified_time || modifiedDate;
+
+// Construct robots meta content
+let robotsContent = [];
+if (seoNoindex) robotsContent.push('noindex');
+else robotsContent.push('index');
+if (seoNofollow) robotsContent.push('nofollow');
+else robotsContent.push('follow');
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+
+		<!-- Google Fonts - Montserrat -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+		<!-- SEO Meta Tags -->
+		<title>{seoTitle}</title>
+		<meta name="description" content={seoDescription} />
+		{seoCanonical && <link rel="canonical" href={seoCanonical} />}
+		<meta name="robots" content={robotsContent.join(', ')} />
+		{seoKeywords && <meta name="keywords" content={seoKeywords} />}
+		{seoAuthor && <meta name="author" content={seoAuthor} />}
+		{seoPublishDate && <meta name="article:published_time" content={seoPublishDate} />}
+		{seoModifiedDate && <meta name="article:modified_time" content={seoModifiedDate} />}
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:title" content={seoOgTitle} />
+		<meta property="og:description" content={seoOgDescription} />
+		<meta property="og:type" content={seoOgType} />
+		<meta property="og:url" content={seoCanonical} />
+		{seoOgImage && <meta property="og:image" content={seoOgImage} />}
+		<meta property="og:site_name" content="Xolar Inc." />
+		<meta property="og:locale" content="en_CA" />
+
+		<!-- Twitter Card Meta Tags -->
+		<meta name="twitter:card" content={seoTwitterCard} />
+		<meta name="twitter:title" content={seoTwitterTitle} />
+		<meta name="twitter:description" content={seoTwitterDescription} />
+		{seoTwitterImage && <meta name="twitter:image" content={seoTwitterImage} />}
+		<meta name="twitter:site" content="@xolar" />
+
+		<!-- Additional Meta Tags -->
+		<meta name="theme-color" content="#059669" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+		<!-- Structured Data -->
+		{seoSchema && <script type="application/ld+json" set:html={seoSchema} />}
 	</head>
-	<body>
-		<slot />
+	<body class="min-h-screen flex flex-col font-sans scroll-smooth">
+		<Navigation />
+		<main class="flex-grow">
+			<slot />
+		</main>
+		<Footer />
+		<PerformanceDashboard position="top-right" theme="auto" showInProduction={true} />
+
+		<!-- Scroll Animation Script -->
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Create intersection observer for scroll animations
+				const observerOptions = {
+					threshold: 0.1,
+					rootMargin: '0px 0px -50px 0px'
+				};
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('visible');
+							// Optionally unobserve after animation to improve performance
+							observer.unobserve(entry.target);
+						}
+					});
+				}, observerOptions);
+
+				// Observe all elements with scroll-animate class
+				const animateElements = document.querySelectorAll('.scroll-animate');
+				animateElements.forEach(el => {
+					observer.observe(el);
+				});
+
+				// Performance optimization: preload animations for elements in viewport
+				const preloadObserver = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.style.willChange = 'transform, opacity';
+							setTimeout(() => {
+								entry.target.style.willChange = 'auto';
+							}, 1000);
+						}
+					});
+				}, { threshold: 0 });
+
+				animateElements.forEach(el => {
+					preloadObserver.observe(el);
+				});
+
+				// Respect user preferences for reduced motion
+				if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					animateElements.forEach(el => {
+						el.classList.add('visible');
+						el.style.transition = 'none';
+					});
+				}
+			});
+		</script>
 	</body>
 </html>
 
 <style>
+	html {
+		scroll-behavior: smooth;
+	}
+
 	html,
 	body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+	}
+
+	body {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	main {
+		flex: 1;
 	}
 </style>
