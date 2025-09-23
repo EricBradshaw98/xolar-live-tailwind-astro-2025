@@ -11,11 +11,15 @@ import partytown from '@astrojs/partytown';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://xolar.ca',
   adapter: cloudflare(),
 
   vite: {
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), sitemap(), partytown()]
+  integrations: [react(), sitemap(), partytown()],
+
+  // Cloudflare Pages deployment settings
+  output: 'static'
 });

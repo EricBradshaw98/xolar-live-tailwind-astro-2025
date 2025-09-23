@@ -1,0 +1,46 @@
+name = "xolar-live-tailwind-astro"
+compatibility_date = "2023-12-01"
+
+[env.production]
+# Production environment settings
+routes = [
+  { pattern = "xolar.ca", zone_name = "xolar.ca" },
+  { pattern = "www.xolar.ca", zone_name = "xolar.ca" }
+]
+
+[[env.production.kv_namespaces]]
+binding = "SESSION"
+id = "your-kv-namespace-id"
+
+[build]
+command = "npm run build"
+cwd = "./"
+
+[build.environment_variables]
+NODE_VERSION = "18"
+
+# Cache settings for static assets
+[[headers]]
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.js"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.css"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/sitemap*.xml"
+[headers.values]
+Cache-Control = "public, max-age=3600"
+
+[[headers]]
+for = "/robots.txt"
+[headers.values]
+Cache-Control = "public, max-age=3600"

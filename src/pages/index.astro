@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import TeslaPowerwall from "../components/TeslaPowerwall.astro";
 import SolarPanel from "../components/SolarPanel.astro";
 import CanadaMap from "../components/CanadaMap.astro";
+import AffordabilityCarousel from "../components/AffordabilityCarousel.astro";
 import backgroundXolar from "../assets/background-xolar.jpg";
 
 const seoData = {
@@ -880,6 +881,11 @@ const seoData = {
     </div>
   </section>
 
+  <!-- Solar Affordability Program Carousel -->
+  <div class="scroll-animate fade-in-right">
+    <AffordabilityCarousel />
+  </div>
+
   <!-- Tesla Powerwall Section -->
 
   <!-- Team Section -->
@@ -1199,7 +1205,7 @@ const seoData = {
 
   <!-- Interactive Canada Map -->
   <div class="scroll-animate fade-in-right section-animate-3">
-    <CanadaMap client:visible />
+    <CanadaMap />
   </div>
 
   <!-- FAQ Section -->

@@ -1,0 +1,13 @@
+# Cloudflare Pages Redirects
+# SPA fallback for client-side routing
+/* /index.html 200
+
+# SEO redirects
+/solar /residential/solar-panels 301
+/tesla /residential/tesla-powerwall 301
+/heat-pump /residential/heat-pumps 301
+/ev /residential/ev-charging 301
+/commercial /commercial/solar-solutions 301
+
+# Remove trailing slashes
+/*/ /:splat 301
