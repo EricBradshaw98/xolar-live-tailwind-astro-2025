@@ -4,6 +4,3 @@
 /heat-pump /residential/heat-pumps 301
 /ev /residential/ev-charging 301
 /commercial /commercial/solar-solutions 301
-
-# SPA fallback for client-side routing (must be last)
-/* /index.html 200
