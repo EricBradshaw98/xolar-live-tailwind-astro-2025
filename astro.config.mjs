@@ -8,6 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import partytown from '@astrojs/partytown';
+import clerk from '@clerk/astro';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,8 +19,13 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), sitemap(), partytown()],
+  integrations: [
+    clerk(),
+    react(),
+    sitemap(),
+    partytown()
+  ],
 
-  // Cloudflare Pages deployment settings
-  output: 'static'
+  // Cloudflare Pages with SSR (required for Clerk)
+  output: 'server'
 });
