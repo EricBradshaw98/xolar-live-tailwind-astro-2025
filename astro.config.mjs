@@ -13,7 +13,11 @@ import clerk from '@clerk/astro';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://xolar.ca',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true
+    }
+  }),
 
   vite: {
     plugins: [tailwindcss()]
