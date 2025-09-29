@@ -152,6 +152,44 @@ else robotsContent.push('follow');
 		<Footer />
 		<PerformanceDashboard position="top-right" theme="auto" showInProduction={true} />
 
+		<!-- Marker.io Feedback Widget -->
+		<script>
+			import markerSDK from '@marker.io/browser';
+
+			// Initialize the Marker.io widget
+			const initializeMarker = async () => {
+				try {
+					const widget = await markerSDK.loadWidget({
+						project: '68d4144c5f6ca33ba8ccb770',
+					});
+
+					// Set up reporter identification (optional)
+					// You can customize this based on user authentication
+					widget.setReporter({
+						email: 'feedback@xolar.ca',
+						fullName: 'Xolar User'
+					});
+
+					// Set custom data for better context
+					widget.setCustomData({
+						company: 'Xolar Inc.',
+						product: 'Solar Energy Solutions',
+						version: '1.0.0',
+						environment: import.meta.env.PROD ? 'production' : 'development',
+						page: window.location.pathname,
+						userAgent: navigator.userAgent,
+						timestamp: new Date().toISOString()
+					});
+
+				} catch (error) {
+					console.error('Failed to initialize Marker.io:', error);
+				}
+			};
+
+			// Initialize when DOM is loaded
+			document.addEventListener('DOMContentLoaded', initializeMarker);
+		</script>
+
 		<!-- Scroll Animation Script -->
 		<script>
 			document.addEventListener('DOMContentLoaded', function() {
