@@ -1,0 +1,225 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Installer Login - Access Solar Projects | Xolar Inc.",
+  description: "Log in to your Xolar installer account to view and bid on solar installation projects across Canada.",
+  keywords: "installer login, solar contractor login, Xolar installer portal, solar projects"
+};
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+>
+  <!-- Hero Section -->
+  <section class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+
+      <!-- Header -->
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          Installer Login
+        </h1>
+        <p class="text-gray-600">
+          Access your Xolar installer dashboard
+        </p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+        <form class="space-y-6" id="login-form">
+
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <div class="relative">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors pr-12"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                id="toggle-password"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-open">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-closed">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex items-center justify-between">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="remember"
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+              />
+              <span class="ml-2 text-sm text-gray-700">Remember me</span>
+            </label>
+            <a href="/installers/forgot-password" class="text-sm text-primary-600 hover:text-primary-700">
+              Forgot password?
+            </a>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Sign In
+          </button>
+
+          <!-- Demo Notice -->
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <div class="text-blue-800 text-sm">
+                <strong>Demo Mode:</strong> This is a skeleton page. Login functionality not yet implemented.
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Register Link -->
+      <div class="text-center">
+        <p class="text-gray-600">
+          Not registered yet?
+          <a href="/installers/register" class="text-primary-600 hover:text-primary-700 font-semibold ml-1">
+            Create an account
+          </a>
+        </p>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="text-center">
+        <a href="/installers/projects" class="text-sm text-gray-500 hover:text-gray-700 flex items-center justify-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Projects
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Password toggle functionality
+    const toggleButton = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeOpen = document.getElementById('eye-open');
+    const eyeClosed = document.getElementById('eye-closed');
+
+    if (toggleButton && passwordInput && eyeOpen && eyeClosed) {
+      toggleButton.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeOpen.classList.add('hidden');
+          eyeClosed.classList.remove('hidden');
+        } else {
+          passwordInput.type = 'password';
+          eyeOpen.classList.remove('hidden');
+          eyeClosed.classList.add('hidden');
+        }
+      });
+    }
+
+    // Form submission handling
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Show demo message
+        alert('Demo Mode: Login functionality not yet implemented. In a real application, this would authenticate the user and redirect to the installer dashboard.');
+
+        // In a real application, you would:
+        // 1. Validate the form data
+        // 2. Send a request to your authentication API
+        // 3. Handle the response and redirect appropriately
+        // 4. Set authentication tokens/cookies
+
+        console.log('Login form submitted with:', {
+          email: this.email.value,
+          password: '[REDACTED]',
+          remember: this.remember.checked
+        });
+      });
+    }
+
+    // Auto-focus email field
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+      emailInput.focus();
+    }
+
+    // Form validation enhancements
+    const inputs = document.querySelectorAll('input[required]');
+    inputs.forEach(input => {
+      input.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+          this.classList.add('border-red-300');
+          this.classList.remove('border-gray-300');
+        } else {
+          this.classList.remove('border-red-300');
+          this.classList.add('border-gray-300');
+        }
+      });
+
+      input.addEventListener('input', function() {
+        if (this.classList.contains('border-red-300') && this.value.trim() !== '') {
+          this.classList.remove('border-red-300');
+          this.classList.add('border-gray-300');
+        }
+      });
+    });
+
+    // Email validation
+    const emailInput2 = document.getElementById('email');
+    if (emailInput2) {
+      emailInput2.addEventListener('blur', function() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (this.value && !emailRegex.test(this.value)) {
+          this.classList.add('border-red-300');
+          this.classList.remove('border-gray-300');
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,567 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Join Xolar Installer Network - Register Today | Xolar Inc.",
+  description: "Become a certified solar installer with Xolar. Join our network and get access to solar installation projects across Canada.",
+  keywords: "solar installer registration, join installer network, solar contractor, Xolar installer program"
+};
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+>
+  <!-- Hero Section -->
+  <section class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Join Xolar's Installer Network
+        </h1>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">
+          Become a certified solar installer and get access to premium installation projects across Canada.
+        </p>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+        <form class="space-y-6" id="register-form">
+
+          <!-- Business Information Section -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+              Business Information
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Company Name -->
+              <div class="md:col-span-2">
+                <label for="company-name" class="block text-sm font-medium text-gray-700 mb-2">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  id="company-name"
+                  name="companyName"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="Your Solar Installation Company"
+                />
+              </div>
+
+              <!-- Business License -->
+              <div>
+                <label for="business-license" class="block text-sm font-medium text-gray-700 mb-2">
+                  Business License Number *
+                </label>
+                <input
+                  type="text"
+                  id="business-license"
+                  name="businessLicense"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="License #"
+                />
+              </div>
+
+              <!-- Years in Business -->
+              <div>
+                <label for="years-business" class="block text-sm font-medium text-gray-700 mb-2">
+                  Years in Business *
+                </label>
+                <select
+                  id="years-business"
+                  name="yearsBusiness"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                >
+                  <option value="">Select range</option>
+                  <option value="0-1">Less than 1 year</option>
+                  <option value="1-3">1-3 years</option>
+                  <option value="3-5">3-5 years</option>
+                  <option value="5-10">5-10 years</option>
+                  <option value="10+">10+ years</option>
+                </select>
+              </div>
+
+              <!-- Service Areas -->
+              <div class="md:col-span-2">
+                <label for="service-areas" class="block text-sm font-medium text-gray-700 mb-2">
+                  Primary Service Areas *
+                </label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="ON" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Ontario</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="BC" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">British Columbia</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="AB" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Alberta</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="QC" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Quebec</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="MB" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Manitoba</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="serviceAreas" value="SK" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Saskatchewan</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information Section -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+              Contact Information
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- First Name -->
+              <div>
+                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">
+                  First Name *
+                </label>
+                <input
+                  type="text"
+                  id="first-name"
+                  name="firstName"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="John"
+                />
+              </div>
+
+              <!-- Last Name -->
+              <div>
+                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  id="last-name"
+                  name="lastName"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="Smith"
+                />
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+
+              <!-- Business Address -->
+              <div class="md:col-span-2">
+                <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                  Business Address *
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="123 Main Street, City, Province, Postal Code"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Certifications Section -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+              Certifications & Credentials
+            </h2>
+
+            <div class="space-y-4">
+              <!-- Certifications -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">
+                  Certifications (Select all that apply) *
+                </label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="electrical" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Licensed Electrician</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="solar" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Solar Installation Certified</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="tesla" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Tesla Powerwall Certified</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="roofing" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Roofing License</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="safety" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Safety Certified</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" name="certifications" value="other" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                    <span class="ml-2 text-sm text-gray-700">Other</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Insurance -->
+              <div>
+                <label for="insurance" class="block text-sm font-medium text-gray-700 mb-2">
+                  Insurance Coverage Amount *
+                </label>
+                <select
+                  id="insurance"
+                  name="insurance"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                >
+                  <option value="">Select coverage amount</option>
+                  <option value="1M">$1 Million</option>
+                  <option value="2M">$2 Million</option>
+                  <option value="5M">$5 Million</option>
+                  <option value="10M">$10 Million+</option>
+                </select>
+              </div>
+
+              <!-- Team Size -->
+              <div>
+                <label for="team-size" class="block text-sm font-medium text-gray-700 mb-2">
+                  Installation Team Size *
+                </label>
+                <select
+                  id="team-size"
+                  name="teamSize"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                >
+                  <option value="">Select team size</option>
+                  <option value="1-2">1-2 people</option>
+                  <option value="3-5">3-5 people</option>
+                  <option value="6-10">6-10 people</option>
+                  <option value="11+">11+ people</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Setup Section -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+              Account Setup
+            </h2>
+
+            <div class="space-y-4">
+              <!-- Password -->
+              <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                  Password *
+                </label>
+                <div class="relative">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors pr-12"
+                    placeholder="Create a strong password"
+                  />
+                  <button
+                    type="button"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                    id="toggle-password"
+                  >
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-open">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    <svg class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="eye-closed">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                    </svg>
+                  </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Must be at least 8 characters long</p>
+              </div>
+
+              <!-- Confirm Password -->
+              <div>
+                <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password *
+                </label>
+                <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirmPassword"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  placeholder="Confirm your password"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms and Privacy -->
+          <div class="space-y-4">
+            <label class="flex items-start">
+              <input
+                type="checkbox"
+                name="terms"
+                required
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded mt-1"
+              />
+              <span class="ml-2 text-sm text-gray-700">
+                I agree to the <a href="/terms" class="text-primary-600 hover:text-primary-700 underline">Terms of Service</a>
+                and <a href="/privacy" class="text-primary-600 hover:text-primary-700 underline">Privacy Policy</a> *
+              </span>
+            </label>
+
+            <label class="flex items-start">
+              <input
+                type="checkbox"
+                name="marketing"
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded mt-1"
+              />
+              <span class="ml-2 text-sm text-gray-700">
+                I would like to receive marketing communications about new projects and opportunities
+              </span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Register as Installer
+          </button>
+
+          <!-- Demo Notice -->
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <div class="text-blue-800 text-sm">
+                <strong>Demo Mode:</strong> Registration functionality not yet implemented. This shows the UI structure.
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Login Link -->
+      <div class="text-center mt-8">
+        <p class="text-gray-600">
+          Already have an account?
+          <a href="/installers/login" class="text-primary-600 hover:text-primary-700 font-semibold ml-1">
+            Sign in here
+          </a>
+        </p>
+      </div>
+
+      <!-- Back to Projects -->
+      <div class="text-center">
+        <a href="/installers/projects" class="text-sm text-gray-500 hover:text-gray-700 flex items-center justify-center">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Projects
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Password toggle functionality
+    const toggleButton = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeOpen = document.getElementById('eye-open');
+    const eyeClosed = document.getElementById('eye-closed');
+
+    if (toggleButton && passwordInput && eyeOpen && eyeClosed) {
+      toggleButton.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeOpen.classList.add('hidden');
+          eyeClosed.classList.remove('hidden');
+        } else {
+          passwordInput.type = 'password';
+          eyeOpen.classList.remove('hidden');
+          eyeClosed.classList.add('hidden');
+        }
+      });
+    }
+
+    // Password confirmation validation
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    if (confirmPasswordInput && passwordInput) {
+      confirmPasswordInput.addEventListener('blur', function() {
+        if (this.value && this.value !== passwordInput.value) {
+          this.classList.add('border-red-300');
+          this.classList.remove('border-gray-300');
+        } else {
+          this.classList.remove('border-red-300');
+          this.classList.add('border-gray-300');
+        }
+      });
+    }
+
+    // Form submission handling
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Basic validation
+        const requiredFields = this.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (field.type === 'checkbox') {
+            if (field.name === 'serviceAreas') {
+              const serviceAreaChecked = this.querySelectorAll('input[name="serviceAreas"]:checked').length > 0;
+              if (!serviceAreaChecked) {
+                isValid = false;
+                alert('Please select at least one service area.');
+                return;
+              }
+            } else if (field.name === 'certifications') {
+              const certificationsChecked = this.querySelectorAll('input[name="certifications"]:checked').length > 0;
+              if (!certificationsChecked) {
+                isValid = false;
+                alert('Please select at least one certification.');
+                return;
+              }
+            } else if (!field.checked) {
+              isValid = false;
+              alert('Please accept the terms and conditions.');
+              return;
+            }
+          } else if (field.value.trim() === '') {
+            isValid = false;
+            field.focus();
+            alert('Please fill in all required fields.');
+            return;
+          }
+        });
+
+        // Password confirmation check
+        const password = this.password.value;
+        const confirmPassword = this.confirmPassword.value;
+        if (password !== confirmPassword) {
+          isValid = false;
+          alert('Passwords do not match.');
+          confirmPasswordInput.focus();
+          return;
+        }
+
+        if (isValid) {
+          // Show demo message
+          alert('Demo Mode: Registration functionality not yet implemented. In a real application, this would create the installer account and send verification emails.');
+
+          // Log form data for debugging
+          const formData = new FormData(this);
+          const data = {};
+          for (let [key, value] of formData.entries()) {
+            if (data[key]) {
+              if (Array.isArray(data[key])) {
+                data[key].push(value);
+              } else {
+                data[key] = [data[key], value];
+              }
+            } else {
+              data[key] = value;
+            }
+          }
+          console.log('Registration form data:', data);
+        }
+      });
+    }
+
+    // Auto-focus first field
+    const firstInput = document.getElementById('company-name');
+    if (firstInput) {
+      firstInput.focus();
+    }
+
+    // Form validation enhancements
+    const inputs = document.querySelectorAll('input[required], select[required]');
+    inputs.forEach(input => {
+      input.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+          this.classList.add('border-red-300');
+          this.classList.remove('border-gray-300');
+        } else {
+          this.classList.remove('border-red-300');
+          this.classList.add('border-gray-300');
+        }
+      });
+
+      input.addEventListener('input', function() {
+        if (this.classList.contains('border-red-300') && this.value.trim() !== '') {
+          this.classList.remove('border-red-300');
+          this.classList.add('border-gray-300');
+        }
+      });
+    });
+
+    // Email validation
+    const emailInput = document.getElementById('email');
+    if (emailInput) {
+      emailInput.addEventListener('blur', function() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (this.value && !emailRegex.test(this.value)) {
+          this.classList.add('border-red-300');
+          this.classList.remove('border-gray-300');
+        }
+      });
+    }
+  });
+</script>

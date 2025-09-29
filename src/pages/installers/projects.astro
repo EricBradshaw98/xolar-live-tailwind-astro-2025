@@ -1,0 +1,507 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const seoData = {
+  title: "Solar Installation Projects - Bid on Projects | Xolar Inc.",
+  description: "Browse available solar installation projects and submit bids. Join Xolar's network of certified solar installers across Canada.",
+  keywords: "solar installer, solar projects, installation bids, solar contractors, Xolar network",
+};
+
+import { mockProjects } from "../../data/mockProjects.js";
+
+// For Cloudflare Pages, we'll render all projects and handle pagination client-side
+// This ensures the page works regardless of the URL query parameter
+const PROJECTS_PER_PAGE = 6;
+const totalPages = Math.ceil(mockProjects.length / PROJECTS_PER_PAGE);
+
+// Default to page 1, but JavaScript will handle the actual page from URL
+const currentPage = 1;
+const startIndex = 0;
+const endIndex = PROJECTS_PER_PAGE;
+
+// Render all projects for client-side pagination and filtering
+const allProjects = mockProjects;
+
+// Generate pagination array
+const getPaginationArray = (current: number, total: number) => {
+  const delta = 2;
+  const range = [];
+  const rangeWithDots = [];
+
+  for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
+    range.push(i);
+  }
+
+  if (current - delta > 2) {
+    rangeWithDots.push(1, '...');
+  } else {
+    rangeWithDots.push(1);
+  }
+
+  rangeWithDots.push(...range);
+
+  if (current + delta < total - 1) {
+    rangeWithDots.push('...', total);
+  } else {
+    rangeWithDots.push(total);
+  }
+
+  return rangeWithDots.filter((item, index, array) => array.indexOf(item) === index);
+};
+
+const paginationArray = totalPages > 1 ? getPaginationArray(currentPage, totalPages) : [];
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-20 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-left">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Solar Installation <span class="text-primary-600">Projects</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mb-8">
+          Browse and bid on solar installation projects across Canada. Join Xolar's network of certified installers.
+        </p>
+
+        <!-- Login Notice -->
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 max-w-2xl">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-yellow-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-yellow-800">
+              <strong>Login required</strong> to submit bids.
+              <a href="/installers/login" class="underline hover:no-underline">Sign in</a> or
+              <a href="/installers/register" class="underline hover:no-underline">register</a> to get started.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="py-8 bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex flex-col sm:flex-row gap-4 items-center">
+          <!-- Project Type Filter -->
+          <select id="type-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Project Types</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+
+          <!-- Location Filter -->
+          <select id="location-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Locations</option>
+            <option value="ON">Ontario</option>
+            <option value="BC">British Columbia</option>
+            <option value="AB">Alberta</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="MB">Manitoba</option>
+            <option value="SK">Saskatchewan</option>
+          </select>
+
+          <!-- System Size Filter -->
+          <select id="size-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All System Sizes</option>
+            <option value="small">Under 10kW</option>
+            <option value="medium">10kW - 25kW</option>
+            <option value="large">25kW+</option>
+          </select>
+
+          <!-- Clear Filters Button -->
+          <button id="clear-filters" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            Clear Filters
+          </button>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <span class="text-sm text-gray-600" id="project-count">
+            Showing {startIndex + 1}-{Math.min(endIndex, mockProjects.length)} of {mockProjects.length} projects
+          </span>
+          <button class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects List -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-4" id="projects-container">
+        {allProjects.map((project, index) => (
+          <div class={`project-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden ${
+            index >= startIndex && index < endIndex ? '' : 'hidden pagination-hidden'
+          }`}
+               data-type={project.projectType}
+               data-location={project.location.split(',')[1]?.trim()}
+               data-size-value={parseInt(project.systemSize)}
+               data-size-category={parseInt(project.systemSize) < 10 ? 'small' : parseInt(project.systemSize) <= 25 ? 'medium' : 'large'}>
+            <div class="p-6">
+              <div class="flex items-start justify-between">
+
+                <!-- Left Section: Main Info -->
+                <div class="flex-1 mr-6">
+                  <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-xl font-bold text-gray-900">{project.title}</h3>
+                      <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+                        project.projectType === 'Residential'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-purple-100 text-purple-800'
+                      }`}>
+                        {project.projectType}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center text-gray-600 mb-3">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>{project.location}</span>
+                  </div>
+
+                  <p class="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+
+                  <!-- Requirements -->
+                  <div class="mb-4">
+                    <div class="flex flex-wrap gap-2">
+                      {project.requirements.map((req) => (
+                        <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                          {req}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Middle Section: Project Details -->
+                <div class="flex-shrink-0 grid grid-cols-2 gap-6 text-sm mr-6">
+                  <div>
+                    <span class="text-gray-500">System Size:</span>
+                    <div class="font-semibold text-gray-900">{project.systemSize}</div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Panels:</span>
+                    <div class="font-semibold text-gray-900">{project.panelCount}</div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Est. Value:</span>
+                    <div class="font-bold text-green-600">{project.estimatedValue}</div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Deadline:</span>
+                    <div class="font-semibold text-gray-900">{new Date(project.deadline).toLocaleDateString()}</div>
+                  </div>
+                </div>
+
+                <!-- Right Section: Meta Info & Actions -->
+                <div class="flex-shrink-0 text-right">
+                  <div class="text-sm text-gray-500 mb-4">
+                    <div>Posted {new Date(project.postedDate).toLocaleDateString()}</div>
+                    <div class="font-medium text-gray-700">{project.bidCount} bids submitted</div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="flex flex-col gap-2 min-w-[140px]">
+                    <a
+                      href={`/installers/project/${project.id}`}
+                      class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-center font-medium text-sm"
+                    >
+                      View Details
+                    </a>
+                    <button
+                      class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
+                      disabled
+                      title="Login required to submit bids"
+                    >
+                      Submit Bid
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Pagination (Client-side generated) -->
+      <div id="pagination-container" class="flex items-center justify-between mt-8">
+        <div class="text-sm text-gray-500" id="page-info">
+          Page 1 of {totalPages}
+        </div>
+
+        <nav class="flex items-center space-x-1" id="pagination-nav">
+          <!-- Generated by JavaScript -->
+        </nav>
+      </div>
+
+      <!-- Empty State for Filters -->
+      <div class="py-16 text-center hidden" id="empty-state">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
+        <p class="text-gray-500 mb-4">Try adjusting your filters to see more projects.</p>
+        <button id="clear-filters-empty" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+          Clear All Filters
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empty State (hidden by default, shown when no projects match filters) -->
+  <section class="py-16 bg-gray-50 hidden" id="empty-state-original">
+    <div class="max-w-md mx-auto text-center">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No projects found</h3>
+      <p class="mt-1 text-sm text-gray-500">Try adjusting your filters to see more projects.</p>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="py-16 bg-primary-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">
+        Join Xolar's Installer Network
+      </h2>
+      <p class="text-xl text-primary-100 mb-8">
+        Get access to more projects and grow your solar installation business with Canada's leading solar company.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/installers/register"
+          class="px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+        >
+          Become an Installer
+        </a>
+        <a
+          href="/installers/login"
+          class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-colors duration-200"
+        >
+          Sign In to Bid
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ projectsPerPage: PROJECTS_PER_PAGE, totalProjects: mockProjects.length, totalPages: totalPages }}>
+  document.addEventListener('DOMContentLoaded', function() {
+    const PROJECTS_PER_PAGE = projectsPerPage;
+    const TOTAL_PROJECTS = totalProjects;
+    const TOTAL_PAGES = totalPages;
+
+    // Get current page from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
+    if (currentPage < 1 || currentPage > TOTAL_PAGES) currentPage = 1;
+
+    // Get elements
+    const typeFilter = document.getElementById('type-filter');
+    const locationFilter = document.getElementById('location-filter');
+    const sizeFilter = document.getElementById('size-filter');
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const clearFiltersEmptyBtn = document.getElementById('clear-filters-empty');
+    const projectsContainer = document.getElementById('projects-container');
+    const projectCount = document.getElementById('project-count');
+    const emptyState = document.getElementById('empty-state');
+    const paginationElement = document.querySelector('.flex.items-center.justify-between.mt-8');
+
+    const allProjectCards = document.querySelectorAll('.project-card');
+
+    function updatePagination(page) {
+      console.log('updatePagination called with page:', page);
+      currentPage = page;
+
+      // Update URL without page reload
+      const newUrl = page === 1
+        ? '/installers/projects'
+        : `/installers/projects?page=${page}`;
+      window.history.pushState({}, '', newUrl);
+      console.log('Updated URL to:', newUrl);
+
+      applyPaginationAndFilters();
+    }
+
+    function applyPaginationAndFilters() {
+      const typeValue = typeFilter.value;
+      const locationValue = locationFilter.value;
+      const sizeValue = sizeFilter.value;
+      const hasFilters = typeValue || locationValue || sizeValue;
+
+      let visibleCount = 0;
+      let filteredCards = [];
+
+      // First apply filters to get filtered set
+      allProjectCards.forEach((card, index) => {
+        let show = true;
+
+        if (typeValue && card.dataset.type !== typeValue) show = false;
+        if (locationValue && card.dataset.location !== locationValue) show = false;
+        if (sizeValue && card.dataset.sizeCategory !== sizeValue) show = false;
+
+        if (show) {
+          filteredCards.push({ card, index });
+        }
+      });
+
+      // Then apply pagination to filtered results
+      allProjectCards.forEach(card => {
+        card.classList.add('hidden');
+      });
+
+      if (hasFilters) {
+        // Show all filtered results
+        filteredCards.forEach(({ card }) => {
+          card.classList.remove('hidden');
+        });
+        visibleCount = filteredCards.length;
+      } else {
+        // Show paginated results
+        const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+        const endIndex = startIndex + PROJECTS_PER_PAGE;
+
+        filteredCards.slice(startIndex, endIndex).forEach(({ card }) => {
+          card.classList.remove('hidden');
+        });
+        visibleCount = Math.min(PROJECTS_PER_PAGE, filteredCards.length - startIndex);
+      }
+
+      // Update UI
+      if (hasFilters) {
+        if (visibleCount === 0) {
+          projectCount.textContent = 'No projects found';
+          emptyState.classList.remove('hidden');
+        } else {
+          projectCount.textContent = `Showing ${visibleCount} of ${TOTAL_PROJECTS} projects`;
+          emptyState.classList.add('hidden');
+        }
+        if (paginationElement) paginationElement.style.display = 'none';
+      } else {
+        const startNum = (currentPage - 1) * PROJECTS_PER_PAGE + 1;
+        const endNum = Math.min(currentPage * PROJECTS_PER_PAGE, TOTAL_PROJECTS);
+        projectCount.textContent = `Showing ${startNum}-${endNum} of ${TOTAL_PROJECTS} projects`;
+        emptyState.classList.add('hidden');
+        if (paginationElement) paginationElement.style.display = 'flex';
+        generatePaginationControls();
+      }
+    }
+
+    function generatePaginationControls() {
+      const pageInfo = document.getElementById('page-info');
+      const paginationNav = document.getElementById('pagination-nav');
+
+      if (pageInfo) {
+        pageInfo.textContent = `Page ${currentPage} of ${TOTAL_PAGES}`;
+      }
+
+      if (!paginationNav) return;
+
+      let html = '';
+
+      // Previous button
+      const prevPage = currentPage - 1;
+      if (currentPage > 1) {
+        const prevHref = prevPage === 1 ? '/installers/projects' : `/installers/projects?page=${prevPage}`;
+        html += `<a href="${prevHref}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">Previous</a>`;
+      } else {
+        html += `<span class="px-3 py-2 text-sm font-medium text-gray-300 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed">Previous</span>`;
+      }
+
+      // Page numbers
+      for (let i = 1; i <= TOTAL_PAGES; i++) {
+        if (i === currentPage) {
+          html += `<span class="px-3 py-2 text-sm font-medium text-white bg-primary-600 border border-primary-600 rounded-md">${i}</span>`;
+        } else {
+          const href = i === 1 ? '/installers/projects' : `/installers/projects?page=${i}`;
+          html += `<a href="${href}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">${i}</a>`;
+        }
+      }
+
+      // Next button
+      const nextPage = currentPage + 1;
+      if (currentPage < TOTAL_PAGES) {
+        html += `<a href="/installers/projects?page=${nextPage}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">Next</a>`;
+      } else {
+        html += `<span class="px-3 py-2 text-sm font-medium text-gray-300 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed">Next</span>`;
+      }
+
+      paginationNav.innerHTML = html;
+    }
+
+    // Handle all pagination clicks
+    document.addEventListener('click', function(e) {
+      const target = e.target.closest('a[href*="projects"]');
+      if (target && target.closest('nav')) {
+        e.preventDefault();
+        const href = target.getAttribute('href');
+        console.log('Clicked pagination link:', href);
+
+        if (href.includes('page=')) {
+          const page = parseInt(href.split('page=')[1]);
+          console.log('Going to page:', page);
+          updatePagination(page);
+        } else if (href.endsWith('/projects') || href.endsWith('/installers/projects')) {
+          console.log('Going to page 1');
+          updatePagination(1);
+        }
+      }
+    });
+
+    function clearAllFilters() {
+      typeFilter.value = '';
+      locationFilter.value = '';
+      sizeFilter.value = '';
+      applyPaginationAndFilters();
+    }
+
+    // Event listeners
+    typeFilter.addEventListener('change', applyPaginationAndFilters);
+    locationFilter.addEventListener('change', applyPaginationAndFilters);
+    sizeFilter.addEventListener('change', applyPaginationAndFilters);
+    clearFiltersBtn.addEventListener('click', clearAllFilters);
+    if (clearFiltersEmptyBtn) {
+      clearFiltersEmptyBtn.addEventListener('click', clearAllFilters);
+    }
+
+    // Submit bid button interaction
+    const bidButtons = document.querySelectorAll('button[title="Login required to submit bids"]');
+    bidButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        alert('Please log in to submit bids on projects. Redirecting to login page...');
+      });
+    });
+
+    // Initialize
+    generatePaginationControls();
+    applyPaginationAndFilters();
+  });
+</script>
+
+<style>
+  /* Line clamp utility for description text */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

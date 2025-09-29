@@ -1,0 +1,585 @@
+// Shared mock project data for the installer portal
+export const mockProjects = [
+  {
+    id: 1,
+    title: "Residential 10kW Solar Installation",
+    location: "Toronto, ON",
+    systemSize: "10kW",
+    panelCount: 32,
+    projectType: "Residential",
+    estimatedValue: "$28,000",
+    deadline: "2025-10-15",
+    description: "Standard residential rooftop solar installation on a single-story home with optimal south-facing roof exposure. The customer has already obtained all necessary permits and is ready to proceed with installation.",
+    requirements: ["Tesla Powerwall Installation", "Net Metering Setup", "25-year warranty"],
+    status: "Open for Bids",
+    postedDate: "2025-09-20",
+    bidCount: 3,
+    customer: {
+      name: "John Smith",
+      address: "123 Maple Street, Toronto, ON M4B 1A1",
+      phone: "(416) 555-0123",
+      email: "john.smith@email.com"
+    },
+    specifications: {
+      roofType: "Asphalt Shingle",
+      roofAge: "5 years",
+      roofCondition: "Excellent",
+      electricalPanel: "200A Main Panel",
+      utilityCompany: "Toronto Hydro",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "32x Canadian Solar 315W Panels",
+      inverter: "SolarEdge SE10000H-US",
+      mounting: "IronRidge XR Rail System",
+      monitoring: "SolarEdge Monitoring Platform",
+      battery: "Tesla Powerwall 2 (13.5kWh)"
+    },
+    timeline: {
+      designReview: "2025-09-30",
+      installation: "2025-10-05 - 2025-10-06",
+      inspection: "2025-10-10",
+      interconnection: "2025-10-15"
+    },
+    attachments: [
+      { name: "Site Survey Report.pdf", size: "2.3 MB" },
+      { name: "Electrical Panel Photos.zip", size: "5.1 MB" },
+      { name: "Building Plans.pdf", size: "1.8 MB" },
+      { name: "Permit Documents.pdf", size: "956 KB" }
+    ]
+  },
+  {
+    id: 2,
+    title: "Commercial 50kW Solar Array",
+    location: "Vancouver, BC",
+    systemSize: "50kW",
+    panelCount: 160,
+    projectType: "Commercial",
+    estimatedValue: "$85,000",
+    deadline: "2025-11-30",
+    description: "Large commercial warehouse solar installation. Flat roof with optimal sun exposure. Customer requires energy storage solution and advanced monitoring system.",
+    requirements: ["Commercial Energy Storage", "Grid Tie Setup", "Monitoring System"],
+    status: "Open for Bids",
+    postedDate: "2025-09-18",
+    bidCount: 7,
+    customer: {
+      name: "Vancouver Logistics Inc.",
+      address: "456 Industrial Way, Vancouver, BC V6B 2K3",
+      phone: "(604) 555-0189",
+      email: "facilities@vanlogistics.com"
+    },
+    specifications: {
+      roofType: "TPO Membrane",
+      roofAge: "3 years",
+      roofCondition: "Excellent",
+      electricalPanel: "800A Main Panel",
+      utilityCompany: "BC Hydro",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "160x LG 315W High-Efficiency Panels",
+      inverter: "SMA Sunny Central 50CP XT",
+      mounting: "Ballasted Racking System",
+      monitoring: "SMA Data Manager M",
+      battery: "Tesla Megapack (1MWh)"
+    },
+    timeline: {
+      designReview: "2025-10-05",
+      installation: "2025-10-15 - 2025-10-25",
+      inspection: "2025-11-05",
+      interconnection: "2025-11-15"
+    },
+    attachments: [
+      { name: "Commercial Site Survey.pdf", size: "4.1 MB" },
+      { name: "Structural Assessment.pdf", size: "2.8 MB" },
+      { name: "Electrical Specifications.pdf", size: "1.5 MB" },
+      { name: "Building Permits.pdf", size: "1.2 MB" }
+    ]
+  },
+  {
+    id: 3,
+    title: "Residential 15kW with Battery Storage",
+    location: "Calgary, AB",
+    systemSize: "15kW",
+    panelCount: 48,
+    projectType: "Residential",
+    estimatedValue: "$42,000",
+    deadline: "2025-10-30",
+    description: "High-efficiency residential installation with Tesla Powerwall 2. Two-story home with complex roofline. Requires experienced installer with battery storage expertise.",
+    requirements: ["Tesla Powerwall 2", "High-efficiency panels", "Structural assessment"],
+    status: "Open for Bids",
+    postedDate: "2025-09-22",
+    bidCount: 5,
+    customer: {
+      name: "Michael and Sarah Johnson",
+      address: "789 Pine Street, Calgary, AB T2P 1K8",
+      phone: "(403) 555-0234",
+      email: "mjohnson@email.com"
+    },
+    specifications: {
+      roofType: "Composite Shingle",
+      roofAge: "8 years",
+      roofCondition: "Good",
+      electricalPanel: "200A Main Panel",
+      utilityCompany: "ENMAX",
+      permitsObtained: true,
+      hoaApproval: "Approved"
+    },
+    equipment: {
+      panels: "48x SunPower X-Series 315W Panels",
+      inverter: "SolarEdge SE15000H-US",
+      mounting: "IronRidge XR Rail System",
+      monitoring: "SolarEdge Monitoring Platform",
+      battery: "Tesla Powerwall 2 (13.5kWh)"
+    },
+    timeline: {
+      designReview: "2025-10-01",
+      installation: "2025-10-08 - 2025-10-10",
+      inspection: "2025-10-15",
+      interconnection: "2025-10-20"
+    },
+    attachments: [
+      { name: "Residential Site Survey.pdf", size: "1.9 MB" },
+      { name: "Roof Assessment.pdf", size: "2.2 MB" },
+      { name: "Electrical Panel Photos.zip", size: "3.1 MB" },
+      { name: "HOA Approval Letter.pdf", size: "512 KB" }
+    ]
+  },
+  {
+    id: 4,
+    title: "Residential 8kW Rooftop Installation",
+    location: "Ottawa, ON",
+    systemSize: "8kW",
+    panelCount: 26,
+    projectType: "Residential",
+    estimatedValue: "$22,000",
+    deadline: "2025-11-05",
+    description: "Small residential installation on a Cape Cod style home. East-west facing roof with moderate complexity. Customer wants quick installation before winter.",
+    requirements: ["Quick Installation", "Winter Prep", "Basic Monitoring"],
+    status: "Open for Bids",
+    postedDate: "2025-09-25",
+    bidCount: 2,
+    customer: {
+      name: "Jennifer Brown",
+      address: "567 Oak Avenue, Ottawa, ON K1G 2B4",
+      phone: "(613) 555-0345",
+      email: "jbrown@email.com"
+    },
+    specifications: {
+      roofType: "Cedar Shake",
+      roofAge: "12 years",
+      roofCondition: "Good",
+      electricalPanel: "150A Main Panel",
+      utilityCompany: "Hydro Ottawa",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "26x Trina Solar 310W Panels",
+      inverter: "Enphase IQ8+ Microinverters",
+      mounting: "SnapNrack Ultra Rail System",
+      monitoring: "Enphase Enlighten",
+      battery: "None"
+    },
+    timeline: {
+      designReview: "2025-10-02",
+      installation: "2025-10-12 - 2025-10-13",
+      inspection: "2025-10-18",
+      interconnection: "2025-10-25"
+    },
+    attachments: [
+      { name: "Site Assessment.pdf", size: "1.5 MB" },
+      { name: "Roof Photos.zip", size: "3.2 MB" },
+      { name: "Electrical Info.pdf", size: "892 KB" }
+    ]
+  },
+  {
+    id: 5,
+    title: "Commercial 75kW Warehouse System",
+    location: "Edmonton, AB",
+    systemSize: "75kW",
+    panelCount: 240,
+    projectType: "Commercial",
+    estimatedValue: "$125,000",
+    deadline: "2025-12-15",
+    description: "Large warehouse facility with excellent south-facing exposure. Client requires maximum energy production and long-term monitoring capabilities.",
+    requirements: ["Maximum Efficiency", "Advanced Monitoring", "Maintenance Plan"],
+    status: "Open for Bids",
+    postedDate: "2025-09-19",
+    bidCount: 9,
+    customer: {
+      name: "Edmonton Distribution Corp",
+      address: "890 Industrial Blvd, Edmonton, AB T5S 3C1",
+      phone: "(780) 555-0456",
+      email: "facilities@edmontondist.com"
+    },
+    specifications: {
+      roofType: "Metal Standing Seam",
+      roofAge: "2 years",
+      roofCondition: "Excellent",
+      electricalPanel: "1000A Main Panel",
+      utilityCompany: "EPCOR",
+      permitsObtained: false,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "240x LONGi Hi-MO 4m 315W Panels",
+      inverter: "Huawei SUN2000-60KTL-M0",
+      mounting: "Schletter PvMax Ballasted System",
+      monitoring: "Huawei FusionSolar",
+      battery: "Huawei LUNA2000 (200kWh)"
+    },
+    timeline: {
+      designReview: "2025-10-08",
+      installation: "2025-10-20 - 2025-11-05",
+      inspection: "2025-11-12",
+      interconnection: "2025-11-20"
+    },
+    attachments: [
+      { name: "Warehouse Plans.pdf", size: "6.8 MB" },
+      { name: "Structural Report.pdf", size: "3.4 MB" },
+      { name: "Electrical Load Analysis.pdf", size: "2.1 MB" },
+      { name: "Site Photos.zip", size: "8.9 MB" }
+    ]
+  },
+  {
+    id: 6,
+    title: "Residential 12kW with EV Charging",
+    location: "Mississauga, ON",
+    systemSize: "12kW",
+    panelCount: 38,
+    projectType: "Residential",
+    estimatedValue: "$35,000",
+    deadline: "2025-11-10",
+    description: "Modern home installation with integrated EV charging station. Customer wants to power their Tesla Model 3 with solar energy. Premium components required.",
+    requirements: ["EV Charging Station", "Tesla Integration", "Premium Components"],
+    status: "Open for Bids",
+    postedDate: "2025-09-21",
+    bidCount: 6,
+    customer: {
+      name: "David and Lisa Chen",
+      address: "234 Maple Ridge Drive, Mississauga, ON L5B 2M7",
+      phone: "(905) 555-0567",
+      email: "dchen@email.com"
+    },
+    specifications: {
+      roofType: "Architectural Shingle",
+      roofAge: "4 years",
+      roofCondition: "Excellent",
+      electricalPanel: "200A Main Panel",
+      utilityCompany: "Alectra Utilities",
+      permitsObtained: true,
+      hoaApproval: "Approved"
+    },
+    equipment: {
+      panels: "38x SunPower Maxeon 3 320W Panels",
+      inverter: "SolarEdge SE11400H-US",
+      mounting: "SunPower InvisiMount Racking",
+      monitoring: "SolarEdge Monitoring Platform",
+      battery: "Tesla Powerwall 2 (13.5kWh)",
+      evCharger: "Tesla Wall Connector"
+    },
+    timeline: {
+      designReview: "2025-10-03",
+      installation: "2025-10-14 - 2025-10-16",
+      inspection: "2025-10-22",
+      interconnection: "2025-10-28"
+    },
+    attachments: [
+      { name: "Home Assessment.pdf", size: "2.1 MB" },
+      { name: "EV Integration Plan.pdf", size: "1.8 MB" },
+      { name: "Electrical Upgrade Specs.pdf", size: "1.3 MB" }
+    ]
+  },
+  {
+    id: 7,
+    title: "Agricultural 30kW Barn Installation",
+    location: "Lethbridge, AB",
+    systemSize: "30kW",
+    panelCount: 96,
+    projectType: "Commercial",
+    estimatedValue: "$55,000",
+    deadline: "2025-10-20",
+    description: "Agricultural barn installation for dairy farm operation. System needs to offset high energy usage from milking equipment and cooling systems.",
+    requirements: ["Agricultural Experience", "Heavy Load Offset", "Reliable Performance"],
+    status: "Open for Bids",
+    postedDate: "2025-09-23",
+    bidCount: 4,
+    customer: {
+      name: "Sunrise Dairy Farm",
+      address: "1234 Range Road 204, Lethbridge, AB T1K 4B2",
+      phone: "(403) 555-0678",
+      email: "manager@sunrisedairy.ca"
+    },
+    specifications: {
+      roofType: "Metal Corrugated",
+      roofAge: "6 years",
+      roofCondition: "Good",
+      electricalPanel: "400A Main Panel",
+      utilityCompany: "FortisAlberta",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "96x Canadian Solar BiKu 315W Panels",
+      inverter: "Fronius Symo 24.0-3",
+      mounting: "S-5! PV Kit 2.0",
+      monitoring: "Fronius Solar.web",
+      battery: "None"
+    },
+    timeline: {
+      designReview: "2025-09-28",
+      installation: "2025-10-07 - 2025-10-09",
+      inspection: "2025-10-14",
+      interconnection: "2025-10-18"
+    },
+    attachments: [
+      { name: "Barn Structural Report.pdf", size: "2.7 MB" },
+      { name: "Agricultural Load Profile.pdf", size: "1.6 MB" },
+      { name: "Site Survey.pdf", size: "3.1 MB" }
+    ]
+  },
+  {
+    id: 8,
+    title: "Residential 6kW Townhouse Complex",
+    location: "Halifax, NS",
+    systemSize: "6kW",
+    panelCount: 20,
+    projectType: "Residential",
+    estimatedValue: "$18,000",
+    deadline: "2025-11-15",
+    description: "Townhouse installation with shared electrical infrastructure. Requires coordination with property management and other unit owners.",
+    requirements: ["Shared Infrastructure", "Property Management Approval", "Minimal Disruption"],
+    status: "Open for Bids",
+    postedDate: "2025-09-24",
+    bidCount: 3,
+    customer: {
+      name: "Oceanview Townhomes HOA",
+      address: "456 Coastal Drive, Halifax, NS B3H 2Y4",
+      phone: "(902) 555-0789",
+      email: "board@oceanviewhomes.ca"
+    },
+    specifications: {
+      roofType: "Asphalt Shingle",
+      roofAge: "7 years",
+      roofCondition: "Good",
+      electricalPanel: "100A Main Panel",
+      utilityCompany: "Nova Scotia Power",
+      permitsObtained: false,
+      hoaApproval: "Pending"
+    },
+    equipment: {
+      panels: "20x REC Alpha 300W Panels",
+      inverter: "SMA Sunny Boy 6.0-US",
+      mounting: "IronRidge XR100 Rail System",
+      monitoring: "SMA Sunny Portal",
+      battery: "None"
+    },
+    timeline: {
+      designReview: "2025-10-10",
+      installation: "2025-10-25 - 2025-10-26",
+      inspection: "2025-11-01",
+      interconnection: "2025-11-08"
+    },
+    attachments: [
+      { name: "Townhouse Plans.pdf", size: "1.4 MB" },
+      { name: "HOA Requirements.pdf", size: "967 KB" },
+      { name: "Shared Infrastructure Map.pdf", size: "1.2 MB" }
+    ]
+  },
+  {
+    id: 9,
+    title: "Commercial 40kW Office Building",
+    location: "Winnipeg, MB",
+    systemSize: "40kW",
+    panelCount: 128,
+    projectType: "Commercial",
+    estimatedValue: "$72,000",
+    deadline: "2025-12-01",
+    description: "Modern office building seeking to reduce operational costs. Building has excellent south-facing exposure and modern electrical infrastructure.",
+    requirements: ["Cost Reduction Focus", "Modern Integration", "Professional Appearance"],
+    status: "Open for Bids",
+    postedDate: "2025-09-20",
+    bidCount: 8,
+    customer: {
+      name: "Prairie Professional Center",
+      address: "789 Business Park Drive, Winnipeg, MB R3T 3X4",
+      phone: "(204) 555-0890",
+      email: "facilities@prairiepro.com"
+    },
+    specifications: {
+      roofType: "EPDM Membrane",
+      roofAge: "1 year",
+      roofCondition: "Excellent",
+      electricalPanel: "600A Main Panel",
+      utilityCompany: "Manitoba Hydro",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "128x JinkoSolar Tiger Pro 315W Panels",
+      inverter: "SolarEdge SE33.3K-US",
+      mounting: "Unirac SolarMount Ballasted",
+      monitoring: "SolarEdge Monitoring Platform",
+      battery: "None"
+    },
+    timeline: {
+      designReview: "2025-10-06",
+      installation: "2025-10-18 - 2025-10-24",
+      inspection: "2025-11-01",
+      interconnection: "2025-11-10"
+    },
+    attachments: [
+      { name: "Office Building Specs.pdf", size: "3.5 MB" },
+      { name: "Energy Usage Analysis.pdf", size: "2.2 MB" },
+      { name: "Roof Assessment.pdf", size: "1.9 MB" }
+    ]
+  },
+  {
+    id: 10,
+    title: "Residential 14kW Premium Installation",
+    location: "Oakville, ON",
+    systemSize: "14kW",
+    panelCount: 44,
+    projectType: "Residential",
+    estimatedValue: "$42,000",
+    deadline: "2025-11-25",
+    description: "High-end residential installation for luxury home. Customer wants the most efficient panels and premium aesthetics. No expense spared for quality.",
+    requirements: ["Premium Components", "Aesthetic Design", "Maximum Efficiency"],
+    status: "Open for Bids",
+    postedDate: "2025-09-22",
+    bidCount: 7,
+    customer: {
+      name: "Robert and Catherine Williams",
+      address: "567 Lakeshore Estate, Oakville, ON L6K 1M9",
+      phone: "(905) 555-0901",
+      email: "rwilliams@email.com"
+    },
+    specifications: {
+      roofType: "Slate Tile",
+      roofAge: "15 years",
+      roofCondition: "Excellent",
+      electricalPanel: "400A Main Panel",
+      utilityCompany: "Oakville Hydro",
+      permitsObtained: true,
+      hoaApproval: "Approved"
+    },
+    equipment: {
+      panels: "44x SunPower Maxeon 3 400W Panels",
+      inverter: "SolarEdge SE15000H-US",
+      mounting: "SunPower InvisiMount Racking",
+      monitoring: "SolarEdge Monitoring Platform",
+      battery: "Tesla Powerwall 2 (13.5kWh x2)"
+    },
+    timeline: {
+      designReview: "2025-10-04",
+      installation: "2025-10-15 - 2025-10-18",
+      inspection: "2025-10-25",
+      interconnection: "2025-11-01"
+    },
+    attachments: [
+      { name: "Luxury Home Assessment.pdf", size: "4.2 MB" },
+      { name: "Premium Component Specs.pdf", size: "2.8 MB" },
+      { name: "Aesthetic Rendering.pdf", size: "5.1 MB" },
+      { name: "Slate Roof Analysis.pdf", size: "1.7 MB" }
+    ]
+  },
+  {
+    id: 11,
+    title: "Commercial 25kW Retail Store",
+    location: "Saskatoon, SK",
+    systemSize: "25kW",
+    panelCount: 80,
+    projectType: "Commercial",
+    estimatedValue: "$48,000",
+    deadline: "2025-11-12",
+    description: "Retail store installation to reduce electricity costs during peak business hours. System must be installed with minimal disruption to store operations.",
+    requirements: ["Minimal Disruption", "Peak Hour Optimization", "Quick Installation"],
+    status: "Open for Bids",
+    postedDate: "2025-09-26",
+    bidCount: 5,
+    customer: {
+      name: "Prairie Home & Garden",
+      address: "123 Circle Drive, Saskatoon, SK S7K 3T5",
+      phone: "(306) 555-1012",
+      email: "manager@prairiehome.ca"
+    },
+    specifications: {
+      roofType: "Modified Bitumen",
+      roofAge: "8 years",
+      roofCondition: "Good",
+      electricalPanel: "300A Main Panel",
+      utilityCompany: "SaskPower",
+      permitsObtained: true,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "80x Hanwha Q CELLS Q.PEAK DUO BLK-G6+ 315W",
+      inverter: "SMA Sunny Tripower 25000TL",
+      mounting: "Schletter PvMax Ballasted System",
+      monitoring: "SMA Sunny Portal",
+      battery: "None"
+    },
+    timeline: {
+      designReview: "2025-10-01",
+      installation: "2025-10-11 - 2025-10-13",
+      inspection: "2025-10-20",
+      interconnection: "2025-10-28"
+    },
+    attachments: [
+      { name: "Retail Store Plans.pdf", size: "2.3 MB" },
+      { name: "Business Hours Impact Assessment.pdf", size: "1.1 MB" },
+      { name: "Roof Condition Report.pdf", size: "1.8 MB" }
+    ]
+  },
+  {
+    id: 12,
+    title: "Residential 9kW Cottage Installation",
+    location: "Muskoka, ON",
+    systemSize: "9kW",
+    panelCount: 30,
+    projectType: "Residential",
+    estimatedValue: "$28,000",
+    deadline: "2025-10-25",
+    description: "Seasonal cottage installation in beautiful Muskoka region. Remote location requires careful logistics planning. Off-grid capabilities desired.",
+    requirements: ["Remote Location", "Off-Grid Capable", "Seasonal Use Optimization"],
+    status: "Open for Bids",
+    postedDate: "2025-09-27",
+    bidCount: 2,
+    customer: {
+      name: "Thompson Family Cottage",
+      address: "456 Lake Joseph Road, Muskoka, ON P0B 1E0",
+      phone: "(705) 555-1123",
+      email: "cottage@thompson.ca"
+    },
+    specifications: {
+      roofType: "Cedar Shingle",
+      roofAge: "10 years",
+      roofCondition: "Good",
+      electricalPanel: "200A Main Panel",
+      utilityCompany: "Hydro One",
+      permitsObtained: false,
+      hoaApproval: "Not Required"
+    },
+    equipment: {
+      panels: "30x Goal Zero Boulder 300W Panels",
+      inverter: "Outback Power FXR2524A",
+      mounting: "UniRac SolarMount",
+      monitoring: "Outback MATE3",
+      battery: "Outback Power EnergyCell 200NC (x4)"
+    },
+    timeline: {
+      designReview: "2025-10-02",
+      installation: "2025-10-12 - 2025-10-14",
+      inspection: "2025-10-19",
+      interconnection: "2025-10-23"
+    },
+    attachments: [
+      { name: "Cottage Site Survey.pdf", size: "2.1 MB" },
+      { name: "Remote Access Plan.pdf", size: "1.3 MB" },
+      { name: "Off-Grid Specifications.pdf", size: "1.6 MB" }
+    ]
+  }
+];

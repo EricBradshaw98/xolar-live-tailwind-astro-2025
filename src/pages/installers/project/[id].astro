@@ -1,0 +1,387 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { mockProjects } from "../../../data/mockProjects.js";
+
+export async function getStaticPaths() {
+  // Generate paths for all mock projects
+  return mockProjects.map(project => ({
+    params: { id: project.id.toString() }
+  }));
+}
+
+const { id } = Astro.params;
+
+// Find the specific project by ID
+const mockProject = mockProjects.find(project => project.id === parseInt(id || "1"));
+
+// Handle case where project is not found
+if (!mockProject) {
+  return Astro.redirect('/installers/projects');
+}
+
+const seoData = {
+  title: `${mockProject.title} - Project #${mockProject.id} | Xolar Installers`,
+  description: `View detailed project information for ${mockProject.title} in ${mockProject.location}. Submit your bid to join this solar installation project.`,
+  keywords: "solar installation project, solar bid, installer network, solar contractor"
+};
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+>
+  <!-- Breadcrumb -->
+  <div class="bg-gray-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-4">
+          <li>
+            <a href="/installers/projects" class="text-gray-500 hover:text-gray-700">Projects</a>
+          </li>
+          <li class="flex items-center">
+            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="ml-4 text-gray-700 font-medium">Project #{mockProject.id}</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Project Header -->
+  <section class="bg-white py-8 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <h1 class="text-3xl font-bold text-gray-900">{mockProject.title}</h1>
+            <span class={`px-3 py-1 text-sm font-medium rounded-full ${
+              mockProject.projectType === 'Residential'
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-purple-100 text-purple-800'
+            }`}>
+              {mockProject.projectType}
+            </span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-6 text-gray-600">
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>{mockProject.location}</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+              <span class="font-semibold text-green-600">{mockProject.estimatedValue}</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a4 4 0 118 0v4M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span>Deadline: {new Date(mockProject.deadline).toLocaleDateString()}</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <span>{mockProject.bidCount} bids submitted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 lg:mt-0 lg:ml-6">
+          <div class="flex gap-3">
+            <button class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+              Download Files
+            </button>
+            <button
+              class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+              disabled
+              title="Login required to submit bids"
+            >
+              Submit Bid
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Main Project Details -->
+        <div class="lg:col-span-2 space-y-8">
+
+          <!-- Project Description -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Project Description</h2>
+            <p class="text-gray-700 leading-relaxed">{mockProject.description}</p>
+          </div>
+
+          <!-- Technical Specifications -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Technical Specifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-3">
+                <div>
+                  <span class="text-sm text-gray-500">System Size</span>
+                  <div class="font-semibold">{mockProject.systemSize}</div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">Panel Count</span>
+                  <div class="font-semibold">{mockProject.panelCount} panels</div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">Roof Type</span>
+                  <div class="font-semibold">{mockProject.specifications.roofType}</div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">Roof Age</span>
+                  <div class="font-semibold">{mockProject.specifications.roofAge}</div>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <span class="text-sm text-gray-500">Electrical Panel</span>
+                  <div class="font-semibold">{mockProject.specifications.electricalPanel}</div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">Utility Company</span>
+                  <div class="font-semibold">{mockProject.specifications.utilityCompany}</div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">Permits</span>
+                  <div class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-green-700 font-semibold">Obtained</span>
+                  </div>
+                </div>
+                <div>
+                  <span class="text-sm text-gray-500">HOA Approval</span>
+                  <div class="font-semibold">{mockProject.specifications.hoaApproval}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Equipment Details -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Equipment & Components</h2>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="w-4 h-4 bg-primary-100 rounded-full flex items-center justify-center mt-1 mr-3">
+                  <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">Solar Panels</div>
+                  <div class="text-gray-600">{mockProject.equipment.panels}</div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-4 h-4 bg-primary-100 rounded-full flex items-center justify-center mt-1 mr-3">
+                  <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">Inverter</div>
+                  <div class="text-gray-600">{mockProject.equipment.inverter}</div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-4 h-4 bg-primary-100 rounded-full flex items-center justify-center mt-1 mr-3">
+                  <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">Mounting System</div>
+                  <div class="text-gray-600">{mockProject.equipment.mounting}</div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-4 h-4 bg-primary-100 rounded-full flex items-center justify-center mt-1 mr-3">
+                  <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">Battery Storage</div>
+                  <div class="text-gray-600">{mockProject.equipment.battery}</div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-4 h-4 bg-primary-100 rounded-full flex items-center justify-center mt-1 mr-3">
+                  <div class="w-2 h-2 bg-primary-600 rounded-full"></div>
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900">Monitoring</div>
+                  <div class="text-gray-600">{mockProject.equipment.monitoring}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Timeline -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Project Timeline</h2>
+            <div class="space-y-4">
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                  <span class="text-primary-600 font-semibold text-sm">1</span>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-gray-900">Design Review</div>
+                  <div class="text-gray-600">{new Date(mockProject.timeline.designReview).toLocaleDateString()}</div>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                  <span class="text-primary-600 font-semibold text-sm">2</span>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-gray-900">Installation</div>
+                  <div class="text-gray-600">{mockProject.timeline.installation}</div>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                  <span class="text-primary-600 font-semibold text-sm">3</span>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-gray-900">Inspection</div>
+                  <div class="text-gray-600">{new Date(mockProject.timeline.inspection).toLocaleDateString()}</div>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                  <span class="text-primary-600 font-semibold text-sm">4</span>
+                </div>
+                <div class="flex-1">
+                  <div class="font-semibold text-gray-900">Utility Interconnection</div>
+                  <div class="text-gray-600">{new Date(mockProject.timeline.interconnection).toLocaleDateString()}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+
+          <!-- Login Required Notice -->
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+            <div class="flex items-center mb-3">
+              <svg class="w-5 h-5 text-yellow-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <h3 class="font-semibold text-yellow-800">Login Required</h3>
+            </div>
+            <p class="text-yellow-700 text-sm mb-4">
+              You must be logged in as a certified installer to submit bids and access customer contact information.
+            </p>
+            <div class="flex gap-2">
+              <a href="/installers/login" class="flex-1 text-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 text-sm font-semibold">
+                Sign In
+              </a>
+              <a href="/installers/register" class="flex-1 text-center px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors duration-200 text-sm font-semibold">
+                Register
+              </a>
+            </div>
+          </div>
+
+          <!-- Project Summary -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Project Summary</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Status:</span>
+                <span class="px-2 py-1 bg-green-100 text-green-800 text-sm rounded-full font-medium">
+                  {mockProject.status}
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Posted:</span>
+                <span class="font-semibold">{new Date(mockProject.postedDate).toLocaleDateString()}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Bids:</span>
+                <span class="font-semibold">{mockProject.bidCount}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Deadline:</span>
+                <span class="font-semibold text-red-600">{new Date(mockProject.deadline).toLocaleDateString()}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Requirements -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Special Requirements</h3>
+            <div class="space-y-2">
+              {mockProject.requirements.map((req) => (
+                <div class="flex items-center">
+                  <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="text-sm text-gray-700">{req}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Project Files -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Project Files</h3>
+            <div class="space-y-3">
+              {mockProject.attachments.map((file) => (
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    <div>
+                      <div class="text-sm font-medium text-gray-900">{file.name}</div>
+                      <div class="text-xs text-gray-500">{file.size}</div>
+                    </div>
+                  </div>
+                  <button class="text-primary-600 hover:text-primary-700 text-sm font-medium" disabled title="Login required to download files">
+                    Download
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle submit bid button
+    const submitBidButton = document.querySelector('button[title="Login required to submit bids"]');
+    if (submitBidButton) {
+      submitBidButton.addEventListener('click', function() {
+        alert('Please log in to submit bids on projects. Redirecting to login page...');
+        // window.location.href = '/installers/login';
+      });
+    }
+
+    // Handle download buttons
+    const downloadButtons = document.querySelectorAll('button[title="Login required to download files"]');
+    downloadButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        alert('Please log in to download project files.');
+        // window.location.href = '/installers/login';
+      });
+    });
+  });
+</script>
