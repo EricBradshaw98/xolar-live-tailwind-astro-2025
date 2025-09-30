@@ -7,7 +7,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "xolar-db"
-database_id = "your-database-id"  # Replace with actual D1 database ID after creation
+database_id = "43d442ca-8f23-4d42-8576-faf0a295fd1e"
 
 [env.production]
 # Production environment settings
@@ -24,7 +24,7 @@ id = "your-kv-namespace-id"
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "xolar-db-production"
-database_id = "your-production-database-id"  # Replace with production D1 database ID
+database_id = "d34b6fa3-deab-4171-87a8-cc216cd58274"
 
 [build]
 command = "npm run build"
