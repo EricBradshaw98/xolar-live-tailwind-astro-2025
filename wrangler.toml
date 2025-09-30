@@ -3,6 +3,12 @@ pages_build_output_dir = "dist"
 compatibility_date = "2023-12-01"
 compatibility_flags = ["nodejs_compat"]
 
+# D1 Database bindings
+[[d1_databases]]
+binding = "DB"
+database_name = "xolar-db"
+database_id = "your-database-id"  # Replace with actual D1 database ID after creation
+
 [env.production]
 # Production environment settings
 routes = [
@@ -13,6 +19,12 @@ routes = [
 [[env.production.kv_namespaces]]
 binding = "SESSION"
 id = "your-kv-namespace-id"
+
+# Production D1 Database
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "xolar-db-production"
+database_id = "your-production-database-id"  # Replace with production D1 database ID
 
 [build]
 command = "npm run build"
