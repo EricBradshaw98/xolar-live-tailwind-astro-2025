@@ -436,7 +436,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('installer-form');
 
-    form?.addEventListener('submit', function (e) {
+    form?.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const formData = new FormData(form as HTMLFormElement);
@@ -453,12 +453,48 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         }
       });
 
-      console.log('New Installer Data:', installerData);
-      alert(
-        'Installer added successfully!\n\nIn production, this would POST to: /api/admin/installers'
-      );
+      // Disable submit button and show loading state
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Creating Account...';
+      }
 
-      window.location.href = '/admin/installers';
+      try {
+        const response = await fetch('/api/admin/installers/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(installerData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          alert(
+            `✅ Installer account created successfully!\n\n` +
+              `Company: ${result.companyName}\n` +
+              `Email: ${result.email}\n` +
+              `Clerk User ID: ${result.clerkUserId}\n\n` +
+              `📧 A welcome email has been sent to the installer with login instructions.`
+          );
+          window.location.href = '/admin/installers';
+        } else {
+          alert(`⚠️ ${result.message || result.error || 'Failed to create installer account.'}`);
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Add Installer';
+          }
+        }
+      } catch (error) {
+        console.error('Error creating installer:', error);
+        alert('❌ Failed to create installer account. Please check your internet connection and try again.');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Add Installer';
+        }
+      }
     });
   });
 </script>
