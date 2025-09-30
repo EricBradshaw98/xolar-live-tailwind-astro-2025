@@ -1,8 +1,8 @@
 ---
-import "../styles/global.css";
-import Navigation from "./Navigation.astro";
-import Footer from "./Footer.astro";
-import PerformanceDashboard from "../components/PerformanceDashboard.astro";
+import '../styles/global.css';
+import Navigation from './Navigation.astro';
+import Footer from './Footer.astro';
+import PerformanceDashboard from '../components/PerformanceDashboard.astro';
 
 export interface Props {
   title?: string;
@@ -48,14 +48,14 @@ export interface Props {
 }
 
 const {
-  title = "Xolar Inc. - Solar Energy Solutions",
+  title = 'Xolar Inc. - Solar Energy Solutions',
   description = "Canada's leading solar energy installation company. Get free solar quotes, Tesla Powerwall, heat pumps, and EV charging solutions.",
   canonicalUrl = Astro.url.href,
   ogTitle,
   ogDescription,
-  ogImage = "/images/xolar-og-default.jpg",
-  ogType = "website",
-  twitterCard = "summary_large_image",
+  ogImage = '/images/xolar-og-default.jpg',
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
   twitterTitle,
   twitterDescription,
   twitterImage,
@@ -63,10 +63,10 @@ const {
   nofollow = false,
   schemaMarkup,
   keywords,
-  author = "Xolar Inc.",
+  author = 'Xolar Inc.',
   publishDate,
   modifiedDate,
-  yoastSeo
+  yoastSeo,
 } = Astro.props;
 
 // Use Yoast SEO data if provided, otherwise fallback to props
@@ -99,168 +99,173 @@ else robotsContent.push('follow');
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
 
-		<!-- Google Fonts - Montserrat -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-		<!-- SEO Meta Tags -->
-		<title>{seoTitle}</title>
-		<meta name="description" content={seoDescription} />
-		{seoCanonical && <link rel="canonical" href={seoCanonical} />}
-		<meta name="robots" content={robotsContent.join(', ')} />
-		{seoKeywords && <meta name="keywords" content={seoKeywords} />}
-		{seoAuthor && <meta name="author" content={seoAuthor} />}
-		{seoPublishDate && <meta name="article:published_time" content={seoPublishDate} />}
-		{seoModifiedDate && <meta name="article:modified_time" content={seoModifiedDate} />}
+    <!-- SEO Meta Tags -->
+    <title>{seoTitle}</title>
+    <meta name="description" content={seoDescription} />
+    {seoCanonical && <link rel="canonical" href={seoCanonical} />}
+    <meta name="robots" content={robotsContent.join(', ')} />
+    {seoKeywords && <meta name="keywords" content={seoKeywords} />}
+    {seoAuthor && <meta name="author" content={seoAuthor} />}
+    {seoPublishDate && <meta name="article:published_time" content={seoPublishDate} />}
+    {seoModifiedDate && <meta name="article:modified_time" content={seoModifiedDate} />}
 
-		<!-- Open Graph Meta Tags -->
-		<meta property="og:title" content={seoOgTitle} />
-		<meta property="og:description" content={seoOgDescription} />
-		<meta property="og:type" content={seoOgType} />
-		<meta property="og:url" content={seoCanonical} />
-		{seoOgImage && <meta property="og:image" content={seoOgImage} />}
-		<meta property="og:site_name" content="Xolar Inc." />
-		<meta property="og:locale" content="en_CA" />
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content={seoOgTitle} />
+    <meta property="og:description" content={seoOgDescription} />
+    <meta property="og:type" content={seoOgType} />
+    <meta property="og:url" content={seoCanonical} />
+    {seoOgImage && <meta property="og:image" content={seoOgImage} />}
+    <meta property="og:site_name" content="Xolar Inc." />
+    <meta property="og:locale" content="en_CA" />
 
-		<!-- Twitter Card Meta Tags -->
-		<meta name="twitter:card" content={seoTwitterCard} />
-		<meta name="twitter:title" content={seoTwitterTitle} />
-		<meta name="twitter:description" content={seoTwitterDescription} />
-		{seoTwitterImage && <meta name="twitter:image" content={seoTwitterImage} />}
-		<meta name="twitter:site" content="@xolar" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content={seoTwitterCard} />
+    <meta name="twitter:title" content={seoTwitterTitle} />
+    <meta name="twitter:description" content={seoTwitterDescription} />
+    {seoTwitterImage && <meta name="twitter:image" content={seoTwitterImage} />}
+    <meta name="twitter:site" content="@xolar" />
 
-		<!-- Additional Meta Tags -->
-		<meta name="theme-color" content="#059669" />
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#059669" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-		<!-- Structured Data -->
-		{seoSchema && <script type="application/ld+json" set:html={seoSchema} />}
-	</head>
-	<body class="min-h-screen flex flex-col font-sans scroll-smooth">
-		<Navigation />
-		<main class="flex-grow">
-			<slot />
-		</main>
-		<Footer />
-		<PerformanceDashboard position="top-right" theme="auto" showInProduction={true} />
+    <!-- Structured Data -->
+    {seoSchema && <script type="application/ld+json" set:html={seoSchema} />}
+  </head>
+  <body class="min-h-screen flex flex-col font-sans scroll-smooth">
+    <Navigation />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer />
+    <PerformanceDashboard position="top-right" theme="auto" showInProduction={true} />
 
-		<!-- Marker.io Feedback Widget -->
-		<script>
-			import markerSDK from '@marker.io/browser';
+    <!-- Marker.io Feedback Widget -->
+    <script>
+      import markerSDK from '@marker.io/browser';
 
-			// Initialize the Marker.io widget
-			const initializeMarker = async () => {
-				try {
-					const widget = await markerSDK.loadWidget({
-						project: '68d4144c5f6ca33ba8ccb770',
-					});
+      // Initialize the Marker.io widget
+      const initializeMarker = async () => {
+        try {
+          const widget = await markerSDK.loadWidget({
+            project: '68d4144c5f6ca33ba8ccb770',
+          });
 
-					// Set up reporter identification (optional)
-					// You can customize this based on user authentication
-					widget.setReporter({
-						email: 'feedback@xolar.ca',
-						fullName: 'Xolar User'
-					});
+          // Set up reporter identification (optional)
+          // You can customize this based on user authentication
+          widget.setReporter({
+            email: 'feedback@xolar.ca',
+            fullName: 'Xolar User',
+          });
 
-					// Set custom data for better context
-					widget.setCustomData({
-						company: 'Xolar Inc.',
-						product: 'Solar Energy Solutions',
-						version: '1.0.0',
-						environment: import.meta.env.PROD ? 'production' : 'development',
-						page: window.location.pathname,
-						userAgent: navigator.userAgent,
-						timestamp: new Date().toISOString()
-					});
+          // Set custom data for better context
+          widget.setCustomData({
+            company: 'Xolar Inc.',
+            product: 'Solar Energy Solutions',
+            version: '1.0.0',
+            environment: import.meta.env.PROD ? 'production' : 'development',
+            page: window.location.pathname,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+          });
+        } catch (error) {
+          console.error('Failed to initialize Marker.io:', error);
+        }
+      };
 
-				} catch (error) {
-					console.error('Failed to initialize Marker.io:', error);
-				}
-			};
+      // Initialize when DOM is loaded
+      document.addEventListener('DOMContentLoaded', initializeMarker);
+    </script>
 
-			// Initialize when DOM is loaded
-			document.addEventListener('DOMContentLoaded', initializeMarker);
-		</script>
+    <!-- Scroll Animation Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Create intersection observer for scroll animations
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px',
+        };
 
-		<!-- Scroll Animation Script -->
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				// Create intersection observer for scroll animations
-				const observerOptions = {
-					threshold: 0.1,
-					rootMargin: '0px 0px -50px 0px'
-				};
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              // Optionally unobserve after animation to improve performance
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
 
-				const observer = new IntersectionObserver((entries) => {
-					entries.forEach(entry => {
-						if (entry.isIntersecting) {
-							entry.target.classList.add('visible');
-							// Optionally unobserve after animation to improve performance
-							observer.unobserve(entry.target);
-						}
-					});
-				}, observerOptions);
+        // Observe all elements with scroll-animate class
+        const animateElements = document.querySelectorAll('.scroll-animate');
+        animateElements.forEach((el) => {
+          observer.observe(el);
+        });
 
-				// Observe all elements with scroll-animate class
-				const animateElements = document.querySelectorAll('.scroll-animate');
-				animateElements.forEach(el => {
-					observer.observe(el);
-				});
+        // Performance optimization: preload animations for elements in viewport
+        const preloadObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.willChange = 'transform, opacity';
+                setTimeout(() => {
+                  entry.target.style.willChange = 'auto';
+                }, 1000);
+              }
+            });
+          },
+          { threshold: 0 }
+        );
 
-				// Performance optimization: preload animations for elements in viewport
-				const preloadObserver = new IntersectionObserver((entries) => {
-					entries.forEach(entry => {
-						if (entry.isIntersecting) {
-							entry.target.style.willChange = 'transform, opacity';
-							setTimeout(() => {
-								entry.target.style.willChange = 'auto';
-							}, 1000);
-						}
-					});
-				}, { threshold: 0 });
+        animateElements.forEach((el) => {
+          preloadObserver.observe(el);
+        });
 
-				animateElements.forEach(el => {
-					preloadObserver.observe(el);
-				});
-
-				// Respect user preferences for reduced motion
-				if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-					animateElements.forEach(el => {
-						el.classList.add('visible');
-						el.style.transition = 'none';
-					});
-				}
-			});
-		</script>
-	</body>
+        // Respect user preferences for reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          animateElements.forEach((el) => {
+            el.classList.add('visible');
+            el.style.transition = 'none';
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
 
 <style>
-	html {
-		scroll-behavior: smooth;
-	}
+  html {
+    scroll-behavior: smooth;
+  }
 
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+  }
 
-	body {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-	main {
-		flex: 1;
-	}
+  main {
+    flex: 1;
+  }
 </style>

@@ -1,0 +1,470 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { mockProjects } from '../../../data/mockProjects.js';
+
+const ITEMS_PER_PAGE = 10;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+
+// Filter out archived projects
+const activeProjects = mockProjects.filter(p => !p.archived);
+
+const totalProjects = activeProjects.length;
+const totalPages = Math.ceil(totalProjects / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedProjects = activeProjects.slice(startIndex, endIndex);
+---
+
+<AdminLayout title="Projects">
+  <div class="mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Projects</h1>
+        <p class="text-gray-600">Manage all installer projects</p>
+      </div>
+      <a
+        href="/admin/projects/new"
+        class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium w-full lg:w-auto"
+      >
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"
+          ></path>
+        </svg>
+        Add New Project
+      </a>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-2">
+          Status
+        </label>
+        <select
+          id="status-filter"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">All Statuses</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+      <div>
+        <label for="type-filter" class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+        <select
+          id="type-filter"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">All Types</option>
+          <option value="Residential">Residential</option>
+          <option value="Commercial">Commercial</option>
+        </select>
+      </div>
+      <div>
+        <label for="location-filter" class="block text-sm font-medium text-gray-700 mb-2">
+          Location
+        </label>
+        <input
+          type="text"
+          id="location-filter"
+          placeholder="Search location..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        />
+      </div>
+      <div class="flex items-end">
+        <button
+          id="clear-filters"
+          class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Card View -->
+  <div class="lg:hidden space-y-4">
+    {
+      paginatedProjects.map((project) => (
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex-1">
+              <a
+                href={`/admin/projects/${project.id}/bids`}
+                class="text-lg font-semibold text-gray-900 hover:text-primary-600"
+              >
+                {project.title}
+              </a>
+              <p class="text-sm text-gray-600 mt-1">#{project.id}</p>
+            </div>
+            <div class="flex items-center space-x-2">
+              <a
+                href={`/admin/projects/${project.id}`}
+                class="p-2 text-primary-600 hover:bg-primary-50 rounded-lg"
+                title="Edit"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </a>
+              <button
+                class="p-2 text-red-600 hover:bg-red-50 rounded-lg delete-btn"
+                data-id={project.id}
+                title="Delete"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <p class="text-xs text-gray-500">Location</p>
+              <p class="text-sm font-medium text-gray-900">{project.location}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Value</p>
+              <p class="text-sm font-medium text-gray-900">{project.estimatedValue}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Type</p>
+              <span class={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
+                project.projectType === 'Residential' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+              }`}>
+                {project.projectType}
+              </span>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Status</p>
+              <span class={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
+                project.status === 'Closed'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-green-100 text-green-800'
+              }`}>
+                {project.status}
+              </span>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Bids</p>
+              <p class="text-sm font-medium text-primary-600">{project.bidCount}</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500">Deadline</p>
+              <p class="text-sm font-medium text-gray-900">{new Date(project.deadline).toLocaleDateString()}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Desktop Table View -->
+  <div class="hidden lg:block bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              ID
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Project
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Location
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Type
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Status
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Bids
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Deadline
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Posted
+            </th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" id="projects-table-body">
+          {
+            paginatedProjects.map((project) => (
+              <tr
+                class="hover:bg-gray-50 project-row"
+                data-id={project.id}
+                data-status={project.status}
+                data-type={project.projectType}
+                data-location={project.location.toLowerCase()}
+              >
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  #{project.id}
+                </td>
+                <td class="px-6 py-4">
+                  <a
+                    href={`/admin/projects/${project.id}/bids`}
+                    class="text-sm font-medium text-gray-900 hover:text-primary-600 transition-colors duration-200"
+                  >
+                    {project.title}
+                  </a>
+                  <div class="text-sm text-gray-500">{project.estimatedValue}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {project.location}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                    class={`px-2 py-1 text-xs font-medium rounded-full ${
+                      project.projectType === 'Residential'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-purple-100 text-purple-800'
+                    }`}
+                  >
+                    {project.projectType}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class={`px-2 py-1 text-xs font-medium rounded-full ${
+                    project.status === 'Closed'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-green-100 text-green-800'
+                  }`}>
+                    {project.status}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <span class="text-sm font-medium text-gray-900">{project.bidCount}</span>
+                    <svg class="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {new Date(project.deadline).toLocaleDateString()}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {new Date(project.postedDate).toLocaleDateString()}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <div class="flex items-center justify-end space-x-2">
+                    <a
+                      href={`/admin/projects/${project.id}`}
+                      class="text-primary-600 hover:text-primary-900"
+                      title="Edit"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </a>
+                    <button
+                      class="text-gray-600 hover:text-gray-900 archive-btn"
+                      data-id={project.id}
+                      title="Archive"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                      </svg>
+                    </button>
+                    <button
+                      class="text-red-600 hover:text-red-900 delete-btn"
+                      data-id={project.id}
+                      title="Delete"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {totalPages > 1 && (
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-600">
+        Showing {startIndex + 1} to {Math.min(endIndex, totalProjects)} of {totalProjects} projects
+      </div>
+      <div class="flex items-center flex-wrap justify-center gap-2">
+        {currentPage > 1 && (
+          <a
+            href={`/admin/projects?page=${currentPage - 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Previous
+          </a>
+        )}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={`/admin/projects?page=${page}`}
+            class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              page === currentPage
+                ? 'bg-primary-600 text-white'
+                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </a>
+        ))}
+        {currentPage < totalPages && (
+          <a
+            href={`/admin/projects?page=${currentPage + 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Next
+          </a>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- Empty State -->
+  <div id="empty-state" class="hidden bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+    <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+    </svg>
+    <h3 class="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
+    <p class="text-gray-600 mb-6">No projects match your current filters. Try adjusting your search.</p>
+    <button id="clear-filters-empty" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+      Clear Filters
+    </button>
+  </div>
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const statusFilter = document.getElementById('status-filter') as HTMLSelectElement;
+    const typeFilter = document.getElementById('type-filter') as HTMLSelectElement;
+    const locationFilter = document.getElementById('location-filter') as HTMLInputElement;
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const clearFiltersEmptyBtn = document.getElementById('clear-filters-empty');
+    const projectRows = document.querySelectorAll('.project-row');
+    const emptyState = document.getElementById('empty-state');
+    const tableBody = document.getElementById('projects-table-body');
+
+    function applyFilters() {
+      const statusValue = statusFilter.value.toLowerCase();
+      const typeValue = typeFilter.value.toLowerCase();
+      const locationValue = locationFilter.value.toLowerCase();
+
+      let visibleCount = 0;
+
+      projectRows.forEach((row) => {
+        const projectStatus = (row as HTMLElement).dataset.status?.toLowerCase() || '';
+        const projectType = (row as HTMLElement).dataset.type?.toLowerCase() || '';
+        const projectLocation = (row as HTMLElement).dataset.location?.toLowerCase() || '';
+
+        let show = true;
+
+        if (statusValue && projectStatus !== statusValue) {
+          show = false;
+        }
+        if (typeValue && projectType !== typeValue) {
+          show = false;
+        }
+        if (locationValue && !projectLocation.includes(locationValue)) {
+          show = false;
+        }
+
+        (row as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      // Show/hide empty state
+      if (visibleCount === 0) {
+        tableBody?.parentElement?.parentElement?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+      } else {
+        tableBody?.parentElement?.parentElement?.classList.remove('hidden');
+        emptyState?.classList.add('hidden');
+      }
+    }
+
+    function clearFilters() {
+      statusFilter.value = '';
+      typeFilter.value = '';
+      locationFilter.value = '';
+      applyFilters();
+    }
+
+    statusFilter.addEventListener('change', applyFilters);
+    typeFilter.addEventListener('change', applyFilters);
+    locationFilter.addEventListener('input', applyFilters);
+    clearFiltersBtn?.addEventListener('click', clearFilters);
+    clearFiltersEmptyBtn?.addEventListener('click', clearFilters);
+
+    // Archive functionality
+    const archiveButtons = document.querySelectorAll('.archive-btn');
+    archiveButtons.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const projectId = (this as HTMLElement).dataset.id;
+        if (confirm('Archive this project? You can restore it later from the Archived Projects page.')) {
+          // In production, this would call an API endpoint
+          alert(`Archive project #${projectId} - This would call /api/admin/projects/${projectId}/archive POST`);
+          // Remove row from table
+          const row = document.querySelector(`[data-id="${projectId}"]`);
+          row?.remove();
+
+          // Check if any rows are still visible
+          applyFilters();
+        }
+      });
+    });
+
+    // Delete functionality
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const projectId = (this as HTMLElement).dataset.id;
+        if (
+          confirm(
+            'Are you sure you want to delete this project? This action cannot be undone and will delete all associated bids.'
+          )
+        ) {
+          // In production, this would call an API endpoint
+          alert(`Delete project #${projectId} - This would call /api/admin/projects/${projectId} DELETE`);
+          // Remove row from table
+          const row = document.querySelector(`[data-id="${projectId}"]`);
+          row?.remove();
+
+          // Check if any rows are still visible
+          applyFilters();
+        }
+      });
+    });
+  });
+</script>

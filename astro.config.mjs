@@ -15,15 +15,15 @@ export default defineConfig({
   site: 'https://xolar.ca',
   adapter: cloudflare({
     platformProxy: {
-      enabled: true
-    }
+      enabled: true,
+    },
   }),
 
   vite: {
     plugins: [tailwindcss()],
     define: {
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    }
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    },
   },
 
   integrations: [
@@ -31,13 +31,13 @@ export default defineConfig({
       afterSignInUrl: '/installers/projects',
       afterSignUpUrl: '/installers/projects',
       signInUrl: '/installers/login',
-      signUpUrl: '/installers/register'
+      signUpUrl: '/installers/register',
     }),
     react(),
     sitemap(),
-    partytown()
+    partytown(),
   ],
 
   // Cloudflare Pages with SSR (required for Clerk)
-  output: 'server'
+  output: 'server',
 });

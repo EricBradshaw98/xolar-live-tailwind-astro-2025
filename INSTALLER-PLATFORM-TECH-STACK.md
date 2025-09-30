@@ -90,6 +90,7 @@ CREATE TABLE project_files (
 ### Setup & Configuration
 
 **Clerk Features to Use:**
+
 - User registration with approval workflow
 - Organization support (installer companies)
 - Custom user metadata for certifications
@@ -97,6 +98,7 @@ CREATE TABLE project_files (
 - File upload for licenses/certifications
 
 **User Metadata Structure:**
+
 ```json
 {
   "installerStatus": "approved", // pending, approved, rejected
@@ -115,6 +117,7 @@ CREATE TABLE project_files (
 **Already Set Up** ✅
 
 **File Types to Store:**
+
 - Site survey reports (PDF)
 - Electrical panel photos (ZIP)
 - Building plans (PDF)
@@ -123,6 +126,7 @@ CREATE TABLE project_files (
 - Bid proposals (PDF)
 
 **R2 Structure:**
+
 ```
 bucket-name/
 ├── projects/
@@ -143,12 +147,14 @@ bucket-name/
 ## 🚀 Implementation Phases
 
 ### Phase 1: Database Setup
+
 1. Install Wrangler CLI: `npm install wrangler`
 2. Create D1 database: `wrangler d1 create installer-platform`
 3. Run schema migrations
 4. Seed with mock data for testing
 
 ### Phase 2: Authentication
+
 1. Set up Clerk account and app
 2. Install Clerk Astro integration
 3. Replace mock login pages with Clerk components
@@ -156,12 +162,14 @@ bucket-name/
 5. Add protected routes for bidding
 
 ### Phase 3: Dynamic Data
+
 1. Replace mock data with D1 queries
 2. Create API routes for CRUD operations
 3. Implement real bidding functionality
 4. Add file upload/download with R2
 
 ### Phase 4: Advanced Features
+
 1. Email notifications for new bids
 2. Real-time bid updates
 3. Installer dashboard with analytics
@@ -198,12 +206,14 @@ Total: $5-55/month (scales with usage)
 ### Agency/SaaS Model
 
 **Single Codebase, Multiple Deployments:**
+
 - Each solar company gets their own subdomain
 - Tenant-based data isolation
 - Custom branding per client
 - Shared authentication system
 
 **Database Schema Addition:**
+
 ```sql
 -- Add tenant_id to all tables
 ALTER TABLE projects ADD COLUMN tenant_id TEXT;
@@ -222,6 +232,7 @@ CREATE TABLE tenants (
 ```
 
 **Revenue Model:**
+
 - $500-2000 setup fee per solar company
 - $200-500/month SaaS subscription
 - Scale Clerk costs across multiple clients
@@ -257,6 +268,7 @@ src/
 ## 📞 Business Opportunities
 
 **Potential Clients:**
+
 - Solar installation companies
 - HVAC contractors
 - Roofing companies
@@ -264,6 +276,7 @@ src/
 - Any service business with subcontractors
 
 **Expansion Ideas:**
+
 - Wealth manager client portals
 - Restaurant staff scheduling
 - Medical practice patient portals

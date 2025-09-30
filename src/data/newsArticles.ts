@@ -17,8 +17,10 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 'solar-incentives-2024',
     title: 'New Federal Solar Incentives for 2024',
-    excerpt: 'The Canadian government announces expanded solar incentives and rebate programs to accelerate renewable energy adoption across the country.',
-    metaDescription: 'Learn about the new Canadian federal solar incentives and rebate programs for 2024. Discover how homeowners and businesses can save on solar installations.',
+    excerpt:
+      'The Canadian government announces expanded solar incentives and rebate programs to accelerate renewable energy adoption across the country.',
+    metaDescription:
+      'Learn about the new Canadian federal solar incentives and rebate programs for 2024. Discover how homeowners and businesses can save on solar installations.',
     content: `
       <h2>Major Changes to Canada's Solar Incentive Program</h2>
       
@@ -82,13 +84,15 @@ export const newsArticles: NewsArticle[] = [
     featured: true,
     author: 'Xolar Team',
     tags: ['incentives', 'federal policy', 'rebates', 'tax credits', 'Canada'],
-    ogImage: '/images/news/solar-incentives-2024.jpg'
+    ogImage: '/images/news/solar-incentives-2024.jpg',
   },
   {
     id: 'battery-technology-advances',
     title: 'Revolutionary Battery Technology Advances',
-    excerpt: 'New battery technologies are making energy storage more efficient and affordable for Canadian homeowners and businesses.',
-    metaDescription: 'Discover the latest advances in battery technology for solar energy storage. Learn about new efficient and affordable battery solutions for Canadian homes and businesses.',
+    excerpt:
+      'New battery technologies are making energy storage more efficient and affordable for Canadian homeowners and businesses.',
+    metaDescription:
+      'Discover the latest advances in battery technology for solar energy storage. Learn about new efficient and affordable battery solutions for Canadian homes and businesses.',
     content: `
       <h2>The Future of Energy Storage is Here</h2>
       
@@ -196,13 +200,15 @@ export const newsArticles: NewsArticle[] = [
     featured: true,
     author: 'Xolar Team',
     tags: ['battery technology', 'energy storage', 'Tesla Powerwall', 'LiFePO4', 'innovation'],
-    ogImage: '/images/news/battery-technology-advances.jpg'
+    ogImage: '/images/news/battery-technology-advances.jpg',
   },
   {
     id: 'solar-market-growth',
     title: 'Canadian Solar Market Sees Record Growth',
-    excerpt: 'Solar installations in Canada reached an all-time high in 2023, with residential installations leading the charge.',
-    metaDescription: 'Canadian solar market achieves record growth in 2023. Learn about the surge in residential solar installations and market trends across Canada.',
+    excerpt:
+      'Solar installations in Canada reached an all-time high in 2023, with residential installations leading the charge.',
+    metaDescription:
+      'Canadian solar market achieves record growth in 2023. Learn about the surge in residential solar installations and market trends across Canada.',
     content: `
       <h2>Historic Year for Canadian Solar Industry</h2>
       
@@ -366,13 +372,15 @@ export const newsArticles: NewsArticle[] = [
     featured: false,
     author: 'Xolar Team',
     tags: ['market growth', 'Canada', 'statistics', 'residential solar', 'industry trends'],
-    ogImage: '/images/news/solar-market-growth.jpg'
+    ogImage: '/images/news/solar-market-growth.jpg',
   },
   {
     id: 'winter-solar-efficiency',
     title: 'Maximizing Solar Efficiency in Canadian Winters',
-    excerpt: 'Expert tips and new technologies that help solar panels maintain high efficiency even during harsh Canadian winters.',
-    metaDescription: 'Learn how to maximize solar panel efficiency during Canadian winters. Expert tips and new technologies for optimal solar performance in cold weather.',
+    excerpt:
+      'Expert tips and new technologies that help solar panels maintain high efficiency even during harsh Canadian winters.',
+    metaDescription:
+      'Learn how to maximize solar panel efficiency during Canadian winters. Expert tips and new technologies for optimal solar performance in cold weather.',
     content: `
       <h2>Solar Power Through Canadian Winters</h2>
       
@@ -576,13 +584,15 @@ export const newsArticles: NewsArticle[] = [
     featured: false,
     author: 'Xolar Team',
     tags: ['winter solar', 'Canadian weather', 'efficiency tips', 'snow management', 'maintenance'],
-    ogImage: '/images/news/winter-solar-efficiency.jpg'
+    ogImage: '/images/news/winter-solar-efficiency.jpg',
   },
   {
     id: 'ev-charging-integration',
     title: 'Solar-Powered EV Charging: The Perfect Match',
-    excerpt: 'Discover how combining solar panels with EV charging stations creates the ultimate sustainable transportation solution for Canadian homeowners.',
-    metaDescription: 'Learn about solar-powered EV charging solutions for Canadian homes. Perfect combination of renewable energy and electric vehicle charging infrastructure.',
+    excerpt:
+      'Discover how combining solar panels with EV charging stations creates the ultimate sustainable transportation solution for Canadian homeowners.',
+    metaDescription:
+      'Learn about solar-powered EV charging solutions for Canadian homes. Perfect combination of renewable energy and electric vehicle charging infrastructure.',
     content: `
       <h2>Revolutionizing Home Energy and Transportation</h2>
       
@@ -774,14 +784,22 @@ export const newsArticles: NewsArticle[] = [
     readTime: '4 min read',
     featured: false,
     author: 'Xolar Team',
-    tags: ['EV charging', 'electric vehicles', 'solar integration', 'smart charging', 'sustainability'],
-    ogImage: '/images/news/ev-charging-integration.jpg'
+    tags: [
+      'EV charging',
+      'electric vehicles',
+      'solar integration',
+      'smart charging',
+      'sustainability',
+    ],
+    ogImage: '/images/news/ev-charging-integration.jpg',
   },
   {
     id: 'rural-solar-solutions',
     title: 'Solar Solutions for Rural Canadian Properties',
-    excerpt: 'Explore how solar energy is transforming rural properties across Canada, from farms to remote cabins, with specialized off-grid and hybrid systems.',
-    metaDescription: 'Discover solar energy solutions for rural Canadian properties. Learn about off-grid systems, agricultural applications, and remote property installations.',
+    excerpt:
+      'Explore how solar energy is transforming rural properties across Canada, from farms to remote cabins, with specialized off-grid and hybrid systems.',
+    metaDescription:
+      'Discover solar energy solutions for rural Canadian properties. Learn about off-grid systems, agricultural applications, and remote property installations.',
     content: `
       <h2>Powering Rural Canada with Solar Energy</h2>
       
@@ -994,13 +1012,15 @@ export const newsArticles: NewsArticle[] = [
     featured: false,
     author: 'Xolar Team',
     tags: ['rural solar', 'off-grid', 'agricultural', 'remote properties', 'energy independence'],
-    ogImage: '/images/news/rural-solar-solutions.jpg'
+    ogImage: '/images/news/rural-solar-solutions.jpg',
   },
   {
     id: 'home-energy-efficiency',
     title: 'Maximizing Solar ROI: Home Energy Efficiency Tips',
-    excerpt: 'Learn how simple energy efficiency improvements can maximize your solar investment and reduce your overall energy consumption.',
-    metaDescription: 'Discover energy efficiency tips to maximize your solar panel ROI. Learn how to reduce energy consumption and optimize your solar investment.',
+    excerpt:
+      'Learn how simple energy efficiency improvements can maximize your solar investment and reduce your overall energy consumption.',
+    metaDescription:
+      'Discover energy efficiency tips to maximize your solar panel ROI. Learn how to reduce energy consumption and optimize your solar investment.',
     content: `
       <h2>Optimize Your Home Before Going Solar</h2>
       
@@ -1222,13 +1242,15 @@ export const newsArticles: NewsArticle[] = [
     featured: true,
     author: 'Xolar Team',
     tags: ['energy efficiency', 'home improvement', 'ROI optimization', 'heat pumps', 'insulation'],
-    ogImage: '/images/news/home-energy-efficiency.jpg'
+    ogImage: '/images/news/home-energy-efficiency.jpg',
   },
   {
     id: 'community-solar-programs',
     title: 'Community Solar Programs Expanding Across Canada',
-    excerpt: 'Discover how community solar programs are making solar energy accessible to renters, condo owners, and those with unsuitable roofs.',
-    metaDescription: 'Learn about community solar programs expanding across Canada. Accessible solar energy for renters, condo owners, and properties with unsuitable roofs.',
+    excerpt:
+      'Discover how community solar programs are making solar energy accessible to renters, condo owners, and those with unsuitable roofs.',
+    metaDescription:
+      'Learn about community solar programs expanding across Canada. Accessible solar energy for renters, condo owners, and properties with unsuitable roofs.',
     content: `
       <h2>Solar Access for Everyone</h2>
       
@@ -1470,21 +1492,27 @@ export const newsArticles: NewsArticle[] = [
     readTime: '4 min read',
     featured: false,
     author: 'Xolar Team',
-    tags: ['community solar', 'shared solar', 'accessibility', 'virtual net metering', 'renewable energy'],
-    ogImage: '/images/news/community-solar-programs.jpg'
-  }
+    tags: [
+      'community solar',
+      'shared solar',
+      'accessibility',
+      'virtual net metering',
+      'renewable energy',
+    ],
+    ogImage: '/images/news/community-solar-programs.jpg',
+  },
 ];
 
 export function getArticleById(id: string): NewsArticle | undefined {
-  return newsArticles.find(article => article.id === id);
+  return newsArticles.find((article) => article.id === id);
 }
 
 export function getArticlesByCategory(category: NewsArticle['category']): NewsArticle[] {
-  return newsArticles.filter(article => article.category === category);
+  return newsArticles.filter((article) => article.category === category);
 }
 
 export function getFeaturedArticles(): NewsArticle[] {
-  return newsArticles.filter(article => article.featured);
+  return newsArticles.filter((article) => article.featured);
 }
 
 export function getRecentArticles(limit: number = 5): NewsArticle[] {
@@ -1495,20 +1523,26 @@ export function getRecentArticles(limit: number = 5): NewsArticle[] {
 
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-CA', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  return date.toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 
 export function getCategoryColor(category: NewsArticle['category']): string {
   switch (category) {
-    case 'Policy': return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-    case 'Technology': return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-    case 'Market': return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-    case 'Tips': return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-    case 'Company': return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-    default: return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    case 'Policy':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    case 'Technology':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    case 'Market':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    case 'Tips':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    case 'Company':
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+    default:
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
   }
 }

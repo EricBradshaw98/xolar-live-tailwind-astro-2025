@@ -7,7 +7,14 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "WebSearch",
+      "WebFetch(domain:clerk.com)",
+      "Bash(npm run lint)",
+      "Bash(npm run format:check:*)",
+      "Bash(npm run:*)",
+      "Bash(npx astro:*)",
+      "Bash(timeout:*)"
     ],
     "deny": [],
     "ask": []

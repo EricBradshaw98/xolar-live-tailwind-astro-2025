@@ -1,36 +1,27 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import TeslaPowerwall from "../components/TeslaPowerwall.astro";
-import SolarPanel from "../components/SolarPanel.astro";
-import CanadaMap from "../components/CanadaMap.astro";
-import AffordabilityCarousel from "../components/AffordabilityCarousel.astro";
-import backgroundXolar from "../assets/background-xolar.jpg";
+import Layout from '../layouts/Layout.astro';
+import TeslaPowerwall from '../components/TeslaPowerwall.astro';
+import SolarPanel from '../components/SolarPanel.astro';
+import CanadaMap from '../components/CanadaMap.astro';
+import AffordabilityCarousel from '../components/AffordabilityCarousel.astro';
+import backgroundXolar from '../assets/background-xolar.jpg';
 
 const seoData = {
   title: "Canada's Leading Solar Energy Company | Xolar Inc.",
   description:
-    "Get free solar panel installation quotes across Canada. Leading solar energy company offering residential & commercial solar panels, Tesla Powerwall, heat pumps & EV charging.",
+    'Get free solar panel installation quotes across Canada. Leading solar energy company offering residential & commercial solar panels, Tesla Powerwall, heat pumps & EV charging.',
   keywords:
-    "solar panels Canada, solar installation, Tesla Powerwall, solar energy, renewable energy, solar quotes",
+    'solar panels Canada, solar installation, Tesla Powerwall, solar energy, renewable energy, solar quotes',
 };
 ---
 
-<Layout
-  title={seoData.title}
-  description={seoData.description}
-  keywords={seoData.keywords}
->
+<Layout title={seoData.title} description={seoData.description} keywords={seoData.keywords}>
   <!-- Hero Section -->
-  <section
+  <!-- <section
     class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden"
   >
-    <!-- Background Image -->
     <div class="absolute inset-0 z-0">
-      <div
-        class="w-full h-full bg-gradient-to-r from-blue-600/20 to-green-600/20"
-      >
-      </div>
-      <!-- Xolar background image -->
+      <div class="w-full h-full bg-gradient-to-r from-blue-600/20 to-green-600/20"></div>
       <div
         class="absolute inset-0 opacity-30 bg-cover bg-center bg-no-repeat"
         style={`background-image: url(${backgroundXolar.src})`}
@@ -39,33 +30,21 @@ const seoData = {
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <!-- Hero Content -->
         <div class="max-w-2xl relative z-20 scroll-animate fade-in-up">
-          <h1
-            class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-none mb-6"
-          >
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-none mb-6">
             Canada's Leading
             <span class="text-primary-600">Solar Energy</span>
             Company
           </h1>
           <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            Join thousands of Canadian homeowners who are saving money and
-            helping the environment with clean, renewable solar energy.
+            Join thousands of Canadian homeowners who are saving money and helping the environment
+            with clean, renewable solar energy.
           </p>
 
-          <!-- Key Benefits -->
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 scroll-animate fade-in-up"
-          >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 scroll-animate fade-in-up">
             <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center"
-              >
-                <svg
-                  class="w-4 h-4 text-green-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -75,14 +54,8 @@ const seoData = {
               <span class="text-gray-700">Save up to 90% on electricity</span>
             </div>
             <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center"
-              >
-                <svg
-                  class="w-4 h-4 text-green-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -92,14 +65,8 @@ const seoData = {
               <span class="text-gray-700">25-year warranty</span>
             </div>
             <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center"
-              >
-                <svg
-                  class="w-4 h-4 text-green-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -109,14 +76,8 @@ const seoData = {
               <span class="text-gray-700">Professional installation</span>
             </div>
             <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center"
-              >
-                <svg
-                  class="w-4 h-4 text-green-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -127,21 +88,13 @@ const seoData = {
             </div>
           </div>
 
-          <!-- CTA Buttons -->
-          <div
-            class="flex flex-col sm:flex-row gap-4 scroll-animate fade-in-up"
-          >
+          <div class="flex flex-col sm:flex-row gap-4 scroll-animate fade-in-up">
             <a
               href="/quote"
               class="inline-flex items-center justify-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               Get Free Quote
-              <svg
-                class="ml-2 w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -158,19 +111,12 @@ const seoData = {
           </div>
         </div>
 
-        <!-- Hero Form -->
-        <div
-          class="bg-white rounded-2xl shadow-xl p-8 relative z-20 scroll-animate fade-in-right"
-        >
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">
-            Get Your Free Solar Quote
-          </h2>
+        <div class="bg-white rounded-2xl shadow-xl p-8 relative z-20 scroll-animate fade-in-right">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Get Your Free Solar Quote</h2>
           <form class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label
-                  for="firstName"
-                  class="block text-sm font-medium text-gray-700 mb-2"
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2"
                   >First Name</label
                 >
                 <input
@@ -182,9 +128,7 @@ const seoData = {
                 />
               </div>
               <div>
-                <label
-                  for="lastName"
-                  class="block text-sm font-medium text-gray-700 mb-2"
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2"
                   >Last Name</label
                 >
                 <input
@@ -198,9 +142,7 @@ const seoData = {
             </div>
 
             <div>
-              <label
-                for="email"
-                class="block text-sm font-medium text-gray-700 mb-2"
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2"
                 >Email Address</label
               >
               <input
@@ -213,9 +155,7 @@ const seoData = {
             </div>
 
             <div>
-              <label
-                for="phone"
-                class="block text-sm font-medium text-gray-700 mb-2"
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-2"
                 >Phone Number</label
               >
               <input
@@ -228,9 +168,7 @@ const seoData = {
             </div>
 
             <div>
-              <label
-                for="address"
-                class="block text-sm font-medium text-gray-700 mb-2"
+              <label for="address" class="block text-sm font-medium text-gray-700 mb-2"
                 >Property Address</label
               >
               <input
@@ -243,9 +181,7 @@ const seoData = {
             </div>
 
             <div>
-              <label
-                for="electricBill"
-                class="block text-sm font-medium text-gray-700 mb-2"
+              <label for="electricBill" class="block text-sm font-medium text-gray-700 mb-2"
                 >Monthly Electric Bill</label
               >
               <select
@@ -272,7 +208,7 @@ const seoData = {
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Why Install Solar Section -->
   <!-- <section class="py-16 lg:py-24 bg-white">
@@ -467,9 +403,7 @@ const seoData = {
   <section class="py-16 lg:py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-16 scroll-animate fade-in-right section-animate-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Solar Panel Packages
-        </h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Solar Panel Packages</h2>
         <p class="text-xl text-gray-600 max-w-3xl">
           Choose the perfect solar system size for your home and energy needs.
         </p>
@@ -489,11 +423,7 @@ const seoData = {
 
           <ul class="space-y-4 mb-8">
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -502,11 +432,7 @@ const seoData = {
               <span class="text-gray-700">16 High-efficiency panels</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -515,11 +441,7 @@ const seoData = {
               <span class="text-gray-700">5kW solar capacity</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -528,11 +450,7 @@ const seoData = {
               <span class="text-gray-700">Professional installation</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -555,8 +473,7 @@ const seoData = {
           class="bg-white rounded-2xl shadow-lg p-8 border-2 border-primary-500 relative hover:shadow-xl transition-shadow duration-300 scroll-animate fade-in-up"
         >
           <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-            <span
-              class="bg-primary-500 text-white px-4 py-2 rounded-full text-sm font-medium"
+            <span class="bg-primary-500 text-white px-4 py-2 rounded-full text-sm font-medium"
               >Most Popular</span
             >
           </div>
@@ -570,11 +487,7 @@ const seoData = {
 
           <ul class="space-y-4 mb-8">
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -583,11 +496,7 @@ const seoData = {
               <span class="text-gray-700">32 High-efficiency panels</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -596,11 +505,7 @@ const seoData = {
               <span class="text-gray-700">10kW solar capacity</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -609,11 +514,7 @@ const seoData = {
               <span class="text-gray-700">Professional installation</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -644,11 +545,7 @@ const seoData = {
 
           <ul class="space-y-4 mb-8">
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -657,11 +554,7 @@ const seoData = {
               <span class="text-gray-700">48 High-efficiency panels</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -670,11 +563,7 @@ const seoData = {
               <span class="text-gray-700">15kW solar capacity</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -683,11 +572,7 @@ const seoData = {
               <span class="text-gray-700">Professional installation</span>
             </li>
             <li class="flex items-center space-x-3">
-              <svg
-                class="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -708,8 +593,8 @@ const seoData = {
 
       <div class="text-center mt-12 scroll-animate fade-in-right">
         <p class="text-sm text-gray-500">
-          *Monthly pricing based on financing options. Final pricing may vary
-          based on installation requirements and location.
+          *Monthly pricing based on financing options. Final pricing may vary based on installation
+          requirements and location.
         </p>
       </div>
     </div>
@@ -723,35 +608,26 @@ const seoData = {
           Trusted by Thousands of Canadians
         </h2>
         <p class="text-xl text-gray-600 max-w-3xl">
-          Join over 10,000 satisfied customers across Canada who have made the
-          switch to solar.
+          Join over 10,000 satisfied customers across Canada who have made the switch to solar.
         </p>
       </div>
 
       <!-- Stats -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
         <div class="text-center scroll-animate fade-in-right">
-          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">
-            10,000+
-          </div>
+          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">10,000+</div>
           <p class="text-gray-600 font-medium">Installations Completed</p>
         </div>
         <div class="text-center scroll-animate fade-in-right">
-          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">
-            4.9/5
-          </div>
+          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">4.9/5</div>
           <p class="text-gray-600 font-medium">Customer Rating</p>
         </div>
         <div class="text-center scroll-animate fade-in-right">
-          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">
-            25
-          </div>
+          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">25</div>
           <p class="text-gray-600 font-medium">Year Warranty</p>
         </div>
         <div class="text-center scroll-animate fade-in-right">
-          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">
-            $2M+
-          </div>
+          <div class="text-4xl md:text-5xl font-bold text-primary-600 mb-2">$2M+</div>
           <p class="text-gray-600 font-medium">Customer Savings</p>
         </div>
       </div>
@@ -790,9 +666,9 @@ const seoData = {
             <span class="text-sm text-gray-600">5.0</span>
           </div>
           <p class="text-gray-700 mb-4">
-            "Xolar made the entire process seamless. From the initial
-            consultation to final installation, their team was professional and
-            knowledgeable. Our electricity bill has dropped by 85%!"
+            "Xolar made the entire process seamless. From the initial consultation to final
+            installation, their team was professional and knowledgeable. Our electricity bill has
+            dropped by 85%!"
           </p>
           <div class="text-sm">
             <p class="font-semibold text-gray-900">Sarah M.</p>
@@ -832,9 +708,8 @@ const seoData = {
             <span class="text-sm text-gray-600">5.0</span>
           </div>
           <p class="text-gray-700 mb-4">
-            "The installation was completed in just one day and the system has
-            been working flawlessly. Great customer service and the savings are
-            exactly what they promised."
+            "The installation was completed in just one day and the system has been working
+            flawlessly. Great customer service and the savings are exactly what they promised."
           </p>
           <div class="text-sm">
             <p class="font-semibold text-gray-900">Mike R.</p>
@@ -874,9 +749,8 @@ const seoData = {
             <span class="text-sm text-gray-600">5.0</span>
           </div>
           <p class="text-gray-700 mb-4">
-            "We love our solar system! It's been 2 years now and we've saved
-            thousands on our energy bills. Highly recommend Xolar to anyone
-            considering solar."
+            "We love our solar system! It's been 2 years now and we've saved thousands on our energy
+            bills. Highly recommend Xolar to anyone considering solar."
           </p>
           <div class="text-sm">
             <p class="font-semibold text-gray-900">Jennifer L.</p>
@@ -1222,8 +1096,7 @@ const seoData = {
           Frequently Asked Questions
         </h2>
         <p class="text-xl text-gray-600 max-w-3xl">
-          Get answers to the most common questions about solar energy and our
-          installation process.
+          Get answers to the most common questions about solar energy and our installation process.
         </p>
       </div>
 
@@ -1253,11 +1126,10 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                Most homeowners save between 70-90% on their electricity bills
-                with solar panels. The exact amount depends on your current
-                energy usage, roof size, and local electricity rates. Our free
-                quote will provide a detailed savings estimate for your specific
-                situation, including projected monthly and annual savings.
+                Most homeowners save between 70-90% on their electricity bills with solar panels.
+                The exact amount depends on your current energy usage, roof size, and local
+                electricity rates. Our free quote will provide a detailed savings estimate for your
+                specific situation, including projected monthly and annual savings.
               </p>
             </div>
           </div>
@@ -1288,11 +1160,10 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                Most residential solar installations are completed in 1-2 days.
-                The entire process from contract to activation typically takes
-                4-8 weeks, including permits, utility approvals, and scheduling.
-                We handle all paperwork and coordinate with local authorities to
-                ensure a smooth process.
+                Most residential solar installations are completed in 1-2 days. The entire process
+                from contract to activation typically takes 4-8 weeks, including permits, utility
+                approvals, and scheduling. We handle all paperwork and coordinate with local
+                authorities to ensure a smooth process.
               </p>
             </div>
           </div>
@@ -1323,11 +1194,10 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                We recommend completing any necessary roof repairs before
-                installation. If repairs are needed after installation, our
-                panels can be temporarily removed and reinstalled. We work with
-                certified roofing contractors to ensure a seamless process and
-                your warranty remains intact.
+                We recommend completing any necessary roof repairs before installation. If repairs
+                are needed after installation, our panels can be temporarily removed and
+                reinstalled. We work with certified roofing contractors to ensure a seamless process
+                and your warranty remains intact.
               </p>
             </div>
           </div>
@@ -1358,11 +1228,10 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                Yes! Solar panels actually work more efficiently in cooler
-                temperatures. While there are fewer daylight hours in winter,
-                modern panels still generate significant electricity. Snow
-                typically slides off panels easily, and any remaining snow
-                usually melts quickly due to the panel's dark surface.
+                Yes! Solar panels actually work more efficiently in cooler temperatures. While there
+                are fewer daylight hours in winter, modern panels still generate significant
+                electricity. Snow typically slides off panels easily, and any remaining snow usually
+                melts quickly due to the panel's dark surface.
               </p>
             </div>
           </div>
@@ -1374,9 +1243,7 @@ const seoData = {
           <summary
             class="w-full px-6 py-5 text-left flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset list-none"
           >
-            <h3 class="text-lg font-semibold text-gray-900 pr-4">
-              What warranties are included?
-            </h3>
+            <h3 class="text-lg font-semibold text-gray-900 pr-4">What warranties are included?</h3>
             <svg
               class="w-5 h-5 text-primary-500 transform transition-transform duration-300 group-open:rotate-180 flex-shrink-0"
               fill="none"
@@ -1393,10 +1260,9 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                All our solar panels come with a 25-year manufacturer warranty
-                on power output and a 12-year product warranty. We also provide
-                a 10-year workmanship warranty on our installation. Our
-                inverters include a 10-25 year warranty depending on the brand.
+                All our solar panels come with a 25-year manufacturer warranty on power output and a
+                12-year product warranty. We also provide a 10-year workmanship warranty on our
+                installation. Our inverters include a 10-25 year warranty depending on the brand.
                 Additionally, we offer ongoing monitoring and support.
               </p>
             </div>
@@ -1428,10 +1294,9 @@ const seoData = {
           <div class="px-6 pb-5 border-t border-gray-100 faq-content">
             <div class="pt-4">
               <p class="text-gray-600 leading-relaxed">
-                Yes! The federal government offers various rebates and tax
-                incentives for solar installations. Many provinces also have
-                additional programs. Our team will help you identify and apply
-                for all available incentives to maximize your savings. We stay
+                Yes! The federal government offers various rebates and tax incentives for solar
+                installations. Many provinces also have additional programs. Our team will help you
+                identify and apply for all available incentives to maximize your savings. We stay
                 up-to-date on all current programs and requirements.
               </p>
             </div>
@@ -1450,8 +1315,8 @@ const seoData = {
         Ready to Start Saving with Solar?
       </h2>
       <p class="text-xl text-primary-100 mb-8 max-w-2xl">
-        Join thousands of Canadian homeowners who are already saving money and
-        helping the environment with clean solar energy.
+        Join thousands of Canadian homeowners who are already saving money and helping the
+        environment with clean solar energy.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4">
@@ -1460,29 +1325,16 @@ const seoData = {
           class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600"
         >
           Get Free Quote Today
-          <svg
-            class="ml-2 w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"></path>
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+            ></path>
           </svg>
         </a>
         <a
           href="tel:+1-800-XOLAR-CA"
           class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-600"
         >
-          <svg
-            class="mr-2 w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -1498,14 +1350,14 @@ const seoData = {
 </Layout>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const faqItems = document.querySelectorAll(".faq-item");
+  document.addEventListener('DOMContentLoaded', function () {
+    const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach((item) => {
-      const summary = item.querySelector("summary");
+      const summary = item.querySelector('summary');
 
-      summary?.addEventListener("click", function (e) {
-        const isCurrentlyOpen = item.open;
+      summary?.addEventListener('click', function (_e) {
+        const _isCurrentlyOpen = item.open;
 
         // Close all other FAQ items
         faqItems.forEach((otherItem) => {

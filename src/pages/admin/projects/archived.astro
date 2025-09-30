@@ -1,0 +1,341 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { mockProjects } from '../../../data/mockProjects.js';
+
+const ITEMS_PER_PAGE = 10;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+
+// Filter for archived projects
+const archivedProjects = mockProjects.filter(p => p.archived);
+
+const totalProjects = archivedProjects.length;
+const totalPages = Math.ceil(totalProjects / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedProjects = archivedProjects.slice(startIndex, endIndex);
+---
+
+<AdminLayout title="Archived Projects">
+  <div class="mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <a
+          href="/admin/projects"
+          class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200 mb-2"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+            ></path>
+          </svg>
+          Back to Active Projects
+        </a>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Archived Projects</h1>
+        <p class="text-gray-600">View and restore archived projects</p>
+      </div>
+    </div>
+  </div>
+
+  {archivedProjects.length === 0 ? (
+    <!-- Empty State -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+      <svg
+        class="w-16 h-16 mx-auto text-gray-400 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+        />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No archived projects</h3>
+      <p class="text-gray-600 mb-6">You haven't archived any projects yet.</p>
+      <a
+        href="/admin/projects"
+        class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium"
+      >
+        View Active Projects
+      </a>
+    </div>
+  ) : (
+    <>
+      <!-- Mobile Card View -->
+      <div class="lg:hidden space-y-4">
+        {
+          paginatedProjects.map((project) => (
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <div class="flex items-start justify-between mb-3">
+                <div class="flex-1">
+                  <div class="text-base font-semibold text-gray-900">
+                    {project.title}
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">{project.estimatedValue}</p>
+                </div>
+                <div class="flex items-center space-x-1">
+                  <span
+                    class={`px-2 py-1 text-xs font-medium rounded-full ${
+                      project.projectType === 'Residential'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-purple-100 text-purple-800'
+                    }`}
+                  >
+                    {project.projectType}
+                  </span>
+                  <span class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">
+                    Archived
+                  </span>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                  <p class="text-xs text-gray-500 mb-1">Location</p>
+                  <p class="text-sm font-medium text-gray-900">{project.location}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500 mb-1">Bids</p>
+                  <p class="text-sm font-medium text-primary-600">{project.bidCount}</p>
+                </div>
+                <div class="col-span-2">
+                  <p class="text-xs text-gray-500 mb-1">Deadline</p>
+                  <p class="text-sm font-medium text-gray-900">{new Date(project.deadline).toLocaleDateString()}</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 pt-3 border-t border-gray-200">
+                <button
+                  class="flex-1 px-3 py-2 text-center border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors duration-200 text-sm font-medium restore-btn"
+                  data-id={project.id}
+                >
+                  Restore
+                </button>
+                <button
+                  class="flex-1 px-3 py-2 text-center border border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm font-medium delete-btn"
+                  data-id={project.id}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Desktop Table View -->
+      <div class="hidden lg:block bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  ID
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Project
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Location
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Type
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Bids
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Deadline
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Posted
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {
+                paginatedProjects.map((project) => (
+                  <tr class="hover:bg-gray-50 project-row" data-id={project.id}>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      #{project.id}
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="text-sm font-medium text-gray-900">{project.title}</div>
+                      <div class="text-sm text-gray-500">{project.estimatedValue}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {project.location}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class={`px-2 py-1 text-xs font-medium rounded-full ${
+                          project.projectType === 'Residential'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-purple-100 text-purple-800'
+                        }`}
+                      >
+                        {project.projectType}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-800">
+                        Archived
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-900">{project.bidCount}</span>
+                        <svg class="w-4 h-4 ml-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {new Date(project.deadline).toLocaleDateString()}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {new Date(project.postedDate).toLocaleDateString()}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex items-center justify-end space-x-2">
+                        <button
+                          class="text-primary-600 hover:text-primary-900 restore-btn"
+                          data-id={project.id}
+                          title="Restore"
+                        >
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                          </svg>
+                        </button>
+                        <button
+                          class="text-red-600 hover:text-red-900 delete-btn"
+                          data-id={project.id}
+                          title="Delete"
+                        >
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      {totalPages > 1 && (
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-sm text-gray-600">
+            Showing {startIndex + 1} to {Math.min(endIndex, totalProjects)} of {totalProjects} projects
+          </div>
+          <div class="flex items-center flex-wrap justify-center gap-2">
+            {currentPage > 1 && (
+              <a
+                href={`/admin/projects/archived?page=${currentPage - 1}`}
+                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+              >
+                Previous
+              </a>
+            )}
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <a
+                href={`/admin/projects/archived?page=${page}`}
+                class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                  page === currentPage
+                    ? 'bg-primary-600 text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {page}
+              </a>
+            ))}
+            {currentPage < totalPages && (
+              <a
+                href={`/admin/projects/archived?page=${currentPage + 1}`}
+                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+              >
+                Next
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  )}
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Restore functionality
+    const restoreButtons = document.querySelectorAll('.restore-btn');
+    restoreButtons.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const projectId = (this as HTMLElement).dataset.id;
+        if (confirm('Restore this project to active projects?')) {
+          // In production, this would call an API endpoint
+          alert(`Restore project #${projectId} - This would call /api/admin/projects/${projectId}/restore POST`);
+          // Remove row from table
+          const row = document.querySelector(`[data-id="${projectId}"]`);
+          row?.remove();
+
+          // Reload if no more projects
+          const remainingRows = document.querySelectorAll('.project-row').length;
+          if (remainingRows === 0) {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
+    // Delete functionality
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const projectId = (this as HTMLElement).dataset.id;
+        if (
+          confirm(
+            'Are you sure you want to permanently delete this project? This action cannot be undone and will delete all associated bids.'
+          )
+        ) {
+          // In production, this would call an API endpoint
+          alert(`Delete project #${projectId} - This would call /api/admin/projects/${projectId} DELETE`);
+          // Remove row from table
+          const row = document.querySelector(`[data-id="${projectId}"]`);
+          row?.remove();
+
+          // Reload if no more projects
+          const remainingRows = document.querySelectorAll('.project-row').length;
+          if (remainingRows === 0) {
+            window.location.reload();
+          }
+        }
+      });
+    });
+  });
+</script>

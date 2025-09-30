@@ -1,0 +1,544 @@
+---
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import { mockProjects } from '../../../../data/mockProjects.js';
+import { mockBids } from '../../../../data/mockBids.js';
+
+export async function getStaticPaths() {
+  return mockProjects.map((project) => ({
+    params: { id: project.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+const project = mockProjects.find((p) => p.id === parseInt(id || '1'));
+const projectBids = mockBids.filter((b) => b.projectId === parseInt(id || '1')).sort((a, b) => a.bidAmountNumeric - b.bidAmountNumeric);
+
+if (!project) {
+  return Astro.redirect('/admin/projects');
+}
+
+// Pagination
+const ITEMS_PER_PAGE = 5;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const totalBids = projectBids.length;
+const totalPages = Math.ceil(totalBids / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedBids = projectBids.slice(startIndex, endIndex);
+
+const lowestBid = projectBids.reduce(
+  (min, bid) => (bid.bidAmountNumeric < min ? bid.bidAmountNumeric : min),
+  Infinity
+);
+const avgBid =
+  projectBids.length > 0
+    ? projectBids.reduce((sum, bid) => sum + bid.bidAmountNumeric, 0) / projectBids.length
+    : 0;
+---
+
+<AdminLayout title={`Bids for Project #${project.id}`}>
+  <div class="mb-8">
+    <div class="flex items-center space-x-4 mb-4">
+      <a
+        href="/admin/projects"
+        class="text-gray-600 hover:text-gray-900 transition-colors duration-200"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </a>
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900">Bids for Project #{project.id}</h1>
+        <p class="text-gray-600 mt-1">{project.title}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Overview -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Location</p>
+      <p class="text-lg font-semibold text-gray-900">{project.location}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Estimated Value</p>
+      <p class="text-lg font-semibold text-green-600">{project.estimatedValue}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Total Bids</p>
+      <p class="text-lg font-semibold text-primary-600">{projectBids.length}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Lowest Bid</p>
+      <p class="text-lg font-semibold text-blue-600">
+        {lowestBid !== Infinity ? `$${lowestBid.toLocaleString()}` : 'N/A'}
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 col-span-2 md:col-span-1 md:order-none order-last">
+      <p class="text-sm text-gray-600 mb-1">Average Bid</p>
+      <p class="text-lg font-semibold text-purple-600">
+        {avgBid > 0 ? `$${Math.round(avgBid).toLocaleString()}` : 'N/A'}
+      </p>
+    </div>
+  </div>
+
+  <!-- Bids List -->
+  {
+    projectBids.length === 0 ? (
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+        <svg
+          class="w-16 h-16 mx-auto text-gray-400 mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          />
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No bids yet</h3>
+        <p class="text-gray-600">
+          This project hasn't received any bids from installers yet. Check back later.
+        </p>
+      </div>
+    ) : (
+      <div class="space-y-4">
+        {paginatedBids.map((bid, index) => {
+            const globalIndex = startIndex + index;
+            return (
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 lg:p-6 bid-card">
+              <!-- Mobile Layout -->
+              <div class="lg:hidden">
+                <div class="mb-3">
+                  <div class="flex items-start justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-gray-900">{bid.installerName}</h3>
+                    <span
+                      class={`px-2 py-1 text-xs font-medium rounded-full ${
+                        bid.status === 'Accepted'
+                          ? 'bg-green-100 text-green-800'
+                          : bid.status === 'Rejected'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                      }`}
+                    >
+                      {bid.status}
+                    </span>
+                  </div>
+                  {globalIndex === 0 && (
+                    <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full mb-2">
+                      Lowest Bid
+                    </span>
+                  )}
+                  <div class="text-2xl font-bold text-primary-600 mb-1">{bid.bidAmount}</div>
+                  <div class="text-sm text-gray-600">{bid.timeline}</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <p class="text-xs text-gray-500 mb-1">Rating</p>
+                    <div class="flex items-center text-sm text-gray-900">
+                      <svg class="w-4 h-4 mr-1 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <span class="font-medium">{bid.installerRating}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="text-xs text-gray-500 mb-1">Projects</p>
+                    <p class="text-sm font-medium text-gray-900">{bid.installerCompletedProjects}</p>
+                  </div>
+                  <div class="col-span-2">
+                    <p class="text-xs text-gray-500 mb-1">Warranty</p>
+                    <p class="text-sm font-medium text-gray-900">{bid.warranty}</p>
+                  </div>
+                </div>
+
+                <div class="mb-3 space-y-2">
+                  <div class="flex items-center text-sm text-gray-600">
+                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <a href={`mailto:${bid.installerEmail}`} class="hover:text-primary-600 truncate">
+                      {bid.installerEmail}
+                    </a>
+                  </div>
+                  <div class="flex items-center text-sm text-gray-600">
+                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                    <a href={`tel:${bid.installerPhone}`} class="hover:text-primary-600">
+                      {bid.installerPhone}
+                    </a>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <p class="text-xs text-gray-500 mb-1">Installer Notes</p>
+                  <p class="text-sm text-gray-600 leading-relaxed">{bid.notes}</p>
+                </div>
+
+                <div class="pt-3 border-t border-gray-200">
+                  <div class="text-xs text-gray-500 mb-3">
+                    Submitted {new Date(bid.submittedDate).toLocaleDateString()} at{' '}
+                    {new Date(bid.submittedDate).toLocaleTimeString()}
+                  </div>
+                  {bid.status === 'Pending' && (
+                    <div class="flex flex-col space-y-2">
+                      <button
+                        class="accept-bid w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm font-medium"
+                        data-bid-id={bid.id}
+                        data-installer-email={bid.installerEmail}
+                        data-installer-name={bid.installerName}
+                        data-project-title={project.title}
+                        data-bid-amount={bid.bidAmount}
+                      >
+                        Accept Bid
+                      </button>
+                      <button
+                        class="reject-bid w-full px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm font-medium"
+                        data-bid-id={bid.id}
+                        data-installer-email={bid.installerEmail}
+                        data-installer-name={bid.installerName}
+                        data-project-title={project.title}
+                        data-bid-amount={bid.bidAmount}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  )}
+                  {bid.status === 'Accepted' && (
+                    <div class="flex items-center justify-center text-green-600">
+                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="font-medium">Bid Accepted</span>
+                    </div>
+                  )}
+                  {bid.status === 'Rejected' && (
+                    <div class="flex items-center justify-center text-red-600">
+                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="font-medium">Bid Rejected</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <!-- Desktop Layout -->
+              <div class="hidden lg:block">
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <h3 class="text-xl font-semibold text-gray-900">{bid.installerName}</h3>
+                      {globalIndex === 0 && (
+                        <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                          Lowest Bid
+                        </span>
+                      )}
+                      <span
+                        class={`px-3 py-1 text-xs font-medium rounded-full ${
+                          bid.status === 'Accepted'
+                            ? 'bg-green-100 text-green-800'
+                            : bid.status === 'Rejected'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                        }`}
+                      >
+                        {bid.status}
+                      </span>
+                    </div>
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span>{bid.installerRating} rating</span>
+                      </div>
+                      <span>•</span>
+                      <span>{bid.installerCompletedProjects} projects completed</span>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-3xl font-bold text-primary-600 mb-1">{bid.bidAmount}</div>
+                    <div class="text-sm text-gray-600">{bid.timeline}</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                  <div>
+                    <p class="text-sm font-medium text-gray-700 mb-2">Contact Information</p>
+                    <div class="space-y-1 text-sm text-gray-600">
+                      <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
+                        <a href={`mailto:${bid.installerEmail}`} class="hover:text-primary-600">
+                          {bid.installerEmail}
+                        </a>
+                      </div>
+                      <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                          />
+                        </svg>
+                        <a href={`tel:${bid.installerPhone}`} class="hover:text-primary-600">
+                          {bid.installerPhone}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p class="text-sm font-medium text-gray-700 mb-2">Warranty Coverage</p>
+                    <p class="text-sm text-gray-600">{bid.warranty}</p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <p class="text-sm font-medium text-gray-700 mb-2">Installer Notes</p>
+                  <p class="text-sm text-gray-600 leading-relaxed">{bid.notes}</p>
+                </div>
+
+                <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                  <div class="text-sm text-gray-500">
+                    Submitted {new Date(bid.submittedDate).toLocaleDateString()} at{' '}
+                    {new Date(bid.submittedDate).toLocaleTimeString()}
+                  </div>
+                  {bid.status === 'Pending' && (
+                    <div class="flex items-center space-x-2">
+                      <button
+                        class="accept-bid px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 text-sm font-medium"
+                        data-bid-id={bid.id}
+                        data-installer-email={bid.installerEmail}
+                        data-installer-name={bid.installerName}
+                        data-project-title={project.title}
+                        data-bid-amount={bid.bidAmount}
+                      >
+                        Accept Bid
+                      </button>
+                      <button
+                        class="reject-bid px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm font-medium"
+                        data-bid-id={bid.id}
+                        data-installer-email={bid.installerEmail}
+                        data-installer-name={bid.installerName}
+                        data-project-title={project.title}
+                        data-bid-amount={bid.bidAmount}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  )}
+                  {bid.status === 'Accepted' && (
+                    <div class="flex items-center text-green-600">
+                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="font-medium">Bid Accepted</span>
+                    </div>
+                  )}
+                  {bid.status === 'Rejected' && (
+                    <div class="flex items-center text-red-600">
+                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span class="font-medium">Bid Rejected</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
+
+  <!-- Pagination -->
+  {totalPages > 1 && (
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-600">
+        Showing {startIndex + 1} to {Math.min(endIndex, totalBids)} of {totalBids} bids
+      </div>
+      <div class="flex items-center flex-wrap justify-center gap-2">
+        {currentPage > 1 && (
+          <a
+            href={`/admin/projects/${id}/bids?page=${currentPage - 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Previous
+          </a>
+        )}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={`/admin/projects/${id}/bids?page=${page}`}
+            class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              page === currentPage
+                ? 'bg-primary-600 text-white'
+                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </a>
+        ))}
+        {currentPage < totalPages && (
+          <a
+            href={`/admin/projects/${id}/bids?page=${currentPage + 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Next
+          </a>
+        )}
+      </div>
+    </div>
+  )}
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Accept bid
+    document.querySelectorAll('.accept-bid').forEach((btn) => {
+      btn.addEventListener('click', async function () {
+        const bidId = (this as HTMLElement).dataset.bidId;
+        const installerEmail = (this as HTMLElement).dataset.installerEmail;
+        const installerName = (this as HTMLElement).dataset.installerName;
+        const projectTitle = (this as HTMLElement).dataset.projectTitle;
+        const bidAmount = (this as HTMLElement).dataset.bidAmount;
+
+        if (confirm('Accept this bid? This will notify the installer and mark the bid as accepted.')) {
+          // Disable button and show loading state
+          const button = this as HTMLButtonElement;
+          button.disabled = true;
+          button.textContent = 'Processing...';
+
+          try {
+            const response = await fetch(`/api/admin/bids/${bidId}/accept`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                installerEmail,
+                installerName,
+                projectTitle,
+                bidAmount,
+              }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+              alert(`✅ Bid accepted! Email notification sent to ${installerName}.`);
+              location.reload();
+            } else {
+              alert(`⚠️ ${result.message || 'Failed to accept bid. Please try again.'}`);
+              button.disabled = false;
+              button.textContent = 'Accept Bid';
+            }
+          } catch (error) {
+            console.error('Error accepting bid:', error);
+            alert('❌ Failed to accept bid. Please check your internet connection and try again.');
+            button.disabled = false;
+            button.textContent = 'Accept Bid';
+          }
+        }
+      });
+    });
+
+    // Reject bid
+    document.querySelectorAll('.reject-bid').forEach((btn) => {
+      btn.addEventListener('click', async function () {
+        const bidId = (this as HTMLElement).dataset.bidId;
+        const installerEmail = (this as HTMLElement).dataset.installerEmail;
+        const installerName = (this as HTMLElement).dataset.installerName;
+        const projectTitle = (this as HTMLElement).dataset.projectTitle;
+        const bidAmount = (this as HTMLElement).dataset.bidAmount;
+
+        const reason = prompt(
+          'Optional: Provide feedback for the installer about why their bid was not selected:'
+        );
+
+        if (
+          reason !== null &&
+          confirm('Reject this bid? This will notify the installer that their bid was not accepted.')
+        ) {
+          // Disable button and show loading state
+          const button = this as HTMLButtonElement;
+          button.disabled = true;
+          button.textContent = 'Processing...';
+
+          try {
+            const response = await fetch(`/api/admin/bids/${bidId}/reject`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                installerEmail,
+                installerName,
+                projectTitle,
+                bidAmount,
+                reason: reason || undefined,
+              }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+              alert(`✅ Bid rejected. Email notification sent to ${installerName}.`);
+              location.reload();
+            } else {
+              alert(`⚠️ ${result.message || 'Failed to reject bid. Please try again.'}`);
+              button.disabled = false;
+              button.textContent = 'Reject';
+            }
+          } catch (error) {
+            console.error('Error rejecting bid:', error);
+            alert('❌ Failed to reject bid. Please check your internet connection and try again.');
+            button.disabled = false;
+            button.textContent = 'Reject';
+          }
+        }
+      });
+    });
+  });
+</script>

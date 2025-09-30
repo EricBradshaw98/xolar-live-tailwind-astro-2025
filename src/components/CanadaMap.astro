@@ -1,33 +1,31 @@
 ---
 // Interactive Canada Map Component
-import canadaMapSvg from "../assets/ca.svg";
+import canadaMapSvg from '../assets/ca.svg';
 
 const provinces = [
-  { name: "British Columbia", abbr: "BC", available: true },
-  { name: "Alberta", abbr: "AB", available: true },
-  { name: "Saskatchewan", abbr: "SK", available: true },
-  { name: "Manitoba", abbr: "MB", available: true },
-  { name: "Ontario", abbr: "ON", available: true },
-  { name: "Quebec", abbr: "QC", available: true },
-  { name: "New Brunswick", abbr: "NB", available: true },
-  { name: "Nova Scotia", abbr: "NS", available: true },
-  { name: "Prince Edward Island", abbr: "PE", available: true },
-  { name: "Newfoundland and Labrador", abbr: "NL", available: true },
-  { name: "Northwest Territories", abbr: "NT", available: false },
-  { name: "Nunavut", abbr: "NU", available: false },
-  { name: "Yukon", abbr: "YT", available: false },
+  { name: 'British Columbia', abbr: 'BC', available: true },
+  { name: 'Alberta', abbr: 'AB', available: true },
+  { name: 'Saskatchewan', abbr: 'SK', available: true },
+  { name: 'Manitoba', abbr: 'MB', available: true },
+  { name: 'Ontario', abbr: 'ON', available: true },
+  { name: 'Quebec', abbr: 'QC', available: true },
+  { name: 'New Brunswick', abbr: 'NB', available: true },
+  { name: 'Nova Scotia', abbr: 'NS', available: true },
+  { name: 'Prince Edward Island', abbr: 'PE', available: true },
+  { name: 'Newfoundland and Labrador', abbr: 'NL', available: true },
+  { name: 'Northwest Territories', abbr: 'NT', available: false },
+  { name: 'Nunavut', abbr: 'NU', available: false },
+  { name: 'Yukon', abbr: 'YT', available: false },
 ];
 ---
 
 <section class="py-16 lg:py-24 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-left mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-        Solar Energy Across Canada
-      </h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Solar Energy Across Canada</h2>
       <p class="text-xl text-gray-600 max-w-3xl">
-        We provide solar installation services across most Canadian provinces.
-        Click on your province to learn more about our services in your area.
+        We provide solar installation services across most Canadian provinces. Click on your
+        province to learn more about our services in your area.
       </p>
     </div>
 
@@ -37,10 +35,7 @@ const provinces = [
         <div class="flex-1 w-full">
           <div class="relative" id="canada-map-container">
             <!-- Interactive Canada SVG -->
-            <div
-              class="relative w-full h-auto max-w-4xl mx-auto"
-              id="interactive-svg-container"
-            >
+            <div class="relative w-full h-auto max-w-4xl mx-auto" id="interactive-svg-container">
               <!-- SVG will be loaded and made interactive here -->
             </div>
           </div>
@@ -49,12 +44,9 @@ const provinces = [
         <!-- Province Info Panel -->
         <div class="lg:w-80 w-full">
           <div class="bg-gray-50 rounded-lg p-6" id="province-info">
-            <h3 class="text-xl font-semibold text-gray-900 mb-3">
-              Select a Province
-            </h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Select a Province</h3>
             <p class="text-gray-600 mb-4">
-              Hover over or click on a province to see our services available in
-              that area.
+              Hover over or click on a province to see our services available in that area.
             </p>
             <div class="space-y-3">
               <div class="flex items-center text-sm">
@@ -71,11 +63,7 @@ const provinces = [
           <!-- Dynamic Province Details -->
           <div class="mt-6 hidden" id="province-details">
             <div class="bg-white border border-gray-200 rounded-lg p-6">
-              <h4
-                class="text-lg font-semibold text-primary-600 mb-2"
-                id="province-name"
-              >
-              </h4>
+              <h4 class="text-lg font-semibold text-primary-600 mb-2" id="province-name"></h4>
               <p class="text-gray-600 mb-4" id="province-description"></p>
               <div class="space-y-2 mb-4" id="province-services"></div>
               <a
@@ -84,12 +72,7 @@ const provinces = [
                 id="province-cta"
               >
                 Get Free Quote
-                <svg
-                  class="ml-2 w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -212,33 +195,33 @@ const provinces = [
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener('DOMContentLoaded', function () {
     // Load and make SVG interactive
     loadInteractiveSVG();
 
     let provinceAreas;
-    const provinceInfo = document.getElementById("province-info");
-    const provinceDetails = document.getElementById("province-details");
-    const provinceName = document.getElementById("province-name");
-    const provinceDescription = document.getElementById("province-description");
-    const provinceServices = document.getElementById("province-services");
-    const provinceCTA = document.getElementById("province-cta");
+    const _provinceInfo = document.getElementById('province-info');
+    const provinceDetails = document.getElementById('province-details');
+    const provinceName = document.getElementById('province-name');
+    const provinceDescription = document.getElementById('province-description');
+    const provinceServices = document.getElementById('province-services');
+    const provinceCTA = document.getElementById('province-cta');
 
     // Province coordinates for geolocation matching
     const provinceCoordinates = {
-      BC: { lat: 53.7267, lng: -127.6476, name: "British Columbia" },
-      AB: { lat: 53.9333, lng: -116.5765, name: "Alberta" },
-      SK: { lat: 52.9399, lng: -106.4509, name: "Saskatchewan" },
-      MB: { lat: 53.7609, lng: -98.8139, name: "Manitoba" },
-      ON: { lat: 51.2538, lng: -85.3232, name: "Ontario" },
-      QC: { lat: 53.1355, lng: -73.2533, name: "Quebec" },
-      NB: { lat: 46.5653, lng: -66.4619, name: "New Brunswick" },
-      NS: { lat: 44.682, lng: -63.7443, name: "Nova Scotia" },
-      PE: { lat: 46.5107, lng: -63.4168, name: "Prince Edward Island" },
-      NL: { lat: 53.1355, lng: -57.6604, name: "Newfoundland and Labrador" },
-      NT: { lat: 61.2181, lng: -113.5034, name: "Northwest Territories" },
-      NU: { lat: 70.2998, lng: -83.1076, name: "Nunavut" },
-      YT: { lat: 64.0685, lng: -139.0686, name: "Yukon" },
+      BC: { lat: 53.7267, lng: -127.6476, name: 'British Columbia' },
+      AB: { lat: 53.9333, lng: -116.5765, name: 'Alberta' },
+      SK: { lat: 52.9399, lng: -106.4509, name: 'Saskatchewan' },
+      MB: { lat: 53.7609, lng: -98.8139, name: 'Manitoba' },
+      ON: { lat: 51.2538, lng: -85.3232, name: 'Ontario' },
+      QC: { lat: 53.1355, lng: -73.2533, name: 'Quebec' },
+      NB: { lat: 46.5653, lng: -66.4619, name: 'New Brunswick' },
+      NS: { lat: 44.682, lng: -63.7443, name: 'Nova Scotia' },
+      PE: { lat: 46.5107, lng: -63.4168, name: 'Prince Edward Island' },
+      NL: { lat: 53.1355, lng: -57.6604, name: 'Newfoundland and Labrador' },
+      NT: { lat: 61.2181, lng: -113.5034, name: 'Northwest Territories' },
+      NU: { lat: 70.2998, lng: -83.1076, name: 'Nunavut' },
+      YT: { lat: 64.0685, lng: -139.0686, name: 'Yukon' },
     };
 
     // Function to calculate distance between two coordinates
@@ -262,12 +245,7 @@ const provinces = [
       let shortestDistance = Infinity;
 
       for (const [code, coords] of Object.entries(provinceCoordinates)) {
-        const distance = calculateDistance(
-          userLat,
-          userLng,
-          coords.lat,
-          coords.lng,
-        );
+        const distance = calculateDistance(userLat, userLng, coords.lat, coords.lng);
         if (distance < shortestDistance) {
           shortestDistance = distance;
           closestProvince = code;
@@ -278,8 +256,8 @@ const provinces = [
     }
 
     // Auto-select province based on geolocation
-    function autoSelectProvince() {
-      if ("geolocation" in navigator) {
+    function _autoSelectProvince() {
+      if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           function (position) {
             const userLat = position.coords.latitude;
@@ -290,21 +268,19 @@ const provinces = [
 
             if (closestProvince) {
               // Find the corresponding province area button
-              const provinceButton = document.querySelector(
-                `[data-province="${closestProvince}"]`,
-              );
+              const provinceButton = document.querySelector(`[data-province="${closestProvince}"]`);
               if (provinceButton) {
                 // Auto-select the province
                 setTimeout(() => {
                   clearSelection();
-                  provinceButton.classList.add("selected");
+                  provinceButton.classList.add('selected');
                   selectedProvince = closestProvince;
                   showProvinceInfo(closestProvince);
 
                   // Add a subtle notification
-                  const notification = document.createElement("div");
+                  const notification = document.createElement('div');
                   notification.className =
-                    "fixed top-4 right-4 bg-primary-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 text-sm";
+                    'fixed top-4 right-4 bg-primary-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 text-sm';
                   notification.textContent = `Auto-selected: ${provinceCoordinates[closestProvince].name}`;
                   document.body.appendChild(notification);
 
@@ -319,140 +295,105 @@ const provinces = [
             }
           },
           function (error) {
-            console.log("Geolocation error:", error.message);
+            console.log('Geolocation error:', error.message);
             // Silently fail - user can still manually select province
           },
           {
             timeout: 10000,
             maximumAge: 300000, // 5 minutes
             enableHighAccuracy: false,
-          },
+          }
         );
       }
     }
 
     const provinceData = {
       BC: {
-        name: "British Columbia",
+        name: 'British Columbia',
         description:
-          "Leading the way in renewable energy with excellent solar potential year-round.",
+          'Leading the way in renewable energy with excellent solar potential year-round.',
         services: [
-          "Residential Solar Panels",
-          "Tesla Powerwall",
-          "Heat Pumps",
-          "EV Charging Stations",
+          'Residential Solar Panels',
+          'Tesla Powerwall',
+          'Heat Pumps',
+          'EV Charging Stations',
         ],
         available: true,
       },
       AB: {
-        name: "Alberta",
-        description:
-          "High solar irradiance makes Alberta perfect for solar energy systems.",
-        services: [
-          "Residential Solar Panels",
-          "Commercial Solar",
-          "Energy Storage",
-          "Maintenance",
-        ],
+        name: 'Alberta',
+        description: 'High solar irradiance makes Alberta perfect for solar energy systems.',
+        services: ['Residential Solar Panels', 'Commercial Solar', 'Energy Storage', 'Maintenance'],
         available: true,
       },
       SK: {
-        name: "Saskatchewan",
-        description:
-          "Abundant sunshine hours provide excellent solar energy opportunities.",
-        services: [
-          "Residential Solar Panels",
-          "Tesla Powerwall",
-          "Commercial Solutions",
-        ],
+        name: 'Saskatchewan',
+        description: 'Abundant sunshine hours provide excellent solar energy opportunities.',
+        services: ['Residential Solar Panels', 'Tesla Powerwall', 'Commercial Solutions'],
         available: true,
       },
       MB: {
-        name: "Manitoba",
-        description:
-          "Growing solar market with strong government incentives and support.",
-        services: [
-          "Residential Solar Panels",
-          "Heat Pumps",
-          "Energy Consultations",
-        ],
+        name: 'Manitoba',
+        description: 'Growing solar market with strong government incentives and support.',
+        services: ['Residential Solar Panels', 'Heat Pumps', 'Energy Consultations'],
         available: true,
       },
       ON: {
-        name: "Ontario",
-        description:
-          "Canada's largest solar market with comprehensive rebate programs.",
+        name: 'Ontario',
+        description: "Canada's largest solar market with comprehensive rebate programs.",
         services: [
-          "Residential Solar Panels",
-          "Tesla Powerwall",
-          "Heat Pumps",
-          "EV Charging",
-          "Commercial Solar",
+          'Residential Solar Panels',
+          'Tesla Powerwall',
+          'Heat Pumps',
+          'EV Charging',
+          'Commercial Solar',
         ],
         available: true,
       },
       QC: {
-        name: "Quebec",
-        description:
-          "Emerging solar market with excellent potential for energy independence.",
-        services: ["Residential Solar Panels", "Tesla Powerwall", "Heat Pumps"],
+        name: 'Quebec',
+        description: 'Emerging solar market with excellent potential for energy independence.',
+        services: ['Residential Solar Panels', 'Tesla Powerwall', 'Heat Pumps'],
         available: true,
       },
       NB: {
-        name: "New Brunswick",
-        description:
-          "Maritime province with growing interest in renewable energy solutions.",
-        services: [
-          "Residential Solar Panels",
-          "Energy Storage",
-          "Consultations",
-        ],
+        name: 'New Brunswick',
+        description: 'Maritime province with growing interest in renewable energy solutions.',
+        services: ['Residential Solar Panels', 'Energy Storage', 'Consultations'],
         available: true,
       },
       NS: {
-        name: "Nova Scotia",
-        description:
-          "Coastal province with strong solar potential and environmental incentives.",
-        services: [
-          "Residential Solar Panels",
-          "Tesla Powerwall",
-          "Marine Applications",
-        ],
+        name: 'Nova Scotia',
+        description: 'Coastal province with strong solar potential and environmental incentives.',
+        services: ['Residential Solar Panels', 'Tesla Powerwall', 'Marine Applications'],
         available: true,
       },
       PE: {
-        name: "Prince Edward Island",
-        description:
-          "Small but mighty province leading in renewable energy adoption.",
-        services: ["Residential Solar Panels", "Energy Storage"],
+        name: 'Prince Edward Island',
+        description: 'Small but mighty province leading in renewable energy adoption.',
+        services: ['Residential Solar Panels', 'Energy Storage'],
         available: true,
       },
       NL: {
-        name: "Newfoundland and Labrador",
-        description:
-          "Remote locations benefit greatly from solar independence solutions.",
-        services: [
-          "Residential Solar Panels",
-          "Off-Grid Systems",
-          "Energy Storage",
-        ],
+        name: 'Newfoundland and Labrador',
+        description: 'Remote locations benefit greatly from solar independence solutions.',
+        services: ['Residential Solar Panels', 'Off-Grid Systems', 'Energy Storage'],
         available: true,
       },
       NT: {
-        name: "Northwest Territories",
-        description: "Service expansion planned for northern communities.",
+        name: 'Northwest Territories',
+        description: 'Service expansion planned for northern communities.',
         services: [],
         available: false,
       },
       NU: {
-        name: "Nunavut",
-        description:
-          "Future service area for specialized northern solar solutions.",
+        name: 'Nunavut',
+        description: 'Future service area for specialized northern solar solutions.',
         services: [],
         available: false,
       },
       YT: {
-        name: "Yukon",
+        name: 'Yukon',
         description: "Coming soon to serve Canada's northern communities.",
         services: [],
         available: false,
@@ -477,127 +418,121 @@ const provinces = [
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
             </svg>
             ${service}
-          </div>`,
+          </div>`
           )
-          .join("");
+          .join('');
 
-        provinceCTA.style.display = "flex";
+        provinceCTA.style.display = 'flex';
         provinceCTA.href = `/quote?province=${provinceCode}`;
       } else {
         provinceServices.innerHTML =
           '<div class="text-sm text-gray-500 italic">Services coming soon to this area.</div>';
-        provinceCTA.style.display = "none";
+        provinceCTA.style.display = 'none';
       }
 
-      provinceDetails.classList.remove("hidden");
-      provinceDetails.classList.add("show");
+      provinceDetails.classList.remove('hidden');
+      provinceDetails.classList.add('show');
     }
 
     // Load SVG and make it interactive
     async function loadInteractiveSVG() {
       try {
-        const response = await fetch("/ca.svg");
+        const response = await fetch('/ca.svg');
         const svgText = await response.text();
-        const container = document.getElementById("interactive-svg-container");
+        const container = document.getElementById('interactive-svg-container');
         container.innerHTML = svgText;
 
-        const svg = container.querySelector("svg");
+        const svg = container.querySelector('svg');
         if (svg) {
-          svg.setAttribute("class", "w-full h-auto");
-          svg.setAttribute(
-            "viewBox",
-            svg.getAttribute("viewBox") || "0 0 1000 1000",
-          );
+          svg.setAttribute('class', 'w-full h-auto');
+          svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '0 0 1000 1000');
 
           // Map SVG IDs to our province codes (based on actual SVG structure)
           const svgIdToProvince = {
-            CABC: "BC",
-            CAAB: "AB",
-            CASK: "SK",
-            CAMB: "MB",
-            CAON: "ON",
-            CAQC: "QC",
-            CANB: "NB",
-            CANS: "NS",
-            CAPE: "PE",
-            CANL: "NL",
-            CANT: "NT",
-            CANU: "NU",
-            CAYT: "YT",
+            CABC: 'BC',
+            CAAB: 'AB',
+            CASK: 'SK',
+            CAMB: 'MB',
+            CAON: 'ON',
+            CAQC: 'QC',
+            CANB: 'NB',
+            CANS: 'NS',
+            CAPE: 'PE',
+            CANL: 'NL',
+            CANT: 'NT',
+            CANU: 'NU',
+            CAYT: 'YT',
           };
 
           // Process all paths in the SVG
-          const paths = svg.querySelectorAll("path");
+          const paths = svg.querySelectorAll('path');
 
           // Special handling for Ontario (which doesn't have an id attribute)
           // We'll identify it as the second path element (index 1)
           paths.forEach((path, index) => {
-            const svgId = path.getAttribute("id");
+            const svgId = path.getAttribute('id');
             let provinceCode = svgIdToProvince[svgId];
 
             // Special case: Ontario is often the second path without an ID
             if (!provinceCode && index === 1) {
-              provinceCode = "ON";
-              console.log("Assigning Ontario to path at index", index);
+              provinceCode = 'ON';
+              console.log('Assigning Ontario to path at index', index);
             }
 
             if (provinceCode) {
               const provinceInfo = provinceData[provinceCode];
 
               // Add data attributes
-              path.setAttribute("data-province", provinceCode);
+              path.setAttribute('data-province', provinceCode);
+              path.setAttribute('data-available', provinceInfo.available.toString());
+              path.setAttribute('role', 'button');
+              path.setAttribute('tabindex', '0');
               path.setAttribute(
-                "data-available",
-                provinceInfo.available.toString(),
-              );
-              path.setAttribute("role", "button");
-              path.setAttribute("tabindex", "0");
-              path.setAttribute(
-                "aria-label",
-                `${provinceInfo.name} - ${provinceInfo.available ? "Service available" : "Coming soon"}`,
+                'aria-label',
+                `${provinceInfo.name} - ${provinceInfo.available ? 'Service available' : 'Coming soon'}`
               );
 
               // Add CSS classes
-              path.classList.add("province-path");
+              path.classList.add('province-path');
               if (!provinceInfo.available) {
-                path.classList.add("unavailable");
+                path.classList.add('unavailable');
               }
 
               // Add event listeners
-              path.addEventListener("mouseenter", function () {
+              path.addEventListener('mouseenter', function () {
                 if (!selectedProvince) {
                   showProvinceInfo(provinceCode);
                 }
               });
 
-              path.addEventListener("click", function () {
+              path.addEventListener('click', function () {
                 // Always allow clicking, even if a province is already selected
                 clearSelection();
-                this.classList.add("selected");
+                this.classList.add('selected');
                 selectedProvince = provinceCode;
                 showProvinceInfo(provinceCode);
               });
 
-              path.addEventListener("keydown", function (e) {
-                if (e.key === "Enter" || e.key === " ") {
+              path.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   this.click();
                 }
               });
             } else if (svgId) {
               // Log unknown provinces for debugging
-              console.log("Unknown province ID:", svgId);
+              console.log('Unknown province ID:', svgId);
             }
           });
 
           // Update provinceAreas to point to SVG paths
-          provinceAreas = svg.querySelectorAll(".province-path");
+          provinceAreas = svg.querySelectorAll('.province-path');
 
           // Handle mouse leave for the entire map
-          svg.addEventListener("mouseleave", function () {
+          svg.addEventListener('mouseleave', function () {
             if (!selectedProvince) {
-              provinceDetails.classList.add("hidden");
-              provinceDetails.classList.remove("show");
+              provinceDetails.classList.add('hidden');
+              provinceDetails.classList.remove('show');
             }
           });
 
@@ -605,14 +540,14 @@ const provinces = [
           // autoSelectProvince();
         }
       } catch (error) {
-        console.error("Failed to load SVG:", error);
+        console.error('Failed to load SVG:', error);
         // Fallback: could load a static image here
       }
     }
 
     function clearSelection() {
       if (provinceAreas) {
-        provinceAreas.forEach((area) => area.classList.remove("selected"));
+        provinceAreas.forEach((area) => area.classList.remove('selected'));
       }
       selectedProvince = null;
     }

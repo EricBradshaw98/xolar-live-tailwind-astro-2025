@@ -1,0 +1,534 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { mockBids } from '../../../data/mockBids.js';
+import { mockInstallerFlags } from '../../../data/mockInstallers.js';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  // Get unique installers from bids
+  const uniqueInstallers = Array.from(
+    new Map(
+      mockBids.map((bid) => [
+        bid.installerId,
+        {
+          id: bid.installerId,
+          name: bid.installerName,
+          email: bid.installerEmail,
+          phone: bid.installerPhone,
+          rating: bid.installerRating,
+          completedProjects: bid.installerCompletedProjects,
+        },
+      ])
+    ).values()
+  );
+
+  return uniqueInstallers.map((installer) => ({
+    params: { id: installer.id },
+  }));
+}
+
+const { id } = Astro.params;
+const installerId = id;
+
+// Get installer details from first bid
+const installerBid = mockBids.find((b) => b.installerId === installerId);
+
+if (!installerBid) {
+  return Astro.redirect('/admin/installers');
+}
+
+const installer = {
+  id: installerBid.installerId,
+  name: installerBid.installerName,
+  email: installerBid.installerEmail,
+  phone: installerBid.installerPhone,
+  rating: installerBid.installerRating,
+  completedProjects: installerBid.installerCompletedProjects,
+  flagged: mockInstallerFlags[installerBid.installerId]?.flagged || false,
+};
+
+// Get all bids for this installer
+const installerBids = mockBids
+  .filter((b) => b.installerId === installerId)
+  .sort((a, b) => new Date(b.submittedDate).getTime() - new Date(a.submittedDate).getTime());
+
+// Calculate stats
+const totalBids = installerBids.length;
+const pendingBids = installerBids.filter((b) => b.status === 'Pending').length;
+const acceptedBids = installerBids.filter((b) => b.status === 'Accepted').length;
+const rejectedBids = installerBids.filter((b) => b.status === 'Rejected').length;
+
+// Pagination
+const ITEMS_PER_PAGE = 10;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const totalPages = Math.ceil(totalBids / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedBids = installerBids.slice(startIndex, endIndex);
+
+const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(installer.name)}&background=random&size=128&bold=true`;
+---
+
+<AdminLayout title={installer.name}>
+  <div class="mb-8">
+    <a
+      href="/admin/installers"
+      class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200 mb-4"
+    >
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+      Back to Installers
+    </a>
+
+    <div class={`bg-white rounded-lg shadow-sm border p-6 ${installer.flagged ? 'border-red-500 bg-red-50' : 'border-gray-200'}`} data-installer-card>
+      <div class="flex flex-col md:flex-row md:items-start gap-6">
+        <img
+          src={avatarUrl}
+          alt={`${installer.name} avatar`}
+          class="w-24 h-24 rounded-full"
+        />
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <h1 class="text-3xl font-bold text-gray-900">{installer.name}</h1>
+            {installer.flagged && (
+              <span class="px-3 py-1 text-sm font-medium bg-red-100 text-red-800 rounded-full" data-flag-badge>
+                Flagged
+              </span>
+            )}
+          </div>
+          <div class="flex items-center text-gray-600 mb-4">
+            <svg class="w-5 h-5 mr-1 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+              ></path>
+            </svg>
+            <span class="font-semibold mr-4">{installer.rating}</span>
+            <span class="text-gray-500">{installer.completedProjects} projects completed</span>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center text-gray-600">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <a href={`mailto:${installer.email}`} class="hover:text-primary-600">
+                {installer.email}
+              </a>
+            </div>
+            <div class="flex items-center text-gray-600">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                ></path>
+              </svg>
+              <a href={`tel:${installer.phone}`} class="hover:text-primary-600">
+                {installer.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 md:ml-auto">
+          <button
+            id="flag-btn"
+            class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+            class:list={[installer.flagged ? 'bg-red-100 text-red-700 hover:bg-red-200' : 'bg-gray-100 text-gray-700 hover:bg-gray-200']}
+            data-flagged={installer.flagged}
+          >
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+            </svg>
+            <span data-flag-text>{installer.flagged ? 'Unflag' : 'Flag'} Installer</span>
+          </button>
+          <button
+            id="delete-btn"
+            class="inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
+          >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Delete Installer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Total Bids</p>
+      <p class="text-3xl font-bold text-gray-900">{totalBids}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Pending</p>
+      <p class="text-3xl font-bold text-yellow-600">{pendingBids}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Accepted</p>
+      <p class="text-3xl font-bold text-green-600">{acceptedBids}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Rejected</p>
+      <p class="text-3xl font-bold text-red-600">{rejectedBids}</p>
+    </div>
+  </div>
+
+  <!-- Bids History -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Bid History</h2>
+
+    <!-- Filter -->
+    <div class="mb-6">
+      <div class="flex flex-wrap gap-2">
+        <button
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-primary-600 text-white"
+          data-filter="all"
+        >
+          All ({totalBids})
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-white text-gray-700 border border-gray-300"
+          data-filter="Pending"
+        >
+          Pending ({pendingBids})
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-white text-gray-700 border border-gray-300"
+          data-filter="Accepted"
+        >
+          Accepted ({acceptedBids})
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 bg-white text-gray-700 border border-gray-300"
+          data-filter="Rejected"
+        >
+          Rejected ({rejectedBids})
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="lg:hidden space-y-4">
+      {
+        paginatedBids.map((bid) => (
+          <div class="bid-item bg-gray-50 rounded-lg p-4 border border-gray-200" data-status={bid.status}>
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex-1">
+                <a
+                  href={`/admin/projects/${bid.projectId}/bids`}
+                  class="text-base font-semibold text-gray-900 hover:text-primary-600"
+                >
+                  Project #{bid.projectId}
+                </a>
+                <p class="text-sm text-gray-600 mt-1">{bid.bidAmount}</p>
+              </div>
+              <span
+                class={`px-2 py-1 text-xs font-medium rounded-full ${
+                  bid.status === 'Accepted'
+                    ? 'bg-green-100 text-green-800'
+                    : bid.status === 'Rejected'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                }`}
+              >
+                {bid.status}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Timeline</p>
+                <p class="text-sm font-medium text-gray-900">{bid.timeline}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Warranty</p>
+                <p class="text-sm font-medium text-gray-900">{bid.warranty}</p>
+              </div>
+              <div class="col-span-2">
+                <p class="text-xs text-gray-500 mb-1">Submitted</p>
+                <p class="text-sm font-medium text-gray-900">
+                  {new Date(bid.submittedDate).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-gray-200">
+              <p class="text-xs text-gray-500 mb-1">Notes</p>
+              <p class="text-sm text-gray-600">{bid.notes}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead>
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Project
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Bid Amount
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Timeline
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Warranty
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Status
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Submitted
+            </th>
+            <th
+              class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {
+            paginatedBids.map((bid) => (
+              <tr class="hover:bg-gray-50 bid-item" data-status={bid.status}>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <a
+                    href={`/admin/projects/${bid.projectId}/bids`}
+                    class="text-sm font-medium text-gray-900 hover:text-primary-600"
+                  >
+                    Project #{bid.projectId}
+                  </a>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
+                  {bid.bidAmount}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{bid.timeline}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{bid.warranty}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                    class={`px-2 py-1 text-xs font-medium rounded-full ${
+                      bid.status === 'Accepted'
+                        ? 'bg-green-100 text-green-800'
+                        : bid.status === 'Rejected'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
+                    {bid.status}
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {new Date(bid.submittedDate).toLocaleDateString()}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a
+                    href={`/admin/projects/${bid.projectId}/bids`}
+                    class="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200 inline-flex items-center justify-center"
+                    title="View Project Bids"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No results message -->
+    <div id="no-results" class="hidden text-center py-12">
+      <svg
+        class="w-16 h-16 mx-auto text-gray-400 mb-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+        ></path>
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No bids found</h3>
+      <p class="text-gray-600">No bids match the selected filter.</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {
+    totalPages > 1 && (
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-600">
+          Showing {startIndex + 1} to {Math.min(endIndex, totalBids)} of {totalBids} bids
+        </div>
+        <div class="flex items-center flex-wrap justify-center gap-2">
+          {currentPage > 1 && (
+            <a
+              href={`/admin/installers/${id}?page=${currentPage - 1}`}
+              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+            >
+              Previous
+            </a>
+          )}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <a
+              href={`/admin/installers/${id}?page=${page}`}
+              class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                page === currentPage
+                  ? 'bg-primary-600 text-white'
+                  : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              {page}
+            </a>
+          ))}
+          {currentPage < totalPages && (
+            <a
+              href={`/admin/installers/${id}?page=${currentPage + 1}`}
+              class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+            >
+              Next
+            </a>
+          )}
+        </div>
+      </div>
+    )
+  }
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const bidItems = document.querySelectorAll('.bid-item');
+    const noResults = document.getElementById('no-results');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+
+        // Update active button
+        filterButtons.forEach((btn) => {
+          btn.classList.remove('bg-primary-600', 'text-white');
+          btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+        });
+        button.classList.add('bg-primary-600', 'text-white');
+        button.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+
+        // Filter bids
+        let visibleCount = 0;
+        bidItems.forEach((item) => {
+          const status = item.dataset.status;
+          if (filter === 'all' || status === filter) {
+            item.style.display = '';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Show/hide no results message
+        if (visibleCount === 0) {
+          noResults?.classList.remove('hidden');
+        } else {
+          noResults?.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Flag/Unflag installer
+  const flagBtn = document.getElementById('flag-btn');
+  const deleteBtn = document.getElementById('delete-btn');
+  const installerId = '{installer.id}';
+
+  flagBtn?.addEventListener('click', function () {
+    const isFlagged = this.dataset.flagged === 'true';
+    const action = isFlagged ? 'Unflag' : 'Flag';
+
+    if (confirm(`${action} this installer?`)) {
+      alert(`${action} installer ${installerId} - This would call /api/admin/installers/${installerId}/flag POST with flagged: ${!isFlagged}`);
+
+      // Update UI
+      const card = document.querySelector('[data-installer-card]');
+      const flagBadge = document.querySelector('[data-flag-badge]');
+      const flagText = document.querySelector('[data-flag-text]');
+
+      if (isFlagged) {
+        // Unflag
+        card?.classList.remove('border-red-500', 'bg-red-50');
+        card?.classList.add('border-gray-200');
+        flagBadge?.remove();
+        this.classList.remove('bg-red-100', 'text-red-700', 'hover:bg-red-200');
+        this.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+        this.dataset.flagged = 'false';
+        if (flagText) flagText.textContent = 'Flag Installer';
+      } else {
+        // Flag
+        card?.classList.add('border-red-500', 'bg-red-50');
+        card?.classList.remove('border-gray-200');
+
+        // Add badge if not exists
+        if (!flagBadge) {
+          const h1 = card?.querySelector('h1');
+          const badge = document.createElement('span');
+          badge.className = 'px-3 py-1 text-sm font-medium bg-red-100 text-red-800 rounded-full';
+          badge.setAttribute('data-flag-badge', '');
+          badge.textContent = 'Flagged';
+          h1?.parentElement?.appendChild(badge);
+        }
+
+        this.classList.add('bg-red-100', 'text-red-700', 'hover:bg-red-200');
+        this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+        this.dataset.flagged = 'true';
+        if (flagText) flagText.textContent = 'Unflag Installer';
+      }
+    }
+  });
+
+  // Delete installer
+  deleteBtn?.addEventListener('click', function () {
+    if (confirm('Are you sure you want to delete this installer? This action cannot be undone. All their bids will also be removed.')) {
+      alert(`Delete installer ${installerId} - This would call /api/admin/installers/${installerId} DELETE then redirect to /admin/installers`);
+      window.location.href = '/admin/installers';
+    }
+  });
+</script>

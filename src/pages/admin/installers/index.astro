@@ -1,0 +1,346 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { mockBids } from '../../../data/mockBids.js';
+import { mockInstallerFlags } from '../../../data/mockInstallers.js';
+
+// Get unique installers from bids
+const uniqueInstallers = Array.from(
+  new Map(
+    mockBids.map((bid) => [
+      bid.installerId,
+      {
+        id: bid.installerId,
+        name: bid.installerName,
+        email: bid.installerEmail,
+        phone: bid.installerPhone,
+        rating: bid.installerRating,
+        completedProjects: bid.installerCompletedProjects,
+        totalBids: mockBids.filter((b) => b.installerId === bid.installerId).length,
+        acceptedBids: mockBids.filter(
+          (b) => b.installerId === bid.installerId && b.status === 'Accepted'
+        ).length,
+        flagged: mockInstallerFlags[bid.installerId]?.flagged || false,
+      },
+    ])
+  ).values()
+).sort((a, b) => a.name.localeCompare(b.name));
+
+// Pagination
+const ITEMS_PER_PAGE = 12;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const searchQuery = Astro.url.searchParams.get('search') || '';
+
+// Filter installers by search query
+const filteredInstallers = searchQuery
+  ? uniqueInstallers.filter((installer) =>
+      installer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      installer.email.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : uniqueInstallers;
+
+const totalInstallers = filteredInstallers.length;
+const totalPages = Math.ceil(totalInstallers / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedInstallers = filteredInstallers.slice(startIndex, endIndex);
+---
+
+<AdminLayout title="Installers">
+  <div class="mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Installers</h1>
+        <p class="text-gray-600">View all registered installers and their bidding activity</p>
+      </div>
+      <a
+        href="/admin/installers/new"
+        class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium w-full lg:w-auto"
+      >
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"
+          ></path>
+        </svg>
+        Add Installer
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Total Installers</p>
+      <p class="text-3xl font-bold text-gray-900">{uniqueInstallers.length}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Average Rating</p>
+      <p class="text-3xl font-bold text-yellow-600">
+        {(uniqueInstallers.reduce((sum, i) => sum + i.rating, 0) / uniqueInstallers.length).toFixed(1)}
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 col-span-2 md:col-span-1">
+      <p class="text-sm text-gray-600 mb-1">Total Bids</p>
+      <p class="text-3xl font-bold text-primary-600">{mockBids.length}</p>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <form method="GET" action="/admin/installers" class="flex gap-4">
+      <div class="flex-1">
+        <label for="search" class="block text-sm font-medium text-gray-700 mb-2">
+          Search Installers
+        </label>
+        <input
+          type="text"
+          id="search"
+          name="search"
+          value={searchQuery}
+          placeholder="Search by name or email..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        />
+      </div>
+      <div class="flex items-end gap-2">
+        <button
+          type="submit"
+          class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium"
+        >
+          Search
+        </button>
+        {searchQuery && (
+          <a
+            href="/admin/installers"
+            class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Clear
+          </a>
+        )}
+      </div>
+    </form>
+  </div>
+
+  <!-- Installers Grid -->
+  {paginatedInstallers.length > 0 ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        paginatedInstallers.map((installer, index) => {
+          // Use UI Avatars API for person avatars
+          const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(installer.name)}&background=random&size=128&bold=true`;
+
+          return (
+        <div class={`bg-white rounded-lg shadow-sm border p-6 hover:border-primary-500 transition-colors duration-200 ${installer.flagged ? 'border-red-500 bg-red-50' : 'border-gray-200'}`} data-installer-id={installer.id}>
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-start space-x-3">
+              <img
+                src={avatarUrl}
+                alt={`${installer.name} avatar`}
+                class="w-12 h-12 rounded-full"
+                loading="lazy"
+              />
+              <div>
+                <div class="flex items-center gap-2">
+                  <a href={`/admin/installers/${installer.id}`} class="block text-lg font-semibold text-gray-900 mb-1 hover:text-primary-600">
+                    {installer.name}
+                  </a>
+                  {installer.flagged && (
+                    <span class="px-2 py-0.5 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                      Flagged
+                    </span>
+                  )}
+                </div>
+                <div class="flex items-center text-sm text-gray-600">
+                  <svg class="w-4 h-4 mr-1 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span class="font-medium">{installer.rating}</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="flag-btn p-2 rounded-lg transition-colors duration-200"
+                class:list={[installer.flagged ? 'text-red-600 hover:bg-red-100' : 'text-gray-400 hover:bg-gray-100']}
+                data-installer-id={installer.id}
+                data-flagged={installer.flagged}
+                title={installer.flagged ? 'Unflag installer' : 'Flag installer'}
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+                </svg>
+              </button>
+              <button
+                class="delete-btn p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
+                data-installer-id={installer.id}
+                title="Delete installer"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <a href={`mailto:${installer.email}`} class="hover:text-primary-600">
+                {installer.email}
+              </a>
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                />
+              </svg>
+              <a href={`tel:${installer.phone}`} class="hover:text-primary-600">
+                {installer.phone}
+              </a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+            <div class="text-center">
+              <div class="text-xl font-bold text-gray-900">{installer.completedProjects}</div>
+              <div class="text-xs text-gray-500">Projects</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xl font-bold text-primary-600">{installer.totalBids}</div>
+              <div class="text-xs text-gray-500">Total Bids</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xl font-bold text-green-600">{installer.acceptedBids}</div>
+              <div class="text-xs text-gray-500">Accepted</div>
+            </div>
+          </div>
+        </div>
+          );
+        })
+      }
+    </div>
+  ) : (
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+      <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No installers found</h3>
+      <p class="text-gray-600 mb-6">No installers match your search. Try a different query.</p>
+      <a href="/admin/installers" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 inline-block">
+        Clear Search
+      </a>
+    </div>
+  )}
+
+  <!-- Pagination -->
+  {totalPages > 1 && (
+    <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-600">
+        Showing {startIndex + 1} to {Math.min(endIndex, totalInstallers)} of {totalInstallers} installers
+      </div>
+      <div class="flex items-center flex-wrap justify-center gap-2">
+        {currentPage > 1 && (
+          <a
+            href={`/admin/installers?page=${currentPage - 1}${searchQuery ? `&search=${searchQuery}` : ''}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Previous
+          </a>
+        )}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={`/admin/installers?page=${page}${searchQuery ? `&search=${searchQuery}` : ''}`}
+            class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              page === currentPage
+                ? 'bg-primary-600 text-white'
+                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </a>
+        ))}
+        {currentPage < totalPages && (
+          <a
+            href={`/admin/installers?page=${currentPage + 1}${searchQuery ? `&search=${searchQuery}` : ''}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Next
+          </a>
+        )}
+      </div>
+    </div>
+  )}
+</AdminLayout>
+
+<script>
+  // Flag/Unflag installer
+  const flagButtons = document.querySelectorAll('.flag-btn');
+  flagButtons.forEach((btn) => {
+    btn.addEventListener('click', function () {
+      const installerId = (this as HTMLElement).dataset.installerId;
+      const isFlagged = (this as HTMLElement).dataset.flagged === 'true';
+      const action = isFlagged ? 'Unflag' : 'Flag';
+
+      if (confirm(`${action} this installer?`)) {
+        alert(`${action} installer ${installerId} - This would call /api/admin/installers/${installerId}/flag POST with flagged: ${!isFlagged}`);
+
+        // Update UI
+        const card = document.querySelector(`[data-installer-id="${installerId}"]`);
+        if (card) {
+          if (isFlagged) {
+            // Unflag
+            card.classList.remove('border-red-500', 'bg-red-50');
+            card.classList.add('border-gray-200');
+            const flagBadge = card.querySelector('.flex.items-center.gap-2 span');
+            if (flagBadge) flagBadge.remove();
+            (this as HTMLElement).classList.remove('text-red-600', 'hover:bg-red-100');
+            (this as HTMLElement).classList.add('text-gray-400', 'hover:bg-gray-100');
+            (this as HTMLElement).dataset.flagged = 'false';
+            (this as HTMLElement).title = 'Flag installer';
+          } else {
+            // Flag
+            card.classList.add('border-red-500', 'bg-red-50');
+            card.classList.remove('border-gray-200');
+            const nameContainer = card.querySelector('.flex.items-center.gap-2');
+            if (nameContainer && !nameContainer.querySelector('span')) {
+              const badge = document.createElement('span');
+              badge.className = 'px-2 py-0.5 text-xs font-medium bg-red-100 text-red-800 rounded-full';
+              badge.textContent = 'Flagged';
+              nameContainer.appendChild(badge);
+            }
+            (this as HTMLElement).classList.add('text-red-600', 'hover:bg-red-100');
+            (this as HTMLElement).classList.remove('text-gray-400', 'hover:bg-gray-100');
+            (this as HTMLElement).dataset.flagged = 'true';
+            (this as HTMLElement).title = 'Unflag installer';
+          }
+        }
+      }
+    });
+  });
+
+  // Delete installer
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach((btn) => {
+    btn.addEventListener('click', function () {
+      const installerId = (this as HTMLElement).dataset.installerId;
+
+      if (confirm('Are you sure you want to delete this installer? This action cannot be undone.')) {
+        alert(`Delete installer ${installerId} - This would call /api/admin/installers/${installerId} DELETE`);
+
+        // Remove card from UI
+        const card = document.querySelector(`[data-installer-id="${installerId}"]`);
+        if (card) {
+          card.remove();
+        }
+      }
+    });
+  });
+</script>

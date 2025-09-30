@@ -1,0 +1,415 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Add New Project">
+  <div class="mb-8">
+    <div class="flex items-center space-x-4 mb-4">
+      <a
+        href="/admin/projects"
+        class="text-gray-600 hover:text-gray-900 transition-colors duration-200"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </a>
+      <h1 class="text-3xl font-bold text-gray-900">Add New Project</h1>
+    </div>
+    <p class="text-gray-600">Create a new project for installers to bid on</p>
+  </div>
+
+  <form id="project-form" class="space-y-6">
+    <!-- Basic Information -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+          <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+            Project Title *
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            placeholder="e.g., Residential Solar Installation - 10kW System"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+            Project Description *
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            rows="4"
+            placeholder="Detailed description of the project requirements..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="projectType" class="block text-sm font-medium text-gray-700 mb-2">
+            Project Type *
+          </label>
+          <select
+            id="projectType"
+            name="projectType"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          >
+            <option value="">Select Type</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
+            Location *
+          </label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            required
+            placeholder="e.g., Toronto, ON"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="estimatedValue" class="block text-sm font-medium text-gray-700 mb-2">
+            Estimated Value *
+          </label>
+          <input
+            type="text"
+            id="estimatedValue"
+            name="estimatedValue"
+            required
+            placeholder="e.g., $15,000 - $20,000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="deadline" class="block text-sm font-medium text-gray-700 mb-2">
+            Bid Deadline *
+          </label>
+          <input
+            type="date"
+            id="deadline"
+            name="deadline"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+          <select
+            id="status"
+            name="status"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          >
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Technical Specifications</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="systemSize" class="block text-sm font-medium text-gray-700 mb-2">
+            System Size *
+          </label>
+          <input
+            type="text"
+            id="systemSize"
+            name="systemSize"
+            required
+            placeholder="e.g., 10kW"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="panelCount" class="block text-sm font-medium text-gray-700 mb-2">
+            Panel Count *
+          </label>
+          <input
+            type="number"
+            id="panelCount"
+            name="panelCount"
+            required
+            placeholder="e.g., 32"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="roofType" class="block text-sm font-medium text-gray-700 mb-2">
+            Roof Type *
+          </label>
+          <input
+            type="text"
+            id="roofType"
+            name="roofType"
+            required
+            placeholder="e.g., Asphalt Shingle"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="roofPitch" class="block text-sm font-medium text-gray-700 mb-2">
+            Roof Pitch *
+          </label>
+          <input
+            type="text"
+            id="roofPitch"
+            name="roofPitch"
+            required
+            placeholder="e.g., 6:12"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="utilityCompany" class="block text-sm font-medium text-gray-700 mb-2">
+            Utility Company *
+          </label>
+          <input
+            type="text"
+            id="utilityCompany"
+            name="utilityCompany"
+            required
+            placeholder="e.g., Toronto Hydro"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="electricalPanelSize" class="block text-sm font-medium text-gray-700 mb-2">
+            Electrical Panel Size *
+          </label>
+          <input
+            type="text"
+            id="electricalPanelSize"
+            name="electricalPanelSize"
+            required
+            placeholder="e.g., 200A"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Equipment Details -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Equipment Details</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="panels" class="block text-sm font-medium text-gray-700 mb-2">
+            Solar Panels *
+          </label>
+          <input
+            type="text"
+            id="panels"
+            name="panels"
+            required
+            placeholder="e.g., 32x Canadian Solar 315W Panels"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="inverter" class="block text-sm font-medium text-gray-700 mb-2">
+            Inverter *
+          </label>
+          <input
+            type="text"
+            id="inverter"
+            name="inverter"
+            required
+            placeholder="e.g., Enphase IQ7+ Microinverters"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="mounting" class="block text-sm font-medium text-gray-700 mb-2">
+            Mounting System *
+          </label>
+          <input
+            type="text"
+            id="mounting"
+            name="mounting"
+            required
+            placeholder="e.g., IronRidge XR Rail System"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="battery" class="block text-sm font-medium text-gray-700 mb-2">
+            Battery Storage
+          </label>
+          <input
+            type="text"
+            id="battery"
+            name="battery"
+            placeholder="e.g., Tesla Powerwall 2"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="monitoring" class="block text-sm font-medium text-gray-700 mb-2">
+            Monitoring System *
+          </label>
+          <input
+            type="text"
+            id="monitoring"
+            name="monitoring"
+            required
+            placeholder="e.g., Enphase Envoy Gateway"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirements -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Special Requirements</h2>
+      <div id="requirements-container" class="space-y-3">
+        <div class="requirement-item flex items-center space-x-2">
+          <input
+            type="text"
+            name="requirements[]"
+            placeholder="Enter a requirement"
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+          <button
+            type="button"
+            class="remove-requirement px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="add-requirement"
+        class="mt-3 px-4 py-2 text-sm text-primary-600 hover:bg-primary-50 rounded-lg transition-colors duration-200 flex items-center"
+      >
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"
+          ></path>
+        </svg>
+        Add Requirement
+      </button>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+      <a
+        href="/admin/projects"
+        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+      >
+        Cancel
+      </a>
+      <button
+        type="submit"
+        class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium"
+      >
+        Create Project
+      </button>
+    </div>
+  </form>
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('project-form');
+    const requirementsContainer = document.getElementById('requirements-container');
+    const addRequirementBtn = document.getElementById('add-requirement');
+
+    // Add requirement
+    addRequirementBtn?.addEventListener('click', function () {
+      const requirementItem = document.createElement('div');
+      requirementItem.className = 'requirement-item flex items-center space-x-2';
+      requirementItem.innerHTML = `
+        <input
+          type="text"
+          name="requirements[]"
+          placeholder="Enter a requirement"
+          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        />
+        <button
+          type="button"
+          class="remove-requirement px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      `;
+      requirementsContainer?.appendChild(requirementItem);
+    });
+
+    // Remove requirement
+    requirementsContainer?.addEventListener('click', function (e) {
+      const target = e.target as HTMLElement;
+      if (
+        target.closest('.remove-requirement') &&
+        requirementsContainer.querySelectorAll('.requirement-item').length > 1
+      ) {
+        target.closest('.requirement-item')?.remove();
+      }
+    });
+
+    // Form submission
+    form?.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form as HTMLFormElement);
+      const projectData: any = {};
+
+      // Basic fields
+      formData.forEach((value, key) => {
+        if (key !== 'requirements[]') {
+          projectData[key] = value;
+        }
+      });
+
+      // Requirements array
+      const requirements = formData.getAll('requirements[]').filter((r) => r !== '');
+      projectData.requirements = requirements;
+
+      // In production, this would POST to /api/admin/projects
+      console.log('Project Data:', projectData);
+      alert('Project created successfully!\n\nIn production, this would POST to: /api/admin/projects');
+
+      // Redirect to projects list
+      window.location.href = '/admin/projects';
+    });
+  });
+</script>

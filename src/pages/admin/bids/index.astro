@@ -1,0 +1,416 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { mockBids } from '../../../data/mockBids.js';
+import { mockProjects } from '../../../data/mockProjects.js';
+
+const ITEMS_PER_PAGE = 10;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const sortedBids = mockBids.sort((a, b) => new Date(b.submittedDate).getTime() - new Date(a.submittedDate).getTime());
+const totalBids = sortedBids.length;
+const totalPages = Math.ceil(totalBids / ITEMS_PER_PAGE);
+const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+const endIndex = startIndex + ITEMS_PER_PAGE;
+const paginatedBids = sortedBids.slice(startIndex, endIndex);
+---
+
+<AdminLayout title="All Bids">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">All Bids</h1>
+    <p class="text-gray-600">View and manage all installer bids across all projects</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Total Bids</p>
+      <p class="text-3xl font-bold text-gray-900">{mockBids.length}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Pending</p>
+      <p class="text-3xl font-bold text-yellow-600">
+        {mockBids.filter((b) => b.status === 'Pending').length}
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Accepted</p>
+      <p class="text-3xl font-bold text-green-600">
+        {mockBids.filter((b) => b.status === 'Accepted').length}
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <p class="text-sm text-gray-600 mb-1">Rejected</p>
+      <p class="text-3xl font-bold text-red-600">
+        {mockBids.filter((b) => b.status === 'Rejected').length}
+      </p>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-2">
+          Status
+        </label>
+        <select
+          id="status-filter"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+      <div>
+        <label for="project-filter" class="block text-sm font-medium text-gray-700 mb-2">
+          Project
+        </label>
+        <select
+          id="project-filter"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        >
+          <option value="">All Projects</option>
+          {
+            mockProjects.map((project) => (
+              <option value={project.id}>
+                #{project.id} - {project.title}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+      <div>
+        <label for="installer-filter" class="block text-sm font-medium text-gray-700 mb-2">
+          Installer
+        </label>
+        <input
+          type="text"
+          id="installer-filter"
+          placeholder="Search installer..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        />
+      </div>
+      <div class="flex items-end">
+        <button
+          id="clear-filters"
+          class="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+        >
+          Clear Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Card View -->
+  <div class="lg:hidden space-y-4">
+    {
+      paginatedBids.map((bid) => {
+        const project = mockProjects.find((p) => p.id === bid.projectId);
+        return (
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div class="flex-1">
+                <a
+                  href={`/admin/projects/${bid.projectId}/bids`}
+                  class="text-lg font-semibold text-gray-900 hover:text-primary-600"
+                >
+                  #{project?.id} - {project?.title.substring(0, 40)}...
+                </a>
+                <p class="text-sm text-gray-600 mt-1">Bid #{bid.id}</p>
+              </div>
+              <span
+                class={`px-2 py-1 text-xs font-medium rounded-full ${
+                  bid.status === 'Accepted'
+                    ? 'bg-green-100 text-green-800'
+                    : bid.status === 'Rejected'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
+                }`}
+              >
+                {bid.status}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <p class="text-xs text-gray-500">Installer</p>
+                <p class="text-sm font-medium text-gray-900">{bid.installerName}</p>
+                <p class="text-xs text-gray-600">⭐ {bid.installerRating}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Bid Amount</p>
+                <p class="text-lg font-bold text-primary-600">{bid.bidAmount}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Timeline</p>
+                <p class="text-sm font-medium text-gray-900">{bid.timeline}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Submitted</p>
+                <p class="text-sm font-medium text-gray-900">{new Date(bid.submittedDate).toLocaleDateString()}</p>
+              </div>
+              <div class="col-span-2">
+                <p class="text-xs text-gray-500">Location</p>
+                <p class="text-sm font-medium text-gray-900">{project?.location}</p>
+              </div>
+            </div>
+
+            <a
+              href={`/admin/projects/${bid.projectId}/bids`}
+              class="block w-full text-center px-4 py-2 bg-primary-50 text-primary-600 rounded-lg hover:bg-primary-100 transition-colors duration-200 text-sm font-medium"
+            >
+              View Details
+            </a>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <!-- Desktop Table View -->
+  <div class="hidden lg:block bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Bid ID
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Project
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Installer
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Bid Amount
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Timeline
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Status
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Submitted
+            </th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200" id="bids-table-body">
+          {
+            paginatedBids.map((bid) => {
+                const project = mockProjects.find((p) => p.id === bid.projectId);
+                return (
+                  <tr
+                    class="hover:bg-gray-50 bid-row"
+                    data-bid-id={bid.id}
+                    data-status={bid.status.toLowerCase()}
+                    data-project-id={bid.projectId}
+                    data-installer={bid.installerName.toLowerCase()}
+                  >
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      #{bid.id}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium text-gray-900">
+                        <a
+                          href={`/admin/projects/${bid.projectId}/bids`}
+                          class="text-primary-600 hover:text-primary-900"
+                        >
+                          #{project?.id} - {project?.title.substring(0, 40)}...
+                        </a>
+                      </div>
+                      <div class="text-sm text-gray-500">{project?.location}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium text-gray-900">{bid.installerName}</div>
+                      <div class="text-sm text-gray-500">
+                        ⭐ {bid.installerRating} • {bid.installerCompletedProjects} projects
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                      {bid.bidAmount}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {bid.timeline}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class={`px-2 py-1 text-xs font-medium rounded-full ${
+                          bid.status === 'Accepted'
+                            ? 'bg-green-100 text-green-800'
+                            : bid.status === 'Rejected'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                        }`}
+                      >
+                        {bid.status}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {new Date(bid.submittedDate).toLocaleDateString()}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a
+                        href={`/admin/projects/${bid.projectId}/bids`}
+                        class="text-primary-600 hover:text-primary-900"
+                      >
+                        View Details
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  {totalPages > 1 && (
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-600">
+        Showing {startIndex + 1} to {Math.min(endIndex, totalBids)} of {totalBids} bids
+      </div>
+      <div class="flex items-center flex-wrap justify-center gap-2">
+        {currentPage > 1 && (
+          <a
+            href={`/admin/bids?page=${currentPage - 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Previous
+          </a>
+        )}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <a
+            href={`/admin/bids?page=${page}`}
+            class={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              page === currentPage
+                ? 'bg-primary-600 text-white'
+                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </a>
+        ))}
+        {currentPage < totalPages && (
+          <a
+            href={`/admin/bids?page=${currentPage + 1}`}
+            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+          >
+            Next
+          </a>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- Empty State -->
+  <div id="empty-state" class="hidden bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+    <svg
+      class="w-16 h-16 mx-auto text-gray-400 mb-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+      />
+    </svg>
+    <h3 class="text-lg font-medium text-gray-900 mb-2">No bids found</h3>
+    <p class="text-gray-600 mb-6">No bids match your current filters. Try adjusting your search.</p>
+    <button
+      id="clear-filters-empty"
+      class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200"
+    >
+      Clear Filters
+    </button>
+  </div>
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const statusFilter = document.getElementById('status-filter') as HTMLSelectElement;
+    const projectFilter = document.getElementById('project-filter') as HTMLSelectElement;
+    const installerFilter = document.getElementById('installer-filter') as HTMLInputElement;
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const clearFiltersEmptyBtn = document.getElementById('clear-filters-empty');
+    const bidRows = document.querySelectorAll('.bid-row');
+    const emptyState = document.getElementById('empty-state');
+    const tableBody = document.getElementById('bids-table-body');
+
+    function applyFilters() {
+      const statusValue = statusFilter.value.toLowerCase();
+      const projectValue = projectFilter.value;
+      const installerValue = installerFilter.value.toLowerCase();
+
+      let visibleCount = 0;
+
+      bidRows.forEach((row) => {
+        const bidStatus = (row as HTMLElement).dataset.status?.toLowerCase() || '';
+        const bidProjectId = (row as HTMLElement).dataset.projectId || '';
+        const bidInstaller = (row as HTMLElement).dataset.installer?.toLowerCase() || '';
+
+        let show = true;
+
+        if (statusValue && bidStatus !== statusValue) {
+          show = false;
+        }
+        if (projectValue && bidProjectId !== projectValue) {
+          show = false;
+        }
+        if (installerValue && !bidInstaller.includes(installerValue)) {
+          show = false;
+        }
+
+        (row as HTMLElement).style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      // Show/hide empty state
+      if (visibleCount === 0) {
+        tableBody?.parentElement?.parentElement?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+      } else {
+        tableBody?.parentElement?.parentElement?.classList.remove('hidden');
+        emptyState?.classList.add('hidden');
+      }
+    }
+
+    function clearFilters() {
+      statusFilter.value = '';
+      projectFilter.value = '';
+      installerFilter.value = '';
+      applyFilters();
+    }
+
+    statusFilter.addEventListener('change', applyFilters);
+    projectFilter.addEventListener('change', applyFilters);
+    installerFilter.addEventListener('input', applyFilters);
+    clearFiltersBtn?.addEventListener('click', clearFilters);
+    clearFiltersEmptyBtn?.addEventListener('click', clearFilters);
+  });
+</script>

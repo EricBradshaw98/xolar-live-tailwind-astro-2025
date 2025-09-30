@@ -5,10 +5,10 @@ export interface Props {
   showInProduction?: boolean;
 }
 
-const { 
+const {
   position = 'top-right',
   theme = 'auto',
-  showInProduction = true  // Enable in production for Xolar
+  showInProduction = true, // Enable in production for Xolar
 } = Astro.props;
 ---
 
@@ -22,7 +22,7 @@ const {
       new window.PerformanceDashboard({
         position,
         theme,
-        showInProduction
+        showInProduction,
       });
     }
   });
@@ -49,17 +49,21 @@ const {
 
       observeLCP() {
         if (!('PerformanceObserver' in window)) return;
-        
+
         const observer = new PerformanceObserver((list) => {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
-          
-          this.dispatchMetric('LCP', lastEntry.startTime, this.getRating('LCP', lastEntry.startTime));
+
+          this.dispatchMetric(
+            'LCP',
+            lastEntry.startTime,
+            this.getRating('LCP', lastEntry.startTime)
+          );
         });
 
         try {
           observer.observe({ entryTypes: ['largest-contentful-paint'] });
-        } catch (e) {
+        } catch (_e) {
           // LCP not supported
         }
       }
@@ -69,14 +73,18 @@ const {
 
         const observer = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          entries.forEach(entry => {
-            this.dispatchMetric('FID', entry.processingStart - entry.startTime, this.getRating('FID', entry.processingStart - entry.startTime));
+          entries.forEach((entry) => {
+            this.dispatchMetric(
+              'FID',
+              entry.processingStart - entry.startTime,
+              this.getRating('FID', entry.processingStart - entry.startTime)
+            );
           });
         });
 
         try {
           observer.observe({ entryTypes: ['first-input'], buffered: true });
-        } catch (e) {
+        } catch (_e) {
           // FID not supported
         }
       }
@@ -90,15 +98,17 @@ const {
 
         const observer = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          
-          entries.forEach(entry => {
+
+          entries.forEach((entry) => {
             if (!entry.hadRecentInput) {
               const firstSessionEntry = sessionEntries[0];
               const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
 
-              if (sessionValue &&
-                  entry.startTime - lastSessionEntry.startTime < 1000 &&
-                  entry.startTime - firstSessionEntry.startTime < 5000) {
+              if (
+                sessionValue &&
+                entry.startTime - lastSessionEntry.startTime < 1000 &&
+                entry.startTime - firstSessionEntry.startTime < 5000
+              ) {
                 sessionValue += entry.value;
                 sessionEntries.push(entry);
               } else {
@@ -116,7 +126,7 @@ const {
 
         try {
           observer.observe({ entryTypes: ['layout-shift'], buffered: true });
-        } catch (e) {
+        } catch (_e) {
           // CLS not supported
         }
       }
@@ -126,7 +136,7 @@ const {
 
         const observer = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          entries.forEach(entry => {
+          entries.forEach((entry) => {
             if (entry.name === 'first-contentful-paint') {
               this.dispatchMetric('FCP', entry.startTime, this.getRating('FCP', entry.startTime));
             }
@@ -135,7 +145,7 @@ const {
 
         try {
           observer.observe({ entryTypes: ['paint'], buffered: true });
-        } catch (e) {
+        } catch (_e) {
           // FCP not supported
         }
       }
@@ -152,11 +162,11 @@ const {
 
       getRating(metric, value) {
         const thresholds = {
-          'LCP': [2500, 4000],
-          'FID': [100, 300],
-          'CLS': [0.1, 0.25],
-          'FCP': [1800, 3000],
-          'TTFB': [800, 1800]
+          LCP: [2500, 4000],
+          FID: [100, 300],
+          CLS: [0.1, 0.25],
+          FCP: [1800, 3000],
+          TTFB: [800, 1800],
         };
 
         const [good, poor] = thresholds[metric] || [0, 0];
@@ -171,17 +181,21 @@ const {
           value,
           rating,
           id: `${name}-${Date.now()}`,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
 
         // Dispatch event for performance dashboard
-        window.dispatchEvent(new CustomEvent('webvitals', {
-          detail: metric
-        }));
+        window.dispatchEvent(
+          new CustomEvent('webvitals', {
+            detail: metric,
+          })
+        );
 
         // Log to console in development
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-          console.log(`[WebVitals] ${name}: ${Math.round(value)}${name === 'CLS' ? '' : 'ms'} (${rating})`);
+          console.log(
+            `[WebVitals] ${name}: ${Math.round(value)}${name === 'CLS' ? '' : 'ms'} (${rating})`
+          );
         }
       }
     }

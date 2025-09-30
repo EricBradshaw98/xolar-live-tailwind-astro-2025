@@ -1,5 +1,5 @@
 /* Tailwind CSS directives */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-primary-50: #fef9ec;
@@ -30,7 +30,7 @@
     outline: 2px solid #f7a813;
     outline-offset: 2px;
   }
-  
+
   /* Better focus styles for buttons and interactive elements */
   button:focus,
   a:focus,
@@ -39,26 +39,26 @@
   textarea:focus {
     box-shadow: 0 0 0 3px rgba(247, 168, 19, 0.3);
   }
-  
+
   /* Remove focus styles for mouse users but keep for keyboard users */
   *:focus:not(:focus-visible) {
     outline: none;
     box-shadow: none;
   }
-  
+
   *:focus-visible {
     outline: 2px solid #f7a813;
     outline-offset: 2px;
     box-shadow: 0 0 0 3px rgba(247, 168, 19, 0.3);
   }
-  
+
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     :root {
       --tw-text-opacity: 1;
     }
   }
-  
+
   /* Reduce motion for users who prefer it */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -70,7 +70,7 @@
       scroll-behavior: auto !important;
     }
   }
-  
+
   /* Better text rendering */
   html {
     text-rendering: optimizeLegibility;
@@ -84,12 +84,19 @@
     line-height: 1.6;
     color: #111827;
     background-color: #ffffff;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
     font-family: 'Montserrat', system-ui, sans-serif;
   }
 
   /* Better heading styles */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 600;
     line-height: 1.25;
     color: #111827;
@@ -116,19 +123,22 @@
   textarea {
     color: #111827;
     background-color: #ffffff;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease;
   }
 
   /* Error state styles */
   .error,
-  [aria-invalid="true"] {
+  [aria-invalid='true'] {
     border-color: #ef4444 !important;
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
   }
 
   /* Success state styles */
   .success,
-  [aria-invalid="false"].validated {
+  [aria-invalid='false'].validated {
     border-color: #22c55e !important;
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
   }
@@ -148,7 +158,7 @@
     white-space: nowrap !important;
     border: 0 !important;
   }
-  
+
   .sr-only:focus {
     position: static !important;
     width: auto !important;
@@ -159,7 +169,7 @@
     clip: auto !important;
     white-space: normal !important;
   }
-  
+
   /* Skip link styles */
   .skip-link {
     position: absolute;
@@ -173,11 +183,11 @@
     transition: top 0.3s;
     z-index: 1000;
   }
-  
+
   .skip-link:focus {
     top: 6px;
   }
-  
+
   /* Button styles */
   .btn {
     display: inline-flex;
@@ -191,7 +201,9 @@
     transition: colors 200ms;
     outline: none;
     &:focus {
-      box-shadow: 0 0 0 2px #f7a813, 0 0 0 4px rgba(247, 168, 19, 0.3);
+      box-shadow:
+        0 0 0 2px #f7a813,
+        0 0 0 4px rgba(247, 168, 19, 0.3);
     }
     &:disabled {
       opacity: 0.5;
@@ -249,7 +261,9 @@
   .card {
     background-color: white;
     border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
     transition: colors 300ms;
   }
@@ -270,19 +284,19 @@
     padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
     --tw-aspect-w: 16;
   }
-  
+
   .aspect-h-9 {
     --tw-aspect-h: 9;
   }
-  
+
   .aspect-h-10 {
     --tw-aspect-h: 10;
   }
-  
+
   .aspect-h-12 {
     --tw-aspect-h: 12;
   }
-  
+
   .aspect-w-16 > * {
     position: absolute;
     height: 100%;
@@ -292,18 +306,18 @@
     bottom: 0;
     left: 0;
   }
-  
+
   /* High contrast text utilities */
   .text-high-contrast {
     color: #111827;
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   }
-  
+
   /* High contrast mode */
   .high-contrast {
     filter: contrast(150%) !important;
   }
-  
+
   /* Reduce motion styles */
   .reduce-motion *,
   .reduce-motion *::before,
@@ -313,14 +327,14 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   /* Enhanced focus styles */
   .enhanced-focus *:focus {
     outline: 3px solid #f7a813 !important;
     outline-offset: 3px !important;
     box-shadow: 0 0 0 6px rgba(247, 168, 19, 0.3) !important;
   }
-  
+
   /* Scroll Animation Classes */
   .scroll-animate {
     opacity: 0;
@@ -350,20 +364,44 @@
   }
 
   /* Staggered animation delays */
-  .scroll-animate:nth-child(1) { transition-delay: 0ms; }
-  .scroll-animate:nth-child(2) { transition-delay: 100ms; }
-  .scroll-animate:nth-child(3) { transition-delay: 200ms; }
-  .scroll-animate:nth-child(4) { transition-delay: 300ms; }
-  .scroll-animate:nth-child(5) { transition-delay: 400ms; }
-  .scroll-animate:nth-child(6) { transition-delay: 500ms; }
+  .scroll-animate:nth-child(1) {
+    transition-delay: 0ms;
+  }
+  .scroll-animate:nth-child(2) {
+    transition-delay: 100ms;
+  }
+  .scroll-animate:nth-child(3) {
+    transition-delay: 200ms;
+  }
+  .scroll-animate:nth-child(4) {
+    transition-delay: 300ms;
+  }
+  .scroll-animate:nth-child(5) {
+    transition-delay: 400ms;
+  }
+  .scroll-animate:nth-child(6) {
+    transition-delay: 500ms;
+  }
 
   /* Section-level staggered delays */
-  .section-animate-1 { transition-delay: 0ms; }
-  .section-animate-2 { transition-delay: 200ms; }
-  .section-animate-3 { transition-delay: 400ms; }
-  .section-animate-4 { transition-delay: 600ms; }
-  .section-animate-5 { transition-delay: 800ms; }
-  .section-animate-6 { transition-delay: 1000ms; }
+  .section-animate-1 {
+    transition-delay: 0ms;
+  }
+  .section-animate-2 {
+    transition-delay: 200ms;
+  }
+  .section-animate-3 {
+    transition-delay: 400ms;
+  }
+  .section-animate-4 {
+    transition-delay: 600ms;
+  }
+  .section-animate-5 {
+    transition-delay: 800ms;
+  }
+  .section-animate-6 {
+    transition-delay: 1000ms;
+  }
 
   /* Animation utilities with reduced motion support */
   .animate-fade-in {

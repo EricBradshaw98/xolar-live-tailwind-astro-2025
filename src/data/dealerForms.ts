@@ -53,24 +53,27 @@ export const dealerForms: DealerForm[] = [
     slug: 'residential-lead',
     title: 'Residential Solar Lead Submission',
     shortTitle: 'Residential Lead',
-    description: 'Submit high-quality residential solar leads with detailed customer information and requirements.',
-    metaDescription: 'Professional residential solar lead submission portal for authorized Xolar dealers and partners.',
+    description:
+      'Submit high-quality residential solar leads with detailed customer information and requirements.',
+    metaDescription:
+      'Professional residential solar lead submission portal for authorized Xolar dealers and partners.',
     category: 'residential',
     icon: 'home',
     color: {
       primary: 'blue',
       secondary: 'indigo',
-      accent: 'green'
+      accent: 'green',
     },
     hero: {
       title: 'Residential Solar Lead Portal',
-      subtitle: 'Transform homeowner interest into confirmed installations with our streamlined lead management system.',
+      subtitle:
+        'Transform homeowner interest into confirmed installations with our streamlined lead management system.',
       benefits: [
         'Instant lead validation and scoring',
         'Real-time credit pre-qualification',
         'Automated follow-up scheduling',
-        'Commission tracking dashboard'
-      ]
+        'Commission tracking dashboard',
+      ],
     },
     formFields: [
       {
@@ -82,14 +85,14 @@ export const dealerForms: DealerForm[] = [
             type: 'text',
             placeholder: 'John & Sarah Smith',
             required: true,
-            validation: 'Must be at least 2 characters'
+            validation: 'Must be at least 2 characters',
           },
           {
             name: 'customerEmail',
             label: 'Customer Email',
             type: 'email',
             placeholder: 'customer@email.com',
-            required: true
+            required: true,
           },
           {
             name: 'customerPhone',
@@ -97,7 +100,7 @@ export const dealerForms: DealerForm[] = [
             type: 'tel',
             placeholder: '(555) 123-4567',
             required: true,
-            validation: 'Must be valid Canadian phone number'
+            validation: 'Must be valid Canadian phone number',
           },
           {
             name: 'propertyAddress',
@@ -105,9 +108,9 @@ export const dealerForms: DealerForm[] = [
             type: 'text',
             placeholder: '123 Main Street, City, Province, Postal Code',
             required: true,
-            description: 'Full property address including postal code'
-          }
-        ]
+            description: 'Full property address including postal code',
+          },
+        ],
       },
       {
         section: 'Property Details',
@@ -123,8 +126,8 @@ export const dealerForms: DealerForm[] = [
               'Townhouse/Row House',
               'Condominium',
               'Mobile/Manufactured Home',
-              'Other'
-            ]
+              'Other',
+            ],
           },
           {
             name: 'roofType',
@@ -138,8 +141,8 @@ export const dealerForms: DealerForm[] = [
               'Slate',
               'Flat/Membrane',
               'Cedar Shakes',
-              'Unknown'
-            ]
+              'Unknown',
+            ],
           },
           {
             name: 'roofAge',
@@ -152,8 +155,8 @@ export const dealerForms: DealerForm[] = [
               '10-15 years',
               '15-20 years',
               'More than 20 years',
-              'Unknown'
-            ]
+              'Unknown',
+            ],
           },
           {
             name: 'monthlyBill',
@@ -161,16 +164,16 @@ export const dealerForms: DealerForm[] = [
             type: 'number',
             placeholder: '250',
             required: true,
-            description: 'Enter amount in CAD ($)'
+            description: 'Enter amount in CAD ($)',
           },
           {
             name: 'shadingConcerns',
             label: 'Shading Concerns',
             type: 'checkbox',
             required: false,
-            description: 'Check if property has significant shading from trees, buildings, etc.'
-          }
-        ]
+            description: 'Check if property has significant shading from trees, buildings, etc.',
+          },
+        ],
       },
       {
         section: 'Customer Preferences',
@@ -185,8 +188,8 @@ export const dealerForms: DealerForm[] = [
               'Within 3 months',
               'Within 6 months',
               'Within 1 year',
-              'Just researching'
-            ]
+              'Just researching',
+            ],
           },
           {
             name: 'budgetRange',
@@ -199,8 +202,8 @@ export const dealerForms: DealerForm[] = [
               '$25,000 - $35,000',
               '$35,000 - $50,000',
               'Over $50,000',
-              'Need financing options'
-            ]
+              'Need financing options',
+            ],
           },
           {
             name: 'primaryGoal',
@@ -212,8 +215,8 @@ export const dealerForms: DealerForm[] = [
               'Environmental impact',
               'Energy independence',
               'Increase property value',
-              'Backup power during outages'
-            ]
+              'Backup power during outages',
+            ],
           },
           {
             name: 'additionalNotes',
@@ -221,9 +224,9 @@ export const dealerForms: DealerForm[] = [
             type: 'textarea',
             placeholder: 'Any special requirements, questions, or concerns...',
             required: false,
-            description: 'Include any relevant details that would help with the consultation'
-          }
-        ]
+            description: 'Include any relevant details that would help with the consultation',
+          },
+        ],
       },
       {
         section: 'Dealer Information',
@@ -233,21 +236,21 @@ export const dealerForms: DealerForm[] = [
             label: 'Your Name',
             type: 'text',
             placeholder: 'Your full name',
-            required: true
+            required: true,
           },
           {
             name: 'dealerCompany',
             label: 'Company/Organization',
             type: 'text',
             placeholder: 'Your company name',
-            required: true
+            required: true,
           },
           {
             name: 'dealerPhone',
             label: 'Your Phone Number',
             type: 'tel',
             placeholder: '(555) 123-4567',
-            required: true
+            required: true,
           },
           {
             name: 'leadSource',
@@ -262,8 +265,8 @@ export const dealerForms: DealerForm[] = [
               'Door-to-Door',
               'Social Media',
               'Advertisement',
-              'Other'
-            ]
+              'Other',
+            ],
           },
           {
             name: 'leadQuality',
@@ -274,12 +277,12 @@ export const dealerForms: DealerForm[] = [
               'Hot - Ready to move forward',
               'Warm - Interested but needs more info',
               'Cold - Early research phase',
-              'Follow-up required'
+              'Follow-up required',
             ],
-            description: 'Your assessment of customer readiness'
-          }
-        ]
-      }
+            description: 'Your assessment of customer readiness',
+          },
+        ],
+      },
     ],
     timeline: {
       title: 'Lead Processing Timeline',
@@ -288,24 +291,25 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Instant Validation',
           timeframe: 'Within 5 minutes',
-          description: 'Lead is automatically validated, scored, and entered into our CRM system'
+          description: 'Lead is automatically validated, scored, and entered into our CRM system',
         },
         {
           title: 'Customer Contact',
           timeframe: 'Within 24 hours',
-          description: 'Our team contacts the customer to schedule a consultation and verify details'
+          description:
+            'Our team contacts the customer to schedule a consultation and verify details',
         },
         {
           title: 'Site Assessment',
           timeframe: '2-5 business days',
-          description: 'Professional site evaluation and custom system design'
+          description: 'Professional site evaluation and custom system design',
         },
         {
           title: 'Proposal & Commission',
           timeframe: '3-7 business days',
-          description: 'Customer receives proposal, dealer receives commission notification'
-        }
-      ]
+          description: 'Customer receives proposal, dealer receives commission notification',
+        },
+      ],
     },
     incentives: {
       title: 'Dealer Incentives',
@@ -313,43 +317,46 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Base Commission',
           description: 'Earn competitive commission on every closed deal',
-          value: 'Up to 8%'
+          value: 'Up to 8%',
         },
         {
           title: 'Volume Bonus',
           description: 'Additional bonus for monthly lead targets',
-          value: '$500-2000'
+          value: '$500-2000',
         },
         {
           title: 'Quality Premium',
           description: 'Extra commission for high-converting leads',
-          value: '+25%'
-        }
-      ]
-    }
+          value: '+25%',
+        },
+      ],
+    },
   },
   {
     slug: 'commercial-lead',
     title: 'Commercial Solar Lead Submission',
     shortTitle: 'Commercial Lead',
-    description: 'Submit commercial and industrial solar opportunities with comprehensive business analysis.',
-    metaDescription: 'Professional commercial solar lead submission portal for business opportunities and industrial projects.',
+    description:
+      'Submit commercial and industrial solar opportunities with comprehensive business analysis.',
+    metaDescription:
+      'Professional commercial solar lead submission portal for business opportunities and industrial projects.',
     category: 'commercial',
     icon: 'building',
     color: {
       primary: 'emerald',
       secondary: 'teal',
-      accent: 'blue'
+      accent: 'blue',
     },
     hero: {
       title: 'Commercial Solar Lead Portal',
-      subtitle: 'Unlock enterprise-level solar opportunities with detailed business case development and project management.',
+      subtitle:
+        'Unlock enterprise-level solar opportunities with detailed business case development and project management.',
       benefits: [
         'Enterprise-grade project analysis',
         'Financial modeling and ROI calculation',
         'Utility interconnection support',
-        'Premium commission structure'
-      ]
+        'Premium commission structure',
+      ],
     },
     formFields: [
       {
@@ -360,44 +367,44 @@ export const dealerForms: DealerForm[] = [
             label: 'Business Name',
             type: 'text',
             placeholder: 'ABC Manufacturing Inc.',
-            required: true
+            required: true,
           },
           {
             name: 'contactName',
             label: 'Primary Contact Name',
             type: 'text',
             placeholder: 'John Smith, Facilities Manager',
-            required: true
+            required: true,
           },
           {
             name: 'contactTitle',
             label: 'Contact Title/Role',
             type: 'text',
             placeholder: 'Facilities Manager, CFO, Owner, etc.',
-            required: true
+            required: true,
           },
           {
             name: 'contactEmail',
             label: 'Contact Email',
             type: 'email',
             placeholder: 'contact@business.com',
-            required: true
+            required: true,
           },
           {
             name: 'contactPhone',
             label: 'Contact Phone',
             type: 'tel',
             placeholder: '(555) 123-4567',
-            required: true
+            required: true,
           },
           {
             name: 'businessAddress',
             label: 'Business Address',
             type: 'text',
             placeholder: '123 Industrial Blvd, City, Province',
-            required: true
-          }
-        ]
+            required: true,
+          },
+        ],
       },
       {
         section: 'Facility Details',
@@ -417,8 +424,8 @@ export const dealerForms: DealerForm[] = [
               'Educational Institution',
               'Healthcare Facility',
               'Data Center',
-              'Other Industrial'
-            ]
+              'Other Industrial',
+            ],
           },
           {
             name: 'facilitySize',
@@ -431,8 +438,8 @@ export const dealerForms: DealerForm[] = [
               '25,000 - 50,000 sq ft',
               '50,000 - 100,000 sq ft',
               '100,000 - 250,000 sq ft',
-              'Over 250,000 sq ft'
-            ]
+              'Over 250,000 sq ft',
+            ],
           },
           {
             name: 'roofCondition',
@@ -444,8 +451,8 @@ export const dealerForms: DealerForm[] = [
               'Good (5-10 years old)',
               'Fair (10-20 years old)',
               'Poor (Needs replacement)',
-              'Unknown'
-            ]
+              'Unknown',
+            ],
           },
           {
             name: 'monthlyDemand',
@@ -453,7 +460,7 @@ export const dealerForms: DealerForm[] = [
             type: 'number',
             placeholder: '500',
             required: true,
-            description: 'Peak electrical demand in kilowatts'
+            description: 'Peak electrical demand in kilowatts',
           },
           {
             name: 'monthlyUsage',
@@ -461,7 +468,7 @@ export const dealerForms: DealerForm[] = [
             type: 'number',
             placeholder: '50000',
             required: true,
-            description: 'Monthly kilowatt-hours consumed'
+            description: 'Monthly kilowatt-hours consumed',
           },
           {
             name: 'electricBill',
@@ -469,9 +476,9 @@ export const dealerForms: DealerForm[] = [
             type: 'number',
             placeholder: '8500',
             required: true,
-            description: 'Enter amount in CAD ($)'
-          }
-        ]
+            description: 'Enter amount in CAD ($)',
+          },
+        ],
       },
       {
         section: 'Project Requirements',
@@ -487,8 +494,8 @@ export const dealerForms: DealerForm[] = [
               '250 kW - 500 kW',
               '500 kW - 1 MW',
               '1 MW - 5 MW',
-              'Over 5 MW'
-            ]
+              'Over 5 MW',
+            ],
           },
           {
             name: 'installationType',
@@ -501,8 +508,8 @@ export const dealerForms: DealerForm[] = [
               'Carport/Canopy',
               'Building integrated',
               'Mixed installation',
-              'Not sure/Need assessment'
-            ]
+              'Not sure/Need assessment',
+            ],
           },
           {
             name: 'timeline',
@@ -514,8 +521,8 @@ export const dealerForms: DealerForm[] = [
               'Within 6 months',
               'Within 1 year',
               '1-2 years',
-              'Long-term planning (2+ years)'
-            ]
+              'Long-term planning (2+ years)',
+            ],
           },
           {
             name: 'budgetRange',
@@ -529,8 +536,8 @@ export const dealerForms: DealerForm[] = [
               '$1M - $2M',
               '$2M - $5M',
               'Over $5M',
-              'Need financing options'
-            ]
+              'Need financing options',
+            ],
           },
           {
             name: 'decisionMaker',
@@ -542,10 +549,10 @@ export const dealerForms: DealerForm[] = [
               'I influence the decision',
               'I need to involve others',
               'Board/Committee decision',
-              'Corporate approval required'
-            ]
-          }
-        ]
+              'Corporate approval required',
+            ],
+          },
+        ],
       },
       {
         section: 'Additional Information',
@@ -555,24 +562,25 @@ export const dealerForms: DealerForm[] = [
             label: 'Current Electricity Provider',
             type: 'text',
             placeholder: 'Ontario Hydro, BC Hydro, etc.',
-            required: false
+            required: false,
           },
           {
             name: 'specialRequirements',
             label: 'Special Requirements',
             type: 'textarea',
-            placeholder: 'Environmental certifications, union requirements, specific equipment needs, etc.',
-            required: false
+            placeholder:
+              'Environmental certifications, union requirements, specific equipment needs, etc.',
+            required: false,
           },
           {
             name: 'dealerNotes',
             label: 'Dealer Notes',
             type: 'textarea',
             placeholder: 'Additional context, relationship details, competitive landscape, etc.',
-            required: false
-          }
-        ]
-      }
+            required: false,
+          },
+        ],
+      },
     ],
     timeline: {
       title: 'Commercial Project Timeline',
@@ -581,24 +589,25 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Initial Assessment',
           timeframe: 'Within 48 hours',
-          description: 'Lead qualification, utility analysis, and preliminary feasibility review'
+          description: 'Lead qualification, utility analysis, and preliminary feasibility review',
         },
         {
           title: 'Site Evaluation',
           timeframe: '1-2 weeks',
-          description: 'Detailed engineering assessment, structural analysis, and utility coordination'
+          description:
+            'Detailed engineering assessment, structural analysis, and utility coordination',
         },
         {
           title: 'Proposal Development',
           timeframe: '2-3 weeks',
-          description: 'Custom system design, financial modeling, and comprehensive proposal'
+          description: 'Custom system design, financial modeling, and comprehensive proposal',
         },
         {
           title: 'Project Execution',
           timeframe: '3-6 months',
-          description: 'Permitting, installation, commissioning, and dealer commission payment'
-        }
-      ]
+          description: 'Permitting, installation, commissioning, and dealer commission payment',
+        },
+      ],
     },
     incentives: {
       title: 'Commercial Dealer Rewards',
@@ -606,43 +615,46 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Premium Commission',
           description: 'Higher commission rates for commercial projects',
-          value: 'Up to 12%'
+          value: 'Up to 12%',
         },
         {
           title: 'Project Milestone Bonuses',
           description: 'Bonuses at key project milestones',
-          value: '$2K-10K'
+          value: '$2K-10K',
         },
         {
           title: 'Referral Network',
           description: 'Access to exclusive commercial referral network',
-          value: 'Ongoing leads'
-        }
-      ]
-    }
+          value: 'Ongoing leads',
+        },
+      ],
+    },
   },
   {
     slug: 'consultation-request',
     title: 'Expert Consultation Request',
     shortTitle: 'Consultation',
-    description: 'Request a specialized consultation for complex solar projects or unique customer requirements.',
-    metaDescription: 'Request expert consultation for complex solar installations and specialized customer requirements.',
+    description:
+      'Request a specialized consultation for complex solar projects or unique customer requirements.',
+    metaDescription:
+      'Request expert consultation for complex solar installations and specialized customer requirements.',
     category: 'consultation',
     icon: 'users',
     color: {
       primary: 'purple',
       secondary: 'violet',
-      accent: 'pink'
+      accent: 'pink',
     },
     hero: {
       title: 'Expert Consultation Portal',
-      subtitle: 'Access specialized expertise for complex projects, unique installations, or challenging customer requirements.',
+      subtitle:
+        'Access specialized expertise for complex projects, unique installations, or challenging customer requirements.',
       benefits: [
         'Direct access to solar engineers',
         'Custom solution development',
         'Technical feasibility analysis',
-        'Regulatory compliance guidance'
-      ]
+        'Regulatory compliance guidance',
+      ],
     },
     formFields: [
       {
@@ -661,8 +673,8 @@ export const dealerForms: DealerForm[] = [
               'Product selection consultation',
               'Troubleshooting existing system',
               'Upgrade/expansion planning',
-              'Other specialized need'
-            ]
+              'Other specialized need',
+            ],
           },
           {
             name: 'urgency',
@@ -674,18 +686,19 @@ export const dealerForms: DealerForm[] = [
               'Urgent - Within 24 hours',
               'High Priority - Within 3 days',
               'Normal - Within 1 week',
-              'Low Priority - Within 2 weeks'
-            ]
+              'Low Priority - Within 2 weeks',
+            ],
           },
           {
             name: 'projectDescription',
             label: 'Project Description',
             type: 'textarea',
-            placeholder: 'Provide detailed description of the project, challenges, or specific requirements...',
+            placeholder:
+              'Provide detailed description of the project, challenges, or specific requirements...',
             required: true,
-            description: 'Include as much detail as possible for accurate consultation'
-          }
-        ]
+            description: 'Include as much detail as possible for accurate consultation',
+          },
+        ],
       },
       {
         section: 'Customer/Project Information',
@@ -695,14 +708,14 @@ export const dealerForms: DealerForm[] = [
             label: 'Customer Name',
             type: 'text',
             placeholder: 'Customer or company name',
-            required: true
+            required: true,
           },
           {
             name: 'projectLocation',
             label: 'Project Location',
             type: 'text',
             placeholder: 'City, Province or full address',
-            required: true
+            required: true,
           },
           {
             name: 'projectType',
@@ -717,8 +730,8 @@ export const dealerForms: DealerForm[] = [
               'Agricultural',
               'Government/Municipal',
               'Non-profit/Educational',
-              'Other'
-            ]
+              'Other',
+            ],
           },
           {
             name: 'systemSize',
@@ -732,10 +745,10 @@ export const dealerForms: DealerForm[] = [
               '100-500 kW',
               '500 kW - 1 MW',
               'Over 1 MW',
-              'Unknown/TBD'
-            ]
-          }
-        ]
+              'Unknown/TBD',
+            ],
+          },
+        ],
       },
       {
         section: 'Technical Details',
@@ -745,23 +758,23 @@ export const dealerForms: DealerForm[] = [
             label: 'Specific Challenges',
             type: 'textarea',
             placeholder: 'Describe any specific technical, regulatory, or financial challenges...',
-            required: false
+            required: false,
           },
           {
             name: 'currentSolution',
             label: 'Current/Proposed Solution',
             type: 'textarea',
             placeholder: 'What solutions have been considered or attempted?',
-            required: false
+            required: false,
           },
           {
             name: 'requiredOutcome',
             label: 'Required Outcome',
             type: 'textarea',
             placeholder: 'What specific outcome or resolution do you need?',
-            required: true
-          }
-        ]
+            required: true,
+          },
+        ],
       },
       {
         section: 'Dealer Information',
@@ -770,25 +783,25 @@ export const dealerForms: DealerForm[] = [
             name: 'dealerName',
             label: 'Your Name',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'dealerCompany',
             label: 'Company',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'dealerPhone',
             label: 'Your Phone',
             type: 'tel',
-            required: true
+            required: true,
           },
           {
             name: 'dealerEmail',
             label: 'Your Email',
             type: 'email',
-            required: true
+            required: true,
           },
           {
             name: 'preferredContact',
@@ -800,11 +813,11 @@ export const dealerForms: DealerForm[] = [
               'Email',
               'Video conference',
               'In-person meeting',
-              'No preference'
-            ]
-          }
-        ]
-      }
+              'No preference',
+            ],
+          },
+        ],
+      },
     ],
     timeline: {
       title: 'Consultation Process',
@@ -813,24 +826,25 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Request Review',
           timeframe: 'Within 4 hours',
-          description: 'Expert team reviews request and assigns appropriate specialist'
+          description: 'Expert team reviews request and assigns appropriate specialist',
         },
         {
           title: 'Initial Contact',
           timeframe: 'Same or next business day',
-          description: 'Specialist contacts you to schedule consultation and gather additional details'
+          description:
+            'Specialist contacts you to schedule consultation and gather additional details',
         },
         {
           title: 'Expert Consultation',
           timeframe: '1-3 business days',
-          description: 'Detailed consultation session with recommendations and action plan'
+          description: 'Detailed consultation session with recommendations and action plan',
         },
         {
           title: 'Follow-up Support',
           timeframe: 'Ongoing',
-          description: 'Continued support through project implementation and completion'
-        }
-      ]
+          description: 'Continued support through project implementation and completion',
+        },
+      ],
     },
     incentives: {
       title: 'Consultation Benefits',
@@ -838,43 +852,46 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Expert Access',
           description: 'Direct access to solar engineers and specialists',
-          value: 'No charge'
+          value: 'No charge',
         },
         {
           title: 'Custom Solutions',
           description: 'Tailored recommendations for unique challenges',
-          value: 'Included'
+          value: 'Included',
         },
         {
           title: 'Implementation Support',
           description: 'Ongoing support through project completion',
-          value: 'Full service'
-        }
-      ]
-    }
+          value: 'Full service',
+        },
+      ],
+    },
   },
   {
     slug: 'emergency-service',
     title: 'Emergency Service Request',
     shortTitle: 'Emergency',
-    description: 'Submit urgent requests for system failures, safety issues, or time-critical solar service needs.',
-    metaDescription: 'Emergency solar service request portal for urgent system failures and time-critical service needs.',
+    description:
+      'Submit urgent requests for system failures, safety issues, or time-critical solar service needs.',
+    metaDescription:
+      'Emergency solar service request portal for urgent system failures and time-critical service needs.',
     category: 'emergency',
     icon: 'exclamation',
     color: {
       primary: 'red',
       secondary: 'orange',
-      accent: 'yellow'
+      accent: 'yellow',
     },
     hero: {
       title: 'Emergency Service Portal',
-      subtitle: 'Immediate response for critical solar system issues, safety concerns, and urgent service requirements.',
+      subtitle:
+        'Immediate response for critical solar system issues, safety concerns, and urgent service requirements.',
       benefits: [
         '24/7 emergency response team',
         'Priority technician dispatch',
         'Safety issue rapid response',
-        'System downtime minimization'
-      ]
+        'System downtime minimization',
+      ],
     },
     formFields: [
       {
@@ -893,8 +910,8 @@ export const dealerForms: DealerForm[] = [
               'Electrical/Fire safety concern',
               'Equipment malfunction',
               'Grid interconnection issue',
-              'Other urgent issue'
-            ]
+              'Other urgent issue',
+            ],
           },
           {
             name: 'severityLevel',
@@ -905,16 +922,17 @@ export const dealerForms: DealerForm[] = [
               'Critical - Life safety risk',
               'High - Property damage risk',
               'Medium - System completely down',
-              'Low - Partial system impact'
-            ]
+              'Low - Partial system impact',
+            ],
           },
           {
             name: 'issueDescription',
             label: 'Detailed Issue Description',
             type: 'textarea',
-            placeholder: 'Describe the problem in detail, including any symptoms, error messages, or visible damage...',
+            placeholder:
+              'Describe the problem in detail, including any symptoms, error messages, or visible damage...',
             required: true,
-            description: 'Include all relevant details to help our emergency response team'
+            description: 'Include all relevant details to help our emergency response team',
           },
           {
             name: 'whenOccurred',
@@ -926,10 +944,10 @@ export const dealerForms: DealerForm[] = [
               'Within the last hour',
               'Within the last 4 hours',
               'Within the last 24 hours',
-              'More than 24 hours ago'
-            ]
-          }
-        ]
+              'More than 24 hours ago',
+            ],
+          },
+        ],
       },
       {
         section: 'System Information',
@@ -938,21 +956,21 @@ export const dealerForms: DealerForm[] = [
             name: 'customerName',
             label: 'Customer Name',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'systemAddress',
             label: 'System Location Address',
             type: 'text',
             placeholder: 'Full address where the solar system is located',
-            required: true
+            required: true,
           },
           {
             name: 'systemSize',
             label: 'System Size (if known)',
             type: 'text',
             placeholder: 'e.g., 10kW, 25 panels, etc.',
-            required: false
+            required: false,
           },
           {
             name: 'installationDate',
@@ -965,22 +983,17 @@ export const dealerForms: DealerForm[] = [
               '2-5 years ago',
               '5-10 years ago',
               'More than 10 years ago',
-              'Unknown'
-            ]
+              'Unknown',
+            ],
           },
           {
             name: 'warrantyStatus',
             label: 'Warranty Status',
             type: 'select',
             required: false,
-            options: [
-              'Still under warranty',
-              'Warranty expired',
-              'Unknown',
-              'Not applicable'
-            ]
-          }
-        ]
+            options: ['Still under warranty', 'Warranty expired', 'Unknown', 'Not applicable'],
+          },
+        ],
       },
       {
         section: 'Contact Information',
@@ -989,7 +1002,7 @@ export const dealerForms: DealerForm[] = [
             name: 'primaryContact',
             label: 'Primary Contact Name',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'emergencyPhone',
@@ -997,14 +1010,14 @@ export const dealerForms: DealerForm[] = [
             type: 'tel',
             placeholder: '(555) 123-4567',
             required: true,
-            description: 'Phone number where you can be reached immediately'
+            description: 'Phone number where you can be reached immediately',
           },
           {
             name: 'alternatePhone',
             label: 'Alternate Phone',
             type: 'tel',
             placeholder: '(555) 123-4567',
-            required: false
+            required: false,
           },
           {
             name: 'onSiteContact',
@@ -1016,18 +1029,19 @@ export const dealerForms: DealerForm[] = [
               'Yes - Someone else is on site',
               'No - But I can be there within 1 hour',
               'No - But I can be there within 4 hours',
-              'No - Remote access only'
-            ]
+              'No - Remote access only',
+            ],
           },
           {
             name: 'accessInstructions',
             label: 'Site Access Instructions',
             type: 'textarea',
-            placeholder: 'Gate codes, key locations, security procedures, contact person for access, etc.',
+            placeholder:
+              'Gate codes, key locations, security procedures, contact person for access, etc.',
             required: false,
-            description: 'How can our technician access the site if you are not present?'
-          }
-        ]
+            description: 'How can our technician access the site if you are not present?',
+          },
+        ],
       },
       {
         section: 'Dealer Information',
@@ -1036,20 +1050,20 @@ export const dealerForms: DealerForm[] = [
             name: 'dealerName',
             label: 'Your Name',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'dealerCompany',
             label: 'Company',
             type: 'text',
-            required: true
+            required: true,
           },
           {
             name: 'dealerPhone',
             label: 'Your Direct Phone',
             type: 'tel',
             required: true,
-            description: 'Direct line for emergency coordination'
+            description: 'Direct line for emergency coordination',
           },
           {
             name: 'relationshipToCustomer',
@@ -1062,11 +1076,11 @@ export const dealerForms: DealerForm[] = [
               'Sales representative',
               'Property manager',
               'Emergency contact',
-              'Other'
-            ]
-          }
-        ]
-      }
+              'Other',
+            ],
+          },
+        ],
+      },
     ],
     timeline: {
       title: 'Emergency Response Timeline',
@@ -1075,24 +1089,26 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Immediate Triage',
           timeframe: 'Within 15 minutes',
-          description: 'Emergency team reviews request and determines response level'
+          description: 'Emergency team reviews request and determines response level',
         },
         {
           title: 'Emergency Dispatch',
           timeframe: '30 minutes - 4 hours',
-          description: 'Technician dispatched based on severity (Critical: 30 min, High: 2 hours, Medium: 4 hours)'
+          description:
+            'Technician dispatched based on severity (Critical: 30 min, High: 2 hours, Medium: 4 hours)',
         },
         {
           title: 'On-Site Response',
           timeframe: 'Based on location',
-          description: 'Certified technician arrives on-site for assessment and immediate safety measures'
+          description:
+            'Certified technician arrives on-site for assessment and immediate safety measures',
         },
         {
           title: 'Resolution',
           timeframe: 'Same day priority',
-          description: 'Problem resolution with same-day priority, temporary measures if needed'
-        }
-      ]
+          description: 'Problem resolution with same-day priority, temporary measures if needed',
+        },
+      ],
     },
     incentives: {
       title: 'Emergency Service Guarantee',
@@ -1100,31 +1116,31 @@ export const dealerForms: DealerForm[] = [
         {
           title: 'Response Time',
           description: 'Guaranteed response within committed timeframes',
-          value: 'SLA backed'
+          value: 'SLA backed',
         },
         {
           title: 'Safety Priority',
           description: 'Life safety issues get immediate attention',
-          value: 'First priority'
+          value: 'First priority',
         },
         {
           title: '24/7 Availability',
           description: 'Emergency service available around the clock',
-          value: 'Always on'
-        }
-      ]
-    }
-  }
+          value: 'Always on',
+        },
+      ],
+    },
+  },
 ];
 
 export function getDealerFormBySlug(slug: string): DealerForm | undefined {
-  return dealerForms.find(form => form.slug === slug);
+  return dealerForms.find((form) => form.slug === slug);
 }
 
 export function getAllDealerFormSlugs(): string[] {
-  return dealerForms.map(form => form.slug);
+  return dealerForms.map((form) => form.slug);
 }
 
 export function getDealerFormsByCategory(category: string): DealerForm[] {
-  return dealerForms.filter(form => form.category === category);
+  return dealerForms.filter((form) => form.category === category);
 }

@@ -1,0 +1,464 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Add New Installer">
+  <div class="mb-8">
+    <div class="flex items-center space-x-4 mb-4">
+      <a
+        href="/admin/installers"
+        class="text-gray-600 hover:text-gray-900 transition-colors duration-200"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </a>
+      <h1 class="text-3xl font-bold text-gray-900">Add New Installer</h1>
+    </div>
+    <p class="text-gray-600">Register a new certified solar installer to the network</p>
+  </div>
+
+  <form id="installer-form" class="space-y-6">
+    <!-- Company Information -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Company Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+          <label for="companyName" class="block text-sm font-medium text-gray-700 mb-2">
+            Company Name *
+          </label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            required
+            placeholder="e.g., SolarTech Pro Inc."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="businessNumber" class="block text-sm font-medium text-gray-700 mb-2">
+            Business Number
+          </label>
+          <input
+            type="text"
+            id="businessNumber"
+            name="businessNumber"
+            placeholder="e.g., 123456789RC0001"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="yearsInBusiness" class="block text-sm font-medium text-gray-700 mb-2">
+            Years in Business *
+          </label>
+          <input
+            type="number"
+            id="yearsInBusiness"
+            name="yearsInBusiness"
+            required
+            min="0"
+            placeholder="e.g., 5"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="companyDescription" class="block text-sm font-medium text-gray-700 mb-2">
+            Company Description
+          </label>
+          <textarea
+            id="companyDescription"
+            name="companyDescription"
+            rows="3"
+            placeholder="Brief description of the company and services..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="primaryContactName" class="block text-sm font-medium text-gray-700 mb-2">
+            Primary Contact Name *
+          </label>
+          <input
+            type="text"
+            id="primaryContactName"
+            name="primaryContactName"
+            required
+            placeholder="e.g., John Smith"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="contactTitle" class="block text-sm font-medium text-gray-700 mb-2">
+            Contact Title
+          </label>
+          <input
+            type="text"
+            id="contactTitle"
+            name="contactTitle"
+            placeholder="e.g., Operations Manager"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            Email Address *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="e.g., contact@solartechpro.com"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number *
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            placeholder="e.g., (416) 555-0123"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+            Business Address *
+          </label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            required
+            placeholder="e.g., 123 Main Street, Toronto, ON M5V 1A1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="website" class="block text-sm font-medium text-gray-700 mb-2">
+            Website URL
+          </label>
+          <input
+            type="url"
+            id="website"
+            name="website"
+            placeholder="e.g., https://solartechpro.com"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="serviceArea" class="block text-sm font-medium text-gray-700 mb-2">
+            Primary Service Area *
+          </label>
+          <input
+            type="text"
+            id="serviceArea"
+            name="serviceArea"
+            required
+            placeholder="e.g., Greater Toronto Area"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Qualifications & Certifications -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Qualifications & Certifications</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="licenseNumber" class="block text-sm font-medium text-gray-700 mb-2">
+            Electrical Contractor License *
+          </label>
+          <input
+            type="text"
+            id="licenseNumber"
+            name="licenseNumber"
+            required
+            placeholder="e.g., EC-12345"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="insuranceProvider" class="block text-sm font-medium text-gray-700 mb-2">
+            Insurance Provider *
+          </label>
+          <input
+            type="text"
+            id="insuranceProvider"
+            name="insuranceProvider"
+            required
+            placeholder="e.g., ABC Insurance Ltd."
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="insuranceCoverage" class="block text-sm font-medium text-gray-700 mb-2">
+            Liability Coverage Amount *
+          </label>
+          <input
+            type="text"
+            id="insuranceCoverage"
+            name="insuranceCoverage"
+            required
+            placeholder="e.g., $2,000,000"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="insuranceExpiry" class="block text-sm font-medium text-gray-700 mb-2">
+            Insurance Expiry Date *
+          </label>
+          <input
+            type="date"
+            id="insuranceExpiry"
+            name="insuranceExpiry"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Certifications (check all that apply)
+          </label>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="NABCEP"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">NABCEP Certified</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="Tesla"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">Tesla Certified</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="Enphase"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">Enphase Certified</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="SolarEdge"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">SolarEdge Certified</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="CSA"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">CSA Approved</span>
+            </label>
+            <label class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name="certifications[]"
+                value="BBB"
+                class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700">BBB Accredited</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance & Ratings -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Performance & Ratings</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label for="completedProjects" class="block text-sm font-medium text-gray-700 mb-2">
+            Completed Projects *
+          </label>
+          <input
+            type="number"
+            id="completedProjects"
+            name="completedProjects"
+            required
+            min="0"
+            value="0"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="rating" class="block text-sm font-medium text-gray-700 mb-2">
+            Initial Rating (out of 5) *
+          </label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            required
+            min="1"
+            max="5"
+            step="0.1"
+            value="4.5"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+            Account Status *
+          </label>
+          <select
+            id="status"
+            name="status"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          >
+            <option value="Active">Active</option>
+            <option value="Pending Approval">Pending Approval</option>
+            <option value="Suspended">Suspended</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Access -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Account Access</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="clerkUserId" class="block text-sm font-medium text-gray-700 mb-2">
+            Clerk User ID
+          </label>
+          <input
+            type="text"
+            id="clerkUserId"
+            name="clerkUserId"
+            placeholder="Leave blank if account not yet created"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+          <p class="mt-1 text-sm text-gray-500">
+            This will be automatically assigned when the installer registers
+          </p>
+        </div>
+
+        <div>
+          <label for="joinDate" class="block text-sm font-medium text-gray-700 mb-2">
+            Join Date *
+          </label>
+          <input
+            type="date"
+            id="joinDate"
+            name="joinDate"
+            required
+            value={new Date().toISOString().split('T')[0]}
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Internal Notes</h2>
+      <div>
+        <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">
+          Admin Notes (not visible to installer)
+        </label>
+        <textarea
+          id="notes"
+          name="notes"
+          rows="4"
+          placeholder="Internal notes about this installer..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+      <a
+        href="/admin/installers"
+        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+      >
+        Cancel
+      </a>
+      <button
+        type="submit"
+        class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium"
+      >
+        Add Installer
+      </button>
+    </div>
+  </form>
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('installer-form');
+
+    form?.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form as HTMLFormElement);
+      const installerData: any = {};
+
+      formData.forEach((value, key) => {
+        if (key === 'certifications[]') {
+          if (!installerData.certifications) {
+            installerData.certifications = [];
+          }
+          installerData.certifications.push(value);
+        } else {
+          installerData[key] = value;
+        }
+      });
+
+      console.log('New Installer Data:', installerData);
+      alert(
+        'Installer added successfully!\n\nIn production, this would POST to: /api/admin/installers'
+      );
+
+      window.location.href = '/admin/installers';
+    });
+  });
+</script>

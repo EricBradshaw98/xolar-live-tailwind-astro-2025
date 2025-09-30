@@ -99,10 +99,10 @@ const statusCounts = {
   <section class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-20 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-left">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           My <span class="text-primary-600">Bids</span>
         </h1>
-        <p class="text-xl text-gray-600 max-w-3xl mb-8">
+        <p class="text-lg text-gray-600 max-w-3xl mb-8">
           Track and manage your submitted bids on solar installation projects.
         </p>
 
@@ -326,7 +326,7 @@ const statusCounts = {
     function applyFilters() {
       const statusValue = statusFilter.value;
       const dateValue = dateFilter.value;
-      const hasFilters = statusValue || dateValue;
+      const _hasFilters = statusValue || dateValue;
 
       let visibleCount = 0;
 
