@@ -1,0 +1,27 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout title="SSO Callback - Xolar">
+    <main class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="mt-4 text-gray-600">Completing sign in...</p>
+                <p class="mt-2 text-sm text-gray-500">You will be redirected automatically.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple redirect handling for SSO callback
+        // Clerk will handle the authentication state automatically via middleware
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect_url') || '/installers/projects';
+
+        // Small delay to show the loading message, then redirect
+        setTimeout(() => {
+            window.location.href = redirectUrl;
+        }, 2000);
+    </script>
+</Layout>

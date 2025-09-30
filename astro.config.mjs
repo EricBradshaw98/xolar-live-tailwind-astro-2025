@@ -20,11 +20,19 @@ export default defineConfig({
   }),
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    }
   },
 
   integrations: [
-    clerk(),
+    clerk({
+      afterSignInUrl: '/installers/projects',
+      afterSignUpUrl: '/installers/projects',
+      signInUrl: '/installers/login',
+      signUpUrl: '/installers/register'
+    }),
     react(),
     sitemap(),
     partytown()

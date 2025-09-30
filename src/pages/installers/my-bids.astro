@@ -1,0 +1,422 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SignedIn, SignedOut } from '@clerk/astro/components';
+
+const seoData = {
+  title: "My Bids - Xolar Installers",
+  description: "View and manage your submitted bids on solar installation projects.",
+  keywords: "installer bids, project bids, solar installation, bid management",
+};
+
+// Mock bid data - in a real app, this would come from your database
+const mockBids = [
+  {
+    id: 1,
+    projectId: 1,
+    projectTitle: "Residential Solar Installation - Toronto",
+    projectLocation: "Toronto, ON",
+    bidAmount: 45000,
+    timeline: "2-4 weeks",
+    submittedDate: "2024-01-15",
+    status: "pending",
+    systemSize: "8.5kW",
+    estimatedValue: "$50,000 - $60,000"
+  },
+  {
+    id: 2,
+    projectId: 3,
+    projectTitle: "Commercial Solar Array - Vancouver",
+    projectLocation: "Vancouver, BC",
+    bidAmount: 125000,
+    timeline: "1-2 months",
+    submittedDate: "2024-01-10",
+    status: "accepted",
+    systemSize: "50kW",
+    estimatedValue: "$120,000 - $150,000"
+  },
+  {
+    id: 3,
+    projectId: 5,
+    projectTitle: "Residential Solar + Battery - Calgary",
+    projectLocation: "Calgary, AB",
+    bidAmount: 32000,
+    timeline: "1-2 weeks",
+    submittedDate: "2024-01-08",
+    status: "rejected",
+    systemSize: "6kW",
+    estimatedValue: "$30,000 - $40,000"
+  },
+  {
+    id: 4,
+    projectId: 7,
+    projectTitle: "Rooftop Solar Installation - Ottawa",
+    projectLocation: "Ottawa, ON",
+    bidAmount: 28500,
+    timeline: "2-4 weeks",
+    submittedDate: "2024-01-05",
+    status: "pending",
+    systemSize: "5.5kW",
+    estimatedValue: "$25,000 - $35,000"
+  }
+];
+
+// Get status counts
+const statusCounts = {
+  pending: mockBids.filter(bid => bid.status === 'pending').length,
+  accepted: mockBids.filter(bid => bid.status === 'accepted').length,
+  rejected: mockBids.filter(bid => bid.status === 'rejected').length,
+  total: mockBids.length
+};
+---
+
+<Layout
+  title={seoData.title}
+  description={seoData.description}
+  keywords={seoData.keywords}
+>
+  <!-- Redirect to login if not signed in -->
+  <SignedOut>
+    <div class="min-h-screen flex items-center justify-center bg-gray-50">
+      <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md text-center">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Login Required</h2>
+          <p class="text-gray-600 mb-6">You must be logged in to view your bids.</p>
+          <div class="space-y-3">
+            <a href="/installers/login" class="block w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
+              Sign In
+            </a>
+            <a href="/installers/register" class="block w-full border border-primary-600 text-primary-600 py-2 px-4 rounded-lg hover:bg-primary-50 transition-colors">
+              Register
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </SignedOut>
+
+  <SignedIn>
+    <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-20 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-left">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          My <span class="text-primary-600">Bids</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mb-8">
+          Track and manage your submitted bids on solar installation projects.
+        </p>
+
+        <!-- Bid Statistics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl">
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+            <div class="text-2xl font-bold text-gray-900">{statusCounts.total}</div>
+            <div class="text-sm text-gray-500">Total Bids</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+            <div class="text-2xl font-bold text-yellow-600">{statusCounts.pending}</div>
+            <div class="text-sm text-gray-500">Pending</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+            <div class="text-2xl font-bold text-green-600">{statusCounts.accepted}</div>
+            <div class="text-sm text-gray-500">Accepted</div>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+            <div class="text-2xl font-bold text-red-600">{statusCounts.rejected}</div>
+            <div class="text-sm text-gray-500">Rejected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters Section -->
+  <section class="py-8 bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div class="flex flex-col sm:flex-row gap-4 items-center">
+          <!-- Status Filter -->
+          <select id="status-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+          </select>
+
+          <!-- Date Filter -->
+          <select id="date-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Dates</option>
+            <option value="week">Last Week</option>
+            <option value="month">Last Month</option>
+            <option value="quarter">Last Quarter</option>
+          </select>
+
+          <!-- Clear Filters Button -->
+          <button id="clear-filters" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            Clear Filters
+          </button>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <span class="text-sm text-gray-600" id="bid-count">
+            Showing {mockBids.length} bids
+          </span>
+          <a href="/installers/projects" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+            Browse New Projects
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bids List -->
+  <section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-4" id="bids-container">
+        {mockBids.map((bid) => (
+          <div class={`bid-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden`}
+               data-status={bid.status}
+               data-date={bid.submittedDate}>
+            <div class="p-6">
+              <div class="flex items-start justify-between">
+
+                <!-- Left Section: Project Info -->
+                <div class="flex-1 mr-6">
+                  <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-xl font-bold text-gray-900">{bid.projectTitle}</h3>
+                      <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+                        bid.status === 'pending'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : bid.status === 'accepted'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center text-gray-600 mb-3">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>{bid.projectLocation}</span>
+                  </div>
+
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span class="text-gray-500">System Size:</span>
+                      <div class="font-semibold text-gray-900">{bid.systemSize}</div>
+                    </div>
+                    <div>
+                      <span class="text-gray-500">Project Value:</span>
+                      <div class="font-semibold text-gray-900">{bid.estimatedValue}</div>
+                    </div>
+                    <div>
+                      <span class="text-gray-500">Your Timeline:</span>
+                      <div class="font-semibold text-gray-900">{bid.timeline}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Middle Section: Bid Details -->
+                <div class="flex-shrink-0 text-center mr-6">
+                  <div class="text-sm text-gray-500 mb-1">Your Bid</div>
+                  <div class="text-2xl font-bold text-primary-600">${bid.bidAmount.toLocaleString()}</div>
+                  <div class="text-xs text-gray-500 mt-1">Submitted {new Date(bid.submittedDate).toLocaleDateString()}</div>
+                </div>
+
+                <!-- Right Section: Actions -->
+                <div class="flex-shrink-0 text-right">
+                  <div class="flex flex-col gap-2 min-w-[140px]">
+                    <a
+                      href={`/installers/project/${bid.projectId}`}
+                      class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 text-center font-medium text-sm"
+                    >
+                      View Project
+                    </a>
+
+                    {bid.status === 'pending' && (
+                      <button
+                        class="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors duration-200 font-medium text-sm edit-bid-btn"
+                        data-bid-id={bid.id}
+                      >
+                        Edit Bid
+                      </button>
+                    )}
+
+                    {bid.status === 'accepted' && (
+                      <span class="px-4 py-2 bg-green-100 text-green-800 rounded-lg font-medium text-sm text-center">
+                        Accepted
+                      </span>
+                    )}
+
+                    {bid.status === 'rejected' && (
+                      <button
+                        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium text-sm rebid-btn"
+                        data-project-id={bid.projectId}
+                      >
+                        Submit New Bid
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty State -->
+      <div class="py-16 text-center hidden" id="empty-state">
+        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No bids found</h3>
+        <p class="text-gray-500 mb-4">Try adjusting your filters or submit your first bid!</p>
+        <a href="/installers/projects" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200">
+          Browse Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Actions Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">
+        Ready for More Projects?
+      </h2>
+      <p class="text-xl text-gray-600 mb-8">
+        Browse available solar installation projects and grow your business with Xolar.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/installers/projects"
+          class="px-8 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200"
+        >
+          Browse Projects
+        </a>
+        <a
+          href="/installers/auth-status"
+          class="px-8 py-3 border-2 border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors duration-200"
+        >
+          Account Status
+        </a>
+      </div>
+    </div>
+  </section>
+  </SignedIn>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get elements
+    const statusFilter = document.getElementById('status-filter');
+    const dateFilter = document.getElementById('date-filter');
+    const clearFiltersBtn = document.getElementById('clear-filters');
+    const bidsContainer = document.getElementById('bids-container');
+    const bidCount = document.getElementById('bid-count');
+    const emptyState = document.getElementById('empty-state');
+
+    const allBidCards = document.querySelectorAll('.bid-card');
+
+    function applyFilters() {
+      const statusValue = statusFilter.value;
+      const dateValue = dateFilter.value;
+      const hasFilters = statusValue || dateValue;
+
+      let visibleCount = 0;
+
+      allBidCards.forEach((card) => {
+        let show = true;
+
+        // Status filter
+        if (statusValue && card.dataset.status !== statusValue) {
+          show = false;
+        }
+
+        // Date filter
+        if (dateValue && show) {
+          const bidDate = new Date(card.dataset.date);
+          const now = new Date();
+          const diffTime = now - bidDate;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          switch (dateValue) {
+            case 'week':
+              if (diffDays > 7) show = false;
+              break;
+            case 'month':
+              if (diffDays > 30) show = false;
+              break;
+            case 'quarter':
+              if (diffDays > 90) show = false;
+              break;
+          }
+        }
+
+        if (show) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Update UI
+      if (visibleCount === 0) {
+        bidCount.textContent = 'No bids found';
+        emptyState.classList.remove('hidden');
+        bidsContainer.classList.add('hidden');
+      } else {
+        bidCount.textContent = `Showing ${visibleCount} bid${visibleCount === 1 ? '' : 's'}`;
+        emptyState.classList.add('hidden');
+        bidsContainer.classList.remove('hidden');
+      }
+    }
+
+    function clearAllFilters() {
+      statusFilter.value = '';
+      dateFilter.value = '';
+      applyFilters();
+    }
+
+    // Event listeners
+    statusFilter.addEventListener('change', applyFilters);
+    dateFilter.addEventListener('change', applyFilters);
+    clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+    // Edit bid buttons
+    const editBidButtons = document.querySelectorAll('.edit-bid-btn');
+    editBidButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const bidId = this.dataset.bidId;
+        alert(`Edit bid functionality would open for bid #${bidId}. This would allow you to modify your bid amount, timeline, and other details.`);
+      });
+    });
+
+    // Rebid buttons
+    const rebidButtons = document.querySelectorAll('.rebid-btn');
+    rebidButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const projectId = this.dataset.projectId;
+        window.location.href = `/installers/project/${projectId}`;
+      });
+    });
+
+    // Initialize
+    applyFilters();
+  });
+</script>
+
+<style>
+  /* Ensure responsive grid */
+  @media (max-width: 640px) {
+    .grid-cols-2.md\\:grid-cols-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

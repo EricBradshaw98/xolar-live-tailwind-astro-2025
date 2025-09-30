@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/components';
+---
+
+<Layout title="Authentication Status - Xolar">
+    <main class="min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+            <div class="text-center">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Authentication Status</h1>
+
+                <SignedIn>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <p class="text-green-800 font-medium">✅ You are signed in!</p>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <UserButton />
+                        </div>
+
+                        <a
+                            href="/installers/projects"
+                            class="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                            Go to Projects
+                        </a>
+                    </div>
+                </SignedIn>
+
+                <SignedOut>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <p class="text-yellow-800 font-medium">⚠️ You are not signed in</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <SignInButton mode="modal">
+                                <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                    Sign In
+                                </button>
+                            </SignInButton>
+
+                            <a
+                                href="/installers/login"
+                                class="block w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+                            >
+                                Sign In Page
+                            </a>
+
+                            <a
+                                href="/installers/register"
+                                class="block w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
+                            >
+                                Register Page
+                            </a>
+                        </div>
+                    </div>
+                </SignedOut>
+            </div>
+        </div>
+    </main>
+</Layout>
