@@ -16,9 +16,10 @@ routes = [
   { pattern = "www.xolar.ca", zone_name = "xolar.ca" }
 ]
 
-[[env.production.kv_namespaces]]
-binding = "SESSION"
-id = "your-kv-namespace-id"
+# KV namespace - uncomment and set ID after creating with: npx wrangler kv namespace create SESSION --env production
+# [[env.production.kv_namespaces]]
+# binding = "SESSION"
+# id = "your-kv-namespace-id"
 
 # Production D1 Database
 [[env.production.d1_databases]]
