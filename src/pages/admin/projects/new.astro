@@ -387,7 +387,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     });
 
     // Form submission
-    form?.addEventListener('submit', function (e) {
+    form?.addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const formData = new FormData(form as HTMLFormElement);
@@ -404,12 +404,48 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       const requirements = formData.getAll('requirements[]').filter((r) => r !== '');
       projectData.requirements = requirements;
 
-      // In production, this would POST to /api/admin/projects
-      console.log('Project Data:', projectData);
-      alert('Project created successfully!\n\nIn production, this would POST to: /api/admin/projects');
+      // Disable submit button and show loading state
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Creating Project...';
+      }
 
-      // Redirect to projects list
-      window.location.href = '/admin/projects';
+      try {
+        const response = await fetch('/api/admin/projects/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(projectData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          alert(
+            `✅ Project created successfully!\n\n` +
+              `📧 ${result.emailResults.sent} installer(s) in ${result.province} have been notified.\n\n` +
+              `Project ID: #${result.projectId}`
+          );
+          window.location.href = '/admin/projects';
+        } else {
+          alert(
+            `⚠️ ${result.message || result.error || 'Failed to create project. Please try again.'}`
+          );
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Create Project';
+          }
+        }
+      } catch (error) {
+        console.error('Error creating project:', error);
+        alert('❌ Failed to create project. Please check your internet connection and try again.');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Create Project';
+        }
+      }
     });
   });
 </script>
