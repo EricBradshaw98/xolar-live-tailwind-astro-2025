@@ -6,6 +6,10 @@ import { albertaData } from '../data/locations/alberta';
 import { quebecData } from '../data/locations/quebec';
 import { saskatchewanData } from '../data/locations/saskatchewan';
 import { manitobaData } from '../data/locations/manitoba';
+import { novaScotiaData } from '../data/locations/nova-scotia';
+import { newBrunswickData } from '../data/locations/new-brunswick';
+import { newfoundlandLabradorData } from '../data/locations/newfoundland-labrador';
+import { princeEdwardIslandData } from '../data/locations/prince-edward-island';
 
 const currentYear = new Date().getFullYear();
 
@@ -40,6 +44,26 @@ const serviceAreas = [
     province: 'Manitoba',
     slug: 'manitoba',
     cities: manitobaData.cities
+  },
+  {
+    province: 'Nova Scotia',
+    slug: 'nova-scotia',
+    cities: novaScotiaData.cities
+  },
+  {
+    province: 'New Brunswick',
+    slug: 'new-brunswick',
+    cities: newBrunswickData.cities
+  },
+  {
+    province: 'Newfoundland and Labrador',
+    slug: 'newfoundland-labrador',
+    cities: newfoundlandLabradorData.cities
+  },
+  {
+    province: 'Prince Edward Island',
+    slug: 'prince-edward-island',
+    cities: princeEdwardIslandData.cities
   }
 ];
 ---
