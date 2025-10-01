@@ -14,7 +14,11 @@
       "Bash(npm run format:check:*)",
       "Bash(npm run:*)",
       "Bash(npx astro:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(wrangler kv:namespace create:*)",
+      "Bash(npx wrangler kv:namespace create:*)",
+      "Bash(npx wrangler kv namespace create:*)",
+      "Bash(npx wrangler d1 execute:*)"
     ],
     "deny": [],
     "ask": []
