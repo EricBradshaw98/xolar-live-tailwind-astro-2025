@@ -1,16 +1,29 @@
 ---
 import xolarLogo from '../assets/XOLARLARGE.webp';
-import { serviceAreas as locationPages } from '../data/serviceAreas';
+import { ontarioData } from '../data/locations/ontario';
+import { britishColumbiaData } from '../data/locations/british-columbia';
+import { albertaData } from '../data/locations/alberta';
 
 const currentYear = new Date().getFullYear();
 
-// Group location pages by province for footer display
-const serviceAreas = Array.from(new Set(locationPages.map((area) => area.province))).map(
-  (province) => ({
-    province,
-    locations: locationPages.filter((area) => area.province === province),
-  })
-);
+// Use all province location data for footer
+const serviceAreas = [
+  {
+    province: 'Ontario',
+    slug: 'ontario',
+    cities: ontarioData.cities
+  },
+  {
+    province: 'British Columbia',
+    slug: 'british-columbia',
+    cities: britishColumbiaData.cities
+  },
+  {
+    province: 'Alberta',
+    slug: 'alberta',
+    cities: albertaData.cities
+  }
+];
 ---
 
 <footer class="bg-gray-50 text-gray-900 border-t border-gray-200" role="contentinfo">
@@ -216,57 +229,69 @@ const serviceAreas = Array.from(new Set(locationPages.map((area) => area.provinc
 
     <!-- Service Areas Section -->
     <div class="border-t border-gray-700 pt-8 mb-8">
-      <h3 class="text-lg font-semibold mb-6 text-primary-600">Service Areas</h3>
+      <h3 class="text-lg font-semibold mb-6 text-primary-600">Solar Panel Installation - Service Areas</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
         {
           serviceAreas.map((area, index) => (
             <div class="service-area-container">
-              <details
-                class="bg-white border border-gray-200 rounded-lg overflow-hidden group service-area-details"
-                data-area-id={`area-${index}`}
-              >
-                <summary class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset cursor-pointer list-none service-area-summary">
-                  <span class="font-medium text-gray-900">{area.province}</span>
-                  <svg
-                    class="w-4 h-4 text-gray-500 transform transition-transform duration-200 area-chevron"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+              <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div class="flex items-center area-toggle cursor-pointer hover:bg-gray-50 transition-colors duration-200" data-area-id={`area-${index}`}>
+                  <a
+                    href={`/solar-panels/${area.slug}`}
+                    class="flex-1 px-4 py-3 font-medium text-gray-900 hover:text-primary-600 transition-colors duration-200"
+                    onclick="event.stopPropagation()"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </summary>
-                <div class="service-area-content px-4 pb-3">
+                    Solar Panels in {area.province}
+                  </a>
+                  <div class="px-3 py-3">
+                    <svg
+                      class="w-4 h-4 text-gray-500 transform transition-transform duration-300 area-chevron"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div class="service-area-content px-4 pb-3" data-content-id={`area-${index}`} style="max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease;">
                   <ul class="space-y-2">
-                    {area.locations.map((location) => (
+                    {area.cities.slice(0, 6).map((city) => (
                       <li>
                         <div class="text-sm text-gray-600">
                           <a
-                            href={`/service-areas/${location.slug}`}
+                            href={`/solar-panels/${area.slug}/${city.slug}`}
                             class="font-medium mb-1 text-gray-800 hover:text-primary-600 transition-colors duration-200"
                           >
-                            {location.city}
+                            {city.name}
                           </a>
                           <div class="text-xs text-gray-500 mt-1">
-                            {location.solarPotential} Solar Potential
+                            {city.data.solarPotential}
                           </div>
-                          <a
-                            href={`/service-areas/${location.slug}`}
-                            class="inline-block mt-1 text-xs text-primary-600 hover:text-primary-500 transition-colors duration-200"
-                          >
-                            View Details →
-                          </a>
+                          <div class="text-xs text-gray-500 mt-1">
+                            Save {city.data.averageSavings}/year
+                          </div>
                         </div>
                       </li>
                     ))}
+                    {area.cities.length > 6 && (
+                      <li class="pt-2">
+                        <a
+                          href={`/solar-panels/${area.slug}`}
+                          class="text-sm font-medium text-primary-600 hover:text-primary-700 hover:underline"
+                        >
+                          + {area.cities.length - 6} more cities →
+                        </a>
+                      </li>
+                    )}
                   </ul>
                 </div>
-              </details>
+              </div>
             </div>
           ))
         }
@@ -395,78 +420,39 @@ const serviceAreas = Array.from(new Set(locationPages.map((area) => area.provinc
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const allServiceAreas = document.querySelectorAll('.service-area-details');
+    const allToggleButtons = document.querySelectorAll('.area-toggle');
 
-    allServiceAreas.forEach((serviceArea) => {
-      const summary = serviceArea.querySelector('.service-area-summary');
-      const chevron = serviceArea.querySelector('.area-chevron');
-      const content = serviceArea.querySelector('.service-area-content');
+    allToggleButtons.forEach((button) => {
+      button.addEventListener('click', function() {
+        const areaId = this.getAttribute('data-area-id');
+        const content = document.querySelector(`[data-content-id="${areaId}"]`);
+        const chevron = this.querySelector('.area-chevron');
 
-      // Prevent default details behavior
-      summary.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+        if (!content) return;
 
-        const isCurrentlyOpen = serviceArea.hasAttribute('open');
+        const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
 
-        if (isCurrentlyOpen) {
-          // Closing animation
-          content.style.maxHeight = content.scrollHeight + 'px';
-          content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
-
-          // Force reflow
-          content.offsetHeight;
-
-          // Start closing animation
+        if (isOpen) {
+          // Collapse
           content.style.maxHeight = '0';
           content.style.opacity = '0';
-          content.style.transform = 'translateY(-8px)';
-
           if (chevron) {
             chevron.style.transform = 'rotate(0deg)';
           }
-
-          // Remove open attribute after animation
-          setTimeout(() => {
-            serviceArea.removeAttribute('open');
-          }, 400);
         } else {
-          // Opening animation
-          serviceArea.setAttribute('open', '');
-
-          // Set initial closed state
-          content.style.maxHeight = '0';
-          content.style.opacity = '0';
-          content.style.transform = 'translateY(-8px)';
-
-          // Force reflow
-          content.offsetHeight;
-
-          // Start opening animation
+          // Expand
           content.style.maxHeight = content.scrollHeight + 'px';
           content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
-
           if (chevron) {
             chevron.style.transform = 'rotate(180deg)';
           }
 
-          // Clean up max-height after animation for responsive behavior
+          // Reset to auto after animation for responsive behavior
           setTimeout(() => {
-            if (serviceArea.hasAttribute('open')) {
+            if (content.style.opacity === '1') {
               content.style.maxHeight = 'none';
             }
           }, 400);
-        }
-      });
-
-      // Handle keyboard navigation
-      summary.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          e.stopPropagation();
-          this.click();
         }
       });
     });

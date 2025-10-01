@@ -1,0 +1,461 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { residentialServices } from '../data/residentialServices';
+
+const seoData = {
+  title: 'Residential Solar & Energy Solutions | Xolar Inc.',
+  description:
+    'Complete residential energy solutions including solar panels, Tesla Powerwall, heat pumps, and EV charging. Save money and go green with professional installation across Canada.',
+  keywords:
+    'residential solar, home energy solutions, solar panels, Tesla Powerwall, heat pumps, EV charging, home battery storage',
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} keywords={seoData.keywords}>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-20 pb-24 lg:pt-28 lg:pb-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Complete Home Energy Solutions
+        </h1>
+        <p class="text-xl text-gray-600 mb-8">
+          Transform your home with renewable energy. From solar panels to heat pumps, we provide
+          everything you need for energy independence and massive savings.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/quote"
+            class="inline-flex items-center justify-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200"
+          >
+            Get Free Quote
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href="#services"
+            class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-primary-500 hover:text-primary-600 transition-colors duration-200"
+          >
+            Explore Services
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section id="services" class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Residential Services</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Comprehensive energy solutions designed for Canadian homes
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {
+          residentialServices.map((service) => (
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-primary-500 hover:shadow-xl transition-all duration-300">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">{service.shortTitle}</h3>
+              <p class="text-gray-600 mb-6">{service.description}</p>
+
+              <div class="space-y-3 mb-6">
+                {service.overview.benefits.slice(0, 4).map((benefit) => (
+                  <div class="flex items-start space-x-3">
+                    <svg
+                      class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span class="text-gray-700">{benefit}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+                <div>
+                  <p class="text-sm text-gray-500">Starting at</p>
+                  <p class="text-2xl font-bold text-primary-600">{service.pricing.startingPrice}</p>
+                </div>
+                <a
+                  href={`/residential/${service.slug}`}
+                  class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200"
+                >
+                  Learn More
+                  <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Section -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Why Choose Residential Energy Solutions?
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Investing in renewable energy pays off in multiple ways
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Massive Savings</h3>
+          <p class="text-gray-600">
+            Reduce your energy bills by 70-90% with solar panels and heat pumps. Most homeowners
+            save $2,000-$4,000 annually on electricity and heating costs.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Increased Home Value</h3>
+          <p class="text-gray-600">
+            Homes with solar energy systems sell for 4-6% more on average. Energy-efficient
+            upgrades make your property more attractive to buyers.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Energy Independence</h3>
+          <p class="text-gray-600">
+            Generate your own power and reduce reliance on the grid. Battery storage provides
+            backup power during outages for true energy security.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Environmental Impact</h3>
+          <p class="text-gray-600">
+            Reduce your carbon footprint by 3-4 tons of CO2 annually. A typical solar system
+            offsets the equivalent of planting 100 trees every year.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Government Incentives</h3>
+          <p class="text-gray-600">
+            Access thousands in federal and provincial rebates. Combined incentives can reduce
+            initial investment by 30-40% for qualifying projects.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">25-Year Warranties</h3>
+          <p class="text-gray-600">
+            Industry-leading warranties on all equipment. Solar panels guaranteed to produce 80%+
+            output after 25 years with comprehensive protection.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rebates Section -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Available Rebates & Incentives
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Take advantage of government programs to reduce your investment
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 border-2 border-blue-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900">Canada Greener Homes Grant</h3>
+            <span class="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full"
+              >Federal</span
+            >
+          </div>
+          <p class="text-3xl font-bold text-blue-600 mb-4">Up to $5,000</p>
+          <p class="text-gray-700 mb-4">
+            Grants for energy-efficient home retrofits including solar panels, heat pumps, and
+            insulation upgrades.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Heat pumps: $4,000-$5,000
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Solar panels: $1,000
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Battery storage: $1,000
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 border-2 border-green-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900">Provincial Solar Rebates</h3>
+            <span class="px-3 py-1 bg-green-600 text-white text-sm font-semibold rounded-full"
+              >Provincial</span
+            >
+          </div>
+          <p class="text-3xl font-bold text-green-600 mb-4">$3,000 - $10,000</p>
+          <p class="text-gray-700 mb-4">
+            Additional provincial incentives vary by location. Ontario, BC, and Quebec offer
+            enhanced programs.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Ontario: Net metering + rebates
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              BC: PST exemption on solar
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Quebec: Additional grants
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-8 border-2 border-purple-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900">EV Charger Incentives</h3>
+            <span class="px-3 py-1 bg-purple-600 text-white text-sm font-semibold rounded-full"
+              >Federal</span
+            >
+          </div>
+          <p class="text-3xl font-bold text-purple-600 mb-4">Up to $1,500</p>
+          <p class="text-gray-700 mb-4">
+            Zero Emission Vehicle Infrastructure Program (ZEVIP) supports home EV charging
+            installation.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Level 2 chargers covered
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Installation costs included
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Stackable with provincial programs
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-yellow-50 border-2 border-yellow-200 rounded-xl p-8">
+        <div class="flex items-start space-x-4">
+          <svg class="w-8 h-8 text-yellow-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">We Handle All Rebate Applications</h3>
+            <p class="text-gray-700">
+              Our team stays current on all federal, provincial, and municipal incentive programs.
+              We help you identify eligible rebates and handle the application process to maximize
+              your savings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 lg:py-24 bg-primary-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        Ready to Transform Your Home with Clean Energy?
+      </h2>
+      <p class="text-xl text-primary-100 mb-8 max-w-3xl mx-auto">
+        Get a free consultation and personalized quote for your residential energy solution. Our
+        experts will assess your home and provide detailed savings projections.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/quote"
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+        >
+          Get Free Quote Today
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a
+          href="tel:+1-800-XOLAR-CA"
+          class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-colors duration-200"
+        >
+          <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+            ></path>
+          </svg>
+          Call 1-800-XOLAR-CA
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">10,000+</div>
+          <p class="text-primary-100">Homes Powered</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">$50M+</div>
+          <p class="text-primary-100">Customer Savings</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">4.9/5</div>
+          <p class="text-primary-100">Customer Rating</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

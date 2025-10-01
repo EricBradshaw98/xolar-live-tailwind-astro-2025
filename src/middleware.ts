@@ -1,15 +1,30 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server';
 import { clerkClient } from '@clerk/astro/server';
+import { sequence } from 'astro:middleware';
 
 const isProtectedRoute = createRouteMatcher([
-  '/installers/projects(.*)',
   '/installers/my-bids(.*)',
   '/admin(.*)',
 ]);
 
+const isPublicRoute = createRouteMatcher([
+  '/',
+  '/residential(.*)',
+  '/commercial(.*)',
+  '/solar-panels(.*)',
+  '/quote(.*)',
+  '/contact(.*)',
+  '/news(.*)',
+  '/about(.*)',
+  '/privacy-policy(.*)',
+  '/terms-of-service(.*)',
+  '/sitemap(.*)',
+]);
+
 const ADMIN_EMAIL = 'eric@techcreationslabs.com';
 
-export const onRequest = clerkMiddleware(async (auth, context) => {
+// Only apply Clerk middleware to non-public routes
+const authMiddleware = clerkMiddleware(async (auth, context) => {
   const requestUrl = new URL(context.request.url);
 
   // Protect installer routes
@@ -94,3 +109,16 @@ export const onRequest = clerkMiddleware(async (auth, context) => {
     }
   }
 });
+
+// Conditional middleware - only apply clerk to protected routes
+export const onRequest = async (context, next) => {
+  const { request } = context;
+
+  // For public routes, skip Clerk entirely
+  if (isPublicRoute(request)) {
+    return next();
+  }
+
+  // For protected routes, use Clerk middleware
+  return authMiddleware(context, next);
+};

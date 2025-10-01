@@ -1,6 +1,5 @@
 ---
 import xolarLogo from '../assets/XOLARLARGE.webp';
-import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/components';
 
 const currentPath = Astro.url.pathname;
 const navItems = [
@@ -111,21 +110,10 @@ const navItems = [
           Get Free Quote
         </a>
 
-        <!-- Authentication Components -->
-        <SignedOut>
-          <div class="flex items-center space-x-2">
-            <a href="/installers/login"
-               class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-              Installer Login
-            </a>
-          </div>
-        </SignedOut>
-
-        <SignedIn>
-          <div class="flex items-center space-x-3">
-            <UserButton />
-          </div>
-        </SignedIn>
+        <a href="/installers/login"
+           class="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+          Installer Login
+        </a>
       </div>
 
       <!-- Mobile menu button -->
@@ -197,23 +185,12 @@ const navItems = [
           </a>
         </li>
 
-        <!-- Mobile Authentication -->
-        <SignedOut>
-          <li role="none" class="pt-2 border-t border-gray-200">
-            <a href="/installers/login"
-               class="block w-full text-center border border-primary-500 text-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200">
-              Installer Login
-            </a>
-          </li>
-        </SignedOut>
-
-        <SignedIn>
-          <li role="none" class="pt-2 border-t border-gray-200">
-            <div class="flex items-center justify-center py-2">
-              <UserButton />
-            </div>
-          </li>
-        </SignedIn>
+        <li role="none" class="pt-2 border-t border-gray-200">
+          <a href="/installers/login"
+             class="block w-full text-center border border-primary-500 text-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200">
+            Installer Login
+          </a>
+        </li>
       </ul>
     </div>
   </div>

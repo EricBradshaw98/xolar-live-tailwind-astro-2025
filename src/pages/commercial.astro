@@ -1,0 +1,483 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { commercialServices } from '../data/commercialServices';
+
+const seoData = {
+  title: 'Commercial Solar & Energy Solutions | Xolar Inc.',
+  description:
+    'Complete commercial energy solutions including solar panels, battery storage, and maintenance services. Reduce operating costs and achieve sustainability goals across Canada.',
+  keywords:
+    'commercial solar, business solar panels, commercial energy storage, solar maintenance, industrial solar, commercial renewable energy',
+};
+---
+
+<Layout title={seoData.title} description={seoData.description} keywords={seoData.keywords}>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-50 to-green-50 pt-20 pb-24 lg:pt-28 lg:pb-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Commercial Solar & Energy Solutions
+        </h1>
+        <p class="text-xl text-gray-600 mb-8">
+          Transform your business operations with enterprise-grade solar and energy storage
+          solutions. Reduce costs, enhance sustainability, and gain energy independence.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/quote"
+            class="inline-flex items-center justify-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200"
+          >
+            Get Commercial Quote
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href="#services"
+            class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-primary-500 hover:text-primary-600 transition-colors duration-200"
+          >
+            Explore Solutions
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section id="services" class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Enterprise Energy Solutions
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Comprehensive commercial energy systems designed for Canadian businesses
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          commercialServices.map((service) => (
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-primary-500 hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mb-6">
+                <svg
+                  class="w-8 h-8 text-primary-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </div>
+
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">{service.shortTitle}</h3>
+              <p class="text-gray-600 mb-6">{service.description}</p>
+
+              <div class="space-y-3 mb-6">
+                {service.overview.keyBenefits.slice(0, 3).map((benefit) => (
+                  <div class="flex items-start space-x-3">
+                    <svg
+                      class="w-5 h-5 text-green-500 mt-1 flex-shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span class="text-gray-700 text-sm">{benefit}</span>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={`/commercial/${service.slug}`}
+                class="inline-flex items-center justify-center w-full px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors duration-200"
+              >
+                Learn More
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Commercial Solar -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Why Businesses Choose Solar Energy
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Commercial solar delivers measurable ROI and strategic advantages
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div class="text-4xl font-bold text-primary-600 mb-2">70-90%</div>
+          <p class="text-gray-900 font-semibold mb-2">Cost Reduction</p>
+          <p class="text-gray-600 text-sm">
+            Reduce electricity costs with commercial solar and lock in energy rates for 25+ years
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div class="text-4xl font-bold text-primary-600 mb-2">4-7</div>
+          <p class="text-gray-900 font-semibold mb-2">Year Payback</p>
+          <p class="text-gray-600 text-sm">
+            Typical ROI achieved through energy savings and available incentive programs
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div class="text-4xl font-bold text-primary-600 mb-2">100%</div>
+          <p class="text-gray-900 font-semibold mb-2">Accelerated Depreciation</p>
+          <p class="text-gray-600 text-sm">
+            Take advantage of tax benefits and accelerated depreciation on solar investments
+          </p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-lg text-center">
+          <div class="text-4xl font-bold text-primary-600 mb-2">25+</div>
+          <p class="text-gray-900 font-semibold mb-2">Years Performance</p>
+          <p class="text-gray-600 text-sm">
+            Long-term energy security with comprehensive warranties and proven reliability
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Benefits -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Strategic Energy Advantages
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Commercial solar provides more than cost savings—it's a strategic investment in your
+            business's future sustainability and competitiveness.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Predictable Energy Costs</h3>
+                <p class="text-gray-600">
+                  Hedge against rising utility rates with fixed solar generation costs for 25+ years
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Corporate Sustainability</h3>
+                <p class="text-gray-600">
+                  Demonstrate environmental leadership and meet ESG goals with renewable energy
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Property Value Enhancement</h3>
+                <p class="text-gray-600">
+                  Increase commercial property value and appeal to environmentally-conscious tenants
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 lg:p-12">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Typical Commercial ROI</h3>
+          <div class="space-y-6">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-700 font-medium">Year 1-3</span>
+                <span class="text-primary-600 font-bold">Tax Benefits</span>
+              </div>
+              <div class="w-full bg-white rounded-full h-3">
+                <div class="bg-primary-600 h-3 rounded-full" style="width: 60%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-700 font-medium">Year 4-7</span>
+                <span class="text-primary-600 font-bold">Full Payback</span>
+              </div>
+              <div class="w-full bg-white rounded-full h-3">
+                <div class="bg-primary-600 h-3 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-700 font-medium">Year 8-25+</span>
+                <span class="text-green-600 font-bold">Pure Profit</span>
+              </div>
+              <div class="w-full bg-white rounded-full h-3">
+                <div class="bg-green-600 h-3 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-8 border-t border-primary-200">
+            <p class="text-gray-700 mb-4">
+              Based on a 500kW commercial system with typical energy usage and available incentives
+            </p>
+            <a
+              href="/quote"
+              class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold"
+            >
+              Calculate Your ROI
+              <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commercial Incentives -->
+  <section class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Commercial Incentives & Tax Benefits
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Maximize your ROI with available programs and accelerated depreciation
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 border-2 border-blue-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900">Accelerated Depreciation</h3>
+            <span class="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full"
+              >Federal</span
+            >
+          </div>
+          <p class="text-3xl font-bold text-blue-600 mb-4">100% First Year</p>
+          <p class="text-gray-700 mb-4">
+            Depreciate your entire solar investment in the first year under current tax provisions,
+            significantly reducing taxable income.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Immediate tax savings
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Improved cash flow
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Shorter payback period
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 border-2 border-green-200">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-gray-900">Provincial Business Grants</h3>
+            <span class="px-3 py-1 bg-green-600 text-white text-sm font-semibold rounded-full"
+              >Provincial</span
+            >
+          </div>
+          <p class="text-3xl font-bold text-green-600 mb-4">Varies by Province</p>
+          <p class="text-gray-700 mb-4">
+            Additional provincial grants and incentives available for commercial solar installations
+            across Canada.
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Ontario: Net metering programs
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              BC: CleanBC commercial incentives
+            </li>
+            <li class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Alberta: Municipal programs
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-8">
+        <div class="flex items-start space-x-4">
+          <svg class="w-8 h-8 text-yellow-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+            ></path>
+          </svg>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">
+              Complete Incentive Management Services
+            </h3>
+            <p class="text-gray-700">
+              Our commercial energy team stays current on all federal, provincial, and municipal
+              incentive programs. We handle incentive applications, tax benefit documentation, and
+              compliance requirements to ensure you capture maximum value from your solar investment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 lg:py-24 bg-primary-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        Ready to Reduce Your Business Energy Costs?
+      </h2>
+      <p class="text-xl text-primary-100 mb-8 max-w-3xl mx-auto">
+        Get a comprehensive commercial energy analysis with detailed ROI projections, financing
+        options, and available incentives for your business.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/quote"
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+        >
+          Get Commercial Quote
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary-600 transition-colors duration-200"
+        >
+          Schedule Consultation
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">500+</div>
+          <p class="text-primary-100">Commercial Projects</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">50MW+</div>
+          <p class="text-primary-100">Total Capacity Installed</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">$100M+</div>
+          <p class="text-primary-100">Client Energy Savings</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-white mb-2">25+</div>
+          <p class="text-primary-100">Years Combined Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
