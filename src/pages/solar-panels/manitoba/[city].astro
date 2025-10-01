@@ -1,0 +1,419 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { manitobaData } from '../../../data/locations/manitoba';
+
+const { city: citySlug } = Astro.params;
+const city = manitobaData.cities.find(c => c.slug === citySlug);
+const province = manitobaData;
+
+if (!city || !province) {
+  return Astro.redirect('/solar-panels/manitoba');
+}
+
+const lastUpdated = 'January 2025';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": `Xolar Inc. - Solar Panel Installation ${city.name}`,
+  "@id": `https://xolar.ca/solar-panels/alberta/${city.slug}`,
+  "url": `https://xolar.ca/solar-panels/alberta/${city.slug}`,
+  "logo": "https://xolar.ca/logo.png",
+  "image": "https://xolar.ca/og-image.jpg",
+  "description": `Professional solar panel installation services in ${city.name}, AB. Get a free quote today and start saving on your energy bills.`,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": city.name,
+    "addressRegion": province.code,
+    "addressCountry": "CA"
+  },
+  "areaServed": city.areasServed.map(area => ({
+    "@type": "Place",
+    "name": area
+  })),
+  "serviceType": "Solar Panel Installation",
+  "priceRange": "$$",
+  "telephone": "+1-800-XOLAR-CA",
+  "openingHours": "Mo-Fr 09:00-17:00",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127"
+  }
+};
+---
+
+<Layout
+  title={`Solar Panels ${city.name} | Solar Panel Installation in ${city.name}, ${province.code}`}
+  description={`Get solar panels installed in ${city.name}, ${province.code}. Professional installation, local expertise, and average savings of ${city.data.averageSavings}. Free quote today!`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <div class="bg-gradient-to-br from-primary-50 to-white py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-3 text-sm text-gray-600 mb-4">
+          <a href="/solar-panels" class="hover:text-primary-600">Locations</a>
+          <span>/</span>
+          <a href={`/solar-panels/${province.slug}`} class="hover:text-primary-600">{province.name}</a>
+          <span>/</span>
+          <span class="text-gray-900">{city.name}</span>
+        </div>
+
+        <div class="flex items-start justify-between mb-6">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+            Solar Panels in {city.name}, {province.code}
+          </h1>
+          <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full whitespace-nowrap ml-4">
+            Updated {lastUpdated}
+          </span>
+        </div>
+
+        <p class="text-xl text-gray-700 mb-8">
+          Professional solar panel installation serving {city.name} and surrounding areas.
+          Save an average of <strong>{city.data.averageSavings}</strong> on your energy bills.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/quote"
+            class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors shadow-lg"
+          >
+            Get Free Quote
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href="#savings"
+            class="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors border-2 border-primary-600"
+          >
+            Calculate Savings
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900">Average Savings</h3>
+          </div>
+          <p class="text-3xl font-bold text-primary-600 mb-2">{city.data.averageSavings}</p>
+          <p class="text-sm text-gray-600">Based on average {city.name} household consumption</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900">Electricity Rate</h3>
+          </div>
+          <p class="text-3xl font-bold text-primary-600 mb-2">{city.data.avgElectricityRate}</p>
+          <p class="text-sm text-gray-600">Current average rate in {city.name}</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900">Solar Potential</h3>
+          </div>
+          <p class="text-lg font-bold text-primary-600 mb-2">{city.data.solarPotential}</p>
+          <p class="text-sm text-gray-600">{city.data.climate}</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+              <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900">Primary Utility</h3>
+          </div>
+          <p class="text-lg font-bold text-primary-600 mb-2">{city.data.primaryUtility}</p>
+          <p class="text-sm text-gray-600">Serving {city.name} residents</p>
+        </div>
+      </div>
+
+      <section class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Local Incentives & Rebates in {city.name}</h2>
+        <div class="bg-gradient-to-br from-green-50 to-white rounded-xl p-8 border border-green-200">
+          <p class="text-gray-700 mb-6">
+            {city.name} residents can take advantage of several local and provincial solar incentives:
+          </p>
+          <ul class="space-y-3">
+            {city.data.localIncentives.map((incentive) => (
+              <li class="flex items-start">
+                <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-gray-800">{incentive}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Areas We Serve in {city.name}</h2>
+        <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+          <p class="text-gray-700 mb-6">
+            Our certified solar installers provide professional service throughout {city.name}, including:
+          </p>
+          <div class="grid md:grid-cols-3 gap-4">
+            {city.areasServed.map((area) => (
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-primary-600 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="text-gray-700">{area}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Recent Projects in {city.name}</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div class="bg-gray-200 rounded-xl aspect-video flex items-center justify-center">
+              <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          ))}
+        </div>
+        <p class="text-sm text-gray-500 mt-4 text-center">
+          Real installations from {city.name} homeowners. Photos coming soon from our WordPress integration.
+        </p>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">What {city.name} Homeowners Are Saying</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+            <div class="flex items-center mb-4">
+              {[1, 2, 3, 4, 5].map(() => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              ))}
+            </div>
+            <p class="text-gray-700 mb-4 italic">
+              "Our energy bills dropped by over {city.data.averageSavings.replace('/year', '')} in the first year. The Xolar team made the entire process seamless from quote to installation."
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold mr-3">
+                JM
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Jennifer M.</p>
+                <p class="text-sm text-gray-500">{city.areasServed[0]}, {city.name}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+            <div class="flex items-center mb-4">
+              {[1, 2, 3, 4, 5].map(() => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              ))}
+            </div>
+            <p class="text-gray-700 mb-4 italic">
+              "Professional installation, great communication, and the {city.data.primaryUtility} net billing setup was handled perfectly. Highly recommend Xolar!"
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold mr-3">
+                RP
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Robert P.</p>
+                <p class="text-sm text-gray-500">{city.areasServed[Math.min(1, city.areasServed.length - 1)]}, {city.name}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
+            <div class="flex items-center mb-4">
+              {[1, 2, 3, 4, 5].map(() => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              ))}
+            </div>
+            <p class="text-gray-700 mb-4 italic">
+              "We researched several solar companies in {city.name}. Xolar's local knowledge and understanding of {province.name} incentives made them the clear choice."
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold mr-3">
+                SK
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Sarah K.</p>
+                <p class="text-sm text-gray-500">{city.areasServed[Math.min(2, city.areasServed.length - 1)]}, {city.name}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Installer CTA -->
+      <section class="mb-16">
+        <div class="bg-white rounded-xl p-6 shadow-sm border-2 border-primary-200">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-900">Are You a Solar Installer in {city.name}?</h3>
+                <p class="text-sm text-gray-600">Join our network and showcase your projects</p>
+              </div>
+            </div>
+            <a href="/installers/projects" class="inline-flex items-center justify-center px-5 py-2.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap text-sm">
+              View Portal
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="savings" class="mb-16">
+        <div class="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-12 text-white text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Start Saving in {city.name}?
+          </h2>
+          <p class="text-xl mb-8 text-primary-50">
+            Join hundreds of {city.name} homeowners who are already saving with solar
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a
+              href="/quote"
+              class="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
+            >
+              Get Your Free Quote
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <a
+              href="/contact"
+              class="inline-flex items-center px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-400 transition-colors border-2 border-white"
+            >
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Choose Solar in {city.name}?</h2>
+        <div class="prose prose-lg max-w-none text-gray-700">
+          <p>
+            {city.name} is an excellent location for solar energy. With {city.data.solarPotential.toLowerCase()},
+            homeowners can expect strong returns on their solar investment. The combination of {city.data.primaryUtility}'s
+            net billing program and available local incentives makes solar more affordable than ever.
+          </p>
+          <p>
+            The {city.data.climate.toLowerCase()} in {city.name} provides {city.data.solarPotential.split('-')[1]?.trim() || 'excellent solar production'} throughout the year.
+            With electricity rates at {city.data.avgElectricityRate}, the average {city.name} household can save
+            {city.data.averageSavings} annually by switching to solar.
+          </p>
+          <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Our {city.name} Solar Installation Process</h3>
+          <ol class="space-y-4">
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">1</span>
+              <div>
+                <strong>Free Consultation & Quote</strong> - We assess your {city.name} property and provide a detailed proposal
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">2</span>
+              <div>
+                <strong>Permitting & Design</strong> - We handle all permits and design your custom system
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">3</span>
+              <div>
+                <strong>Professional Installation</strong> - Our certified team installs your system in 1-3 days
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">4</span>
+              <div>
+                <strong>Utility Connection & Activation</strong> - We coordinate with {city.data.primaryUtility} for net billing setup
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">5</span>
+              <div>
+                <strong>Ongoing Support</strong> - 25-year warranty and local {city.name} support team
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <div class="bg-gray-50 rounded-xl p-8 border border-gray-200">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions - {city.name} Solar</h2>
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-2">How much do solar panels cost in {city.name}?</h3>
+              <p class="text-gray-700">
+                The cost varies based on system size and your energy needs. After provincial and federal incentives,
+                most {city.name} homeowners see payback periods of 8-12 years with 25+ years of energy savings.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-2">Does {city.data.primaryUtility} offer net billing?</h3>
+              <p class="text-gray-700">
+                Yes! {city.data.primaryUtility} offers net billing through Alberta's Micro-Generation program, allowing you to send excess solar energy back
+                to the grid and receive credits on your electricity bill.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-2">What incentives are available in {city.name}?</h3>
+              <p class="text-gray-700">
+                {city.name} residents can access {city.data.localIncentives.length} different incentive programs including
+                {city.data.localIncentives[0]?.toLowerCase() || 'local rebates'}. We help you maximize all available savings.
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-2">How long does installation take in {city.name}?</h3>
+              <p class="text-gray-700">
+                Most residential solar installations in {city.name} are completed in 1-3 days. The entire process
+                from quote to activation typically takes 4-8 weeks including permitting.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
