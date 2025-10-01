@@ -1,13 +1,13 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { quebecData } from '../../../data/locations/quebec';
+import { saskatchewanData } from '../../../data/locations/saskatchewan';
 
 const { city: citySlug } = Astro.params;
-const city = quebecData.cities.find(c => c.slug === citySlug);
-const province = quebecData;
+const city = saskatchewanData.cities.find(c => c.slug === citySlug);
+const province = saskatchewanData;
 
 if (!city || !province) {
-  return Astro.redirect('/solar-panels/quebec');
+  return Astro.redirect('/solar-panels/saskatchewan');
 }
 
 const lastUpdated = 'January 2025';
@@ -16,11 +16,11 @@ const schema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": `Xolar Inc. - Solar Panel Installation ${city.name}`,
-  "@id": `https://xolar.ca/solar-panels/quebec/${city.slug}`,
-  "url": `https://xolar.ca/solar-panels/quebec/${city.slug}`,
+  "@id": `https://xolar.ca/solar-panels/alberta/${city.slug}`,
+  "url": `https://xolar.ca/solar-panels/alberta/${city.slug}`,
   "logo": "https://xolar.ca/logo.png",
   "image": "https://xolar.ca/og-image.jpg",
-  "description": `Professional solar panel installation services in ${city.name}, QC. Get a free quote today and start saving on your energy bills.`,
+  "description": `Professional solar panel installation services in ${city.name}, AB. Get a free quote today and start saving on your energy bills.`,
   "address": {
     "@type": "PostalAddress",
     "addressLocality": city.name,
@@ -240,7 +240,7 @@ const schema = {
               ))}
             </div>
             <p class="text-gray-700 mb-4 italic">
-              "Professional installation, great communication, and the Hydro-Québec net metering setup was handled perfectly. Highly recommend Xolar!"
+              "Professional installation, great communication, and the {city.data.primaryUtility} net billing setup was handled perfectly. Highly recommend Xolar!"
             </p>
             <div class="flex items-center">
               <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold mr-3">
@@ -334,13 +334,13 @@ const schema = {
         <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Choose Solar in {city.name}?</h2>
         <div class="prose prose-lg max-w-none text-gray-700">
           <p>
-            {city.name} is a great location for solar energy. With {city.data.solarPotential.toLowerCase()},
-            homeowners can expect good returns on their solar investment. The combination of Hydro-Québec's
-            net metering program and available incentives makes solar more accessible than ever.
+            {city.name} is an excellent location for solar energy. With {city.data.solarPotential.toLowerCase()},
+            homeowners can expect strong returns on their solar investment. The combination of {city.data.primaryUtility}'s
+            net billing program and available local incentives makes solar more affordable than ever.
           </p>
           <p>
-            The {city.data.climate.toLowerCase()} in {city.name} provides {city.data.solarPotential.split('-')[1]?.trim() || 'good solar production'}.
-            With electricity rates at {city.data.avgElectricityRate} from Hydro-Québec, the average {city.name} household can save
+            The {city.data.climate.toLowerCase()} in {city.name} provides {city.data.solarPotential.split('-')[1]?.trim() || 'excellent solar production'} throughout the year.
+            With electricity rates at {city.data.avgElectricityRate}, the average {city.name} household can save
             {city.data.averageSavings} annually by switching to solar.
           </p>
           <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Our {city.name} Solar Installation Process</h3>
@@ -366,7 +366,7 @@ const schema = {
             <li class="flex items-start">
               <span class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold mr-4">4</span>
               <div>
-                <strong>Utility Connection & Activation</strong> - We coordinate with Hydro-Québec for net metering setup
+                <strong>Utility Connection & Activation</strong> - We coordinate with {city.data.primaryUtility} for net billing setup
               </div>
             </li>
             <li class="flex items-start">
@@ -387,13 +387,13 @@ const schema = {
               <h3 class="font-semibold text-gray-900 mb-2">How much do solar panels cost in {city.name}?</h3>
               <p class="text-gray-700">
                 The cost varies based on system size and your energy needs. After provincial and federal incentives,
-                most {city.name} homeowners see payback periods of 10-15 years with 25+ years of energy savings.
+                most {city.name} homeowners see payback periods of 8-12 years with 25+ years of energy savings.
               </p>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900 mb-2">Does Hydro-Québec offer net metering?</h3>
+              <h3 class="font-semibold text-gray-900 mb-2">Does {city.data.primaryUtility} offer net billing?</h3>
               <p class="text-gray-700">
-                Yes! Hydro-Québec offers a net metering program, allowing you to send excess solar energy back
+                Yes! {city.data.primaryUtility} offers net billing through Alberta's Micro-Generation program, allowing you to send excess solar energy back
                 to the grid and receive credits on your electricity bill.
               </p>
             </div>
